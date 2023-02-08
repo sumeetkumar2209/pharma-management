@@ -22,11 +22,12 @@ public class UserController {
     PasswordEncoder passwordEncoder;
 
     @PostMapping(value = "/registerUser")
-    public ResponseEntity<?> registerUser (@RequestHeader("userId") String userId,
+    public ResponseEntity<?> registerUser (@RequestHeader("createdBy") String createdBy,
                                            @RequestHeader("Authorization") String token,@RequestBody UserDTO userDTO){
 
         userDTO.setCreationTimestamp(Timestamp.from(Instant.now()));
         userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        userDTO.setCreatedBy(createdBy);
         userService.registerUser(userDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body("Registration successful");
     }

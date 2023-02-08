@@ -1,6 +1,7 @@
 package com.reify.login.service.impl;
 
 import com.reify.login.DTO.UserDTO;
+import com.reify.login.model.RoleDO;
 import com.reify.login.model.UserDO;
 import com.reify.login.repo.UserRepo;
 import com.reify.login.service.UserService;
@@ -23,6 +24,11 @@ public class UserServiceImpl implements UserService {
 
         UserDO userDO = context.getBean(UserDO.class);
         BeanUtils.copyProperties(userDTO, userDO);
+
+        RoleDO roleDO = context.getBean(RoleDO.class);
+        roleDO.setRoleId(userDTO.getRoleId());
+
+        userDO.setRoleDO(roleDO);
 
         userRepo.save(userDO);
 

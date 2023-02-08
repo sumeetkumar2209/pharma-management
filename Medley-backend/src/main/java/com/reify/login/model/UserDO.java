@@ -7,10 +7,9 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.UUID;
 
 @Component
 @Data
@@ -22,7 +21,10 @@ import java.sql.Timestamp;
 public class UserDO {
 
     @Id
-    private String userId;
+    @GeneratedValue
+    @Column(name = "userId")
+    private UUID userId;
+
     private String emailId;
     private String password;
     private Timestamp creationTimestamp;
@@ -39,5 +41,9 @@ public class UserDO {
     private String supervisorId;
 
     private Timestamp lastLoginTime;
+
+    @ManyToOne
+    @JoinColumn(name = "roleId")
+    private RoleDO roleDO;
 
 }
