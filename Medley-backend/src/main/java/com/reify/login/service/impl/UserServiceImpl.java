@@ -27,10 +27,17 @@ public class UserServiceImpl implements UserService {
 
         RoleDO roleDO = context.getBean(RoleDO.class);
         roleDO.setRoleId(userDTO.getRoleId());
-
         userDO.setRoleDO(roleDO);
 
         userRepo.save(userDO);
+    }
 
+    @Override
+    public UserDTO fetchUserDetails(String emailId) {
+        UserDO userDO = userRepo.findByEmailId(emailId);
+        System.out.println(userDO);
+        UserDTO userDTO = context.getBean(UserDTO.class);
+        BeanUtils.copyProperties(userDO, userDTO);
+        return userDTO;
     }
 }

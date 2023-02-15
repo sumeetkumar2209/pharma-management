@@ -32,4 +32,15 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body("Registration successful");
     }
 
+    @GetMapping(value = "/fetchUserDetails")
+    public ResponseEntity<?> fetchUserDetails (@RequestHeader("Authorization") String token,
+                                               @RequestParam("emailId") String emailId) {
+
+        UserDTO userDTO = userService.fetchUserDetails(emailId);
+
+        System.out.println(userDTO.toString());
+
+        return ResponseEntity.status(HttpStatus.OK).body(userDTO);
+    }
+
 }
