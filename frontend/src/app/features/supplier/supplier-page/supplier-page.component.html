@@ -1,0 +1,145 @@
+<div class="container" fxLayout="row" fxLayoutAlign="center none">
+  <div fxFlex="95%">
+    <div class="container" fxLayout="row" fxLayoutAlign="space-between center">
+
+      <div>
+
+        <h2><mat-icon>flare</mat-icon>Suppliers</h2>
+      </div>
+      <div style="margin:18px 0px">
+        <button mat-raised-button [routerLink]="['/supplier/add']" class="demo-button">
+          New Supplier
+        </button>
+
+      </div>
+    </div>
+    <mat-accordion>
+      <mat-expansion-panel [expanded]="true" style="margin-bottom:16px;">
+        <form [formGroup]="filterSupplierForm" (ngSubmit)="filterSuppliers(filterSupplierForm.value)">
+
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon>filter_list</mat-icon>Filter
+          </mat-panel-title>
+
+        </mat-expansion-panel-header>
+        <div class="container" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="16px grid">
+
+
+
+            <mat-form-field fxFlex="25%">
+              <mat-label>Supplier ID</mat-label>
+              <input matInput #input formControlName="supplierId">
+            </mat-form-field>
+
+            <mat-form-field fxFlex="25%">
+              <mat-label>Supplier Name</mat-label>
+              <input matInput #input formControlName="supplierName">
+            </mat-form-field>
+            <mat-form-field fxFlex="25%">
+              <mat-label>Postcode</mat-label>
+              <input matInput #input formControlName="postalCode">
+            </mat-form-field>
+            <mat-form-field  fxFlex="25%">
+              <mat-label>Supplier Status</mat-label>
+              <mat-select [formControl]="supplierStatusControl" name="supplierStatus">
+                <mat-option *ngFor="let sso of supplierStatusOptions" [value]="sso.value">
+                  {{sso.viewValue}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+           
+          
+        </div>
+        <div class="container" fxLayout="row" fxLayoutAlign="end center">
+          <button mat-raised-button (click)="resetFilters()" class="demo-button" >
+            Reset
+          </button>
+          <button mat-raised-button class="demo-button" type="submit">
+            Apply
+          </button>
+        </div>
+        </form>
+      </mat-expansion-panel></mat-accordion>
+
+
+
+
+
+
+    <mat-card>
+      <mat-card-content>
+        <p-table [columns]="tableSelectedColumns" [value]="suppliers" [tableStyle]="{'min-width': '50rem'}" dataKey="supplierId"
+          [rowHover]="true" [rows]="rows" [showCurrentPageReport]="true" [rowsPerPageOptions]="rowsPerPageOptions" [totalRecords]="totalRecords"
+          [loading]="loading" [paginator]="true"  [lazy]="true" (onLazyLoad)="paginate($event)"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
+          >
+
+       
+          <ng-template pTemplate="caption">
+            <div class="table-header" fxLayout="row" fxLayoutAlign="space-between center">
+              <div>
+                List of Suppliers</div>
+              <div class="p-input-icon-left">
+
+                <mat-form-field>
+                  <mat-select [formControl]="selectedColumns"
+                    placeholder="Selected Columns" multiple>
+                    <mat-option *ngFor="let col of cols" [value]="col.header">
+                      {{col.header}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <button mat-icon-button aria-label="edit supplier icon" (click)="print()">
+                  <mat-icon>print</mat-icon>
+                </button>
+              </div>
+            </div>
+
+          </ng-template>
+          <ng-template pTemplate="header" let-columns>
+            <tr>
+              <th style="width: 4rem">
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+              </th>
+
+
+              <th [pSortableColumn]="col.field" style="min-width: 4rem" *ngFor="let col of columns">
+                <div class="flex justify-content-between align-items-center">
+                  {{col.header}}
+                  <p-sortIcon field="supplierId"></p-sortIcon>
+
+                </div>
+              </th>
+              <th style="width: 2rem"></th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-supplier let-columns="columns">
+            <tr>
+
+              <td>
+                <p-tableCheckbox [value]="supplier"></p-tableCheckbox>
+              </td>
+              <td *ngFor="let col of columns">
+                <span class="p-column-title">Supplier Id</span>
+                {{supplier[col.field]}}
+              </td>
+              <td style="text-align: center">
+                <button mat-icon-button aria-label="edit supplier icon" (click)="modify(supplier)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+
+
+
+
+      </mat-card-content></mat-card>
+
+
+
+
+  </div>
+</div>
