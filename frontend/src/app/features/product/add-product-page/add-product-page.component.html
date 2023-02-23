@@ -1,0 +1,112 @@
+<div class="container" fxLayout="row" fxLayoutAlign="center none">
+  <div fxFlex="95%">
+    <div class="container" fxLayout="row" fxLayoutAlign="space-between center">
+
+      <div>
+
+        <h2><mat-icon></mat-icon>Add Product</h2>
+      </div>
+
+    </div>
+
+    <mat-card>
+      <mat-card-content>
+
+        <form [formGroup]="addProductForm" (ngSubmit)="onSubmit(addProductForm.value)" class="form">
+          <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="16px grid">
+            <mat-form-field fxFlex="50%" fxFlex.lt-sm="100%">
+              <input matInput placeholder="Client" formControlName="client">
+              <mat-error *ngIf="!apControls['client'].valid && apControls['client'].touched">
+                {{ getError('client') }}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="50%" fxFlex.lt-sm="100%">
+              <input matInput placeholder="SKU" formControlName="sku">
+              <mat-error *ngIf="!apControls['sku'].valid && apControls['sku'].touched">
+                {{ getError('sku') }}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="50%" fxFlex.lt-sm="100%">
+              <input matInput placeholder="EAN Barcode" formControlName="ean_barcode">
+              <mat-error *ngIf="!apControls['ean_barcode'].valid && apControls['ean_barcode'].touched">
+                {{ getError('ean_barcode') }}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field fxFlex="50%" fxFlex.lt-sm="100%">
+              <input matInput placeholder="UPC Barcode" formControlName="upc_barcode">
+              <mat-error *ngIf="!apControls['upc_barcode'].valid && apControls['upc_barcode'].touched">
+                {{ getError('upc_barcode') }}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="50%" fxFlex.lt-sm="100%">
+              <input matInput placeholder="Name" formControlName="name">
+              <mat-error *ngIf="!apControls['name'].valid && apControls['name'].touched">
+                {{ getError('name') }}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="100%">
+              <textarea matInput placeholder="Description" formControlName="description"></textarea>
+              <mat-error *ngIf="!apControls['description'].valid && apControls['description'].touched">
+                {{ getError('description') }}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field fxFlex="100%">
+              <textarea matInput placeholder="Custom Description" formControlName="customDescription"></textarea>
+              <mat-error *ngIf="!apControls['customDescription'].valid && apControls['customDescription'].touched">
+                {{ getError('customDescription') }}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field fxFlex="50%" fxFlex.lt-sm="100%">
+              <input matInput placeholder="Country of Manufacture" formControlName="countryManufacture">
+              <mat-error *ngIf="!apControls['countryManufacture'].valid && apControls['countryManufacture'].touched">
+                {{ getError('countryManufacture') }}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field fxFlex="50%" fxFlex.lt-sm="100%">
+              <input matInput placeholder="Commodity Code" formControlName="commodityCode">
+              <mat-error *ngIf="!apControls['commodityCode'].valid && apControls['commodityCode'].touched">
+                {{ getError('commodityCode') }}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field fxFlex="50%" fxFlex.lt-sm="100%">
+              <mat-slide-toggle formControlName="discontinued">Discontinued</mat-slide-toggle>
+              <textarea matInput hidden></textarea>
+
+              <mat-error *ngIf="!apControls['discontinued'].valid && apControls['discontinued'].touched">
+                {{ getError('discontinued') }}
+              </mat-error>
+            </mat-form-field>
+
+
+            <mat-form-field fxFlex="50%" fxFlex.lt-sm="100%">
+              <mat-slide-toggle formControlName="preorderable">Pre-orderable</mat-slide-toggle>
+              <textarea matInput hidden></textarea>
+              <mat-error *ngIf="!apControls['preorderable'].valid && apControls['preorderable'].touched">
+                {{ getError('preorderable') }}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field fxFlex="50%" fxFlex.lt-sm="100%">
+              <input matInput placeholder="Image URL" formControlName="imageUrl">
+              <mat-error *ngIf="!apControls['imageUrl'].valid && apControls['imageUrl'].touched">
+                {{ getError('imageUrl') }}
+              </mat-error>
+            </mat-form-field>
+    
+
+          </div>
+          <div fxLayout="row" fxLayoutAlign="end center"> 
+            <button mat-raised-button color="primary" type="submit" class="button" 
+              [disabled]="!addProductForm.valid">Next</button>
+          </div>
+        
+        </form>
+
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+</div>
