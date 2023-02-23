@@ -70,7 +70,7 @@ public class AuthenticationController {
         return ResponseEntity.status(HttpStatus.OK).body(token);
     }
 
-    private void authenticate(String username, String password) throws Exception {
+    public void authenticate(String username, String password) throws Exception {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         } catch (DisabledException e) {
