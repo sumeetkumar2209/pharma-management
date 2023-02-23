@@ -79,7 +79,7 @@ public class UserController {
 
     }
 
-    @PostMapping(value = "/getUserDetails")
+    @GetMapping(value = "/getUserDetails")
     public ResponseEntity<?> getUserDetails(@RequestHeader("Authorization") String token,
                                             @RequestParam("emailId") String emailId){
 

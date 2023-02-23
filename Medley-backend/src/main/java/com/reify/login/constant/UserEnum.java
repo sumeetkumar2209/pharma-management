@@ -1,7 +1,5 @@
 package com.reify.login.constant;
 
-import java.util.stream.Stream;
-
 public enum UserEnum {
 
     USERID("userId"),
