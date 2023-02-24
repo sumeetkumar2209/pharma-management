@@ -8,10 +8,8 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Component
 @Data
@@ -23,8 +21,17 @@ import javax.persistence.Table;
 public class RoleDO {
 
     @Id
+    @Column(name = "ROLE_ID")
     private int roleId;
 
     @Column(name = "ROLENAME")
     private String roleName;
+
+    @OneToMany
+    @JoinTable(
+            name = "Role_Menu",
+            joinColumns = @JoinColumn(name = "ROLE_ID"),
+            inverseJoinColumns = @JoinColumn(name = "MENU_ID")
+    )
+    private List<MenuDO> menuList;
 }
