@@ -1,0 +1,169 @@
+<div class="container" fxLayout="row" fxLayoutAlign="center none">
+  <div fxFlex="95%">
+    <div class="container" fxLayout="row" fxLayoutAlign="space-between center">
+
+      <div>
+
+        <h2 *ngIf="!(editForm||approverForm)"><mat-icon></mat-icon>Add PurchaseOrder</h2>
+        <h2 *ngIf="editForm"><mat-icon></mat-icon>Modify PurchaseOrder</h2>
+        <h2 *ngIf="approverForm"><mat-icon></mat-icon>Approve PurchaseOrder</h2>
+      </div>
+      <div>
+        <mat-form-field class="example-full-width">
+          <mat-label>P.O Number</mat-label>
+          <input matInput  value="P010101" disabled="true">
+        </mat-form-field>
+      </div>
+
+    </div>
+
+      <mat-card>
+        <mat-card-content>
+         
+
+          <p-table [value]="products" dataKey="id" editMode="row" [tableStyle]="{'min-width': '50rem'}">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th >Product ID</th>
+                    <th >License No.</th>
+                    <th >Product Name</th>
+                    <th >Dosage Form</th>
+                    <th >Strength</th>
+                    <th >Pack Type</th>
+                    <th >Pack Size</th>
+                    <th >Supplier</th>
+                    <th >P.O Quantity</th>
+                    <th >Price per Pack</th>
+                    <th >Total Product Amount</th>
+                    <th ></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-po let-editing="editing" let-ri="rowIndex">
+                <tr [pEditableRow]="po">
+                  <td >
+              
+                    <p-cellEditor>
+                      <ng-template pTemplate="input">
+                          <p-dropdown [options]="productOptions" appendTo="body" [(ngModel)]="po.productId" [style]="{'width':'100%'}"></p-dropdown>
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                          {{po.productId}}
+                      </ng-template>
+                  </p-cellEditor>
+                  </td>
+                  <td >
+                    <span class="p-column-title">License No.</span>
+                   {{ po.licenseNumber}}
+                  </td>
+                  <td >
+                    <span class="p-column-title">License No.</span>
+                    {{po.productName}}
+                  </td>
+                  <td >
+                    <span class="p-column-title">License No.</span>
+                    {{po.dosageForm}}
+                  </td>
+                  <td >
+                    <span class="p-column-title">License No.</span>
+                   {{ po.strength}}
+                  </td>
+                  <td >
+                    <span class="p-column-title">License No.</span>
+                   {{ po.packType}}
+                  </td>
+                  <td >
+                    <span class="p-column-title">License No.</span>
+                    {{po.packSize}}
+                  </td>
+                  <td >
+                    <p-cellEditor>
+                      <ng-template pTemplate="input">
+                          <p-dropdown [options]="statuses" appendTo="body" [(ngModel)]="po.supplierName" [style]="{'width':'100%'}"></p-dropdown>
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                          {{po.supplierName}}
+                      </ng-template>
+                  </p-cellEditor>
+                  </td>
+                  <td >
+                    <p-cellEditor>
+                      <ng-template pTemplate="input">
+                          <input pInputText type="text" [(ngModel)]="po.purchaseOrderQuantitye">
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                          {{ po.purchaseOrderQuantity}}
+                      </ng-template>
+                  </p-cellEditor>
+                  </td>
+                  <td >
+                    <span class="p-column-title">License No.</span>
+                    {{po.pricePerPack}}
+                  </td>
+                  <td >
+                    <span class="p-column-title">License No.</span>
+                    {{po.totalProductAmount}}
+                  </td>
+
+                  
+                    <td>
+                        <div class="flex align-items-center justify-content-center gap-2">
+                            <!-- <button  pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" (click)="onRowEditInit(po)" class="p-button-rounded p-button-text"></button> -->
+                            <button mat-icon-button aria-label="edit purchaseOrder icon" (click)="onRowEditInit(po)" *ngIf="!editing" pInitEditableRow>
+                              <mat-icon>edit</mat-icon>
+                            </button>
+                            <button mat-icon-button aria-label="edit purchaseOrder icon" (click)="onRowEditSave(po)" *ngIf="editing" pSaveEditableRow>
+                              <mat-icon>check</mat-icon>
+                            </button>
+                            <button mat-icon-button aria-label="edit purchaseOrder icon" (click)="onRowEditCancel(po, ri)" *ngIf="editing" pCancelEditableRow>
+                              <mat-icon>close</mat-icon>
+                            </button>
+                            <!-- <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSave(po)" class="p-button-rounded p-button-text p-button-success mr-2"></button>
+                            <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" (click)="onRowEditCancel(po, ri)" class="p-button-rounded p-button-text p-button-danger"></button> -->
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="summary">
+          
+              <div  fxLayout="row" fxLayoutAlign="space-between center">
+
+                <div>
+        
+                  <button mat-raised-button [routerLink]="['/purchaseOrder']" class="demo-button">
+                    Delete Row
+                  </button>
+                </div>
+                <div style="margin:18px 0px">             
+                  <button mat-raised-button (click)="onAddNewRow()" type="submit" class="demo-button">
+                    Add Row
+                  </button>
+                </div>
+              </div>
+        
+          </ng-template>
+        </p-table>
+
+
+        </mat-card-content>
+      </mat-card>
+
+      <div class="container" fxLayout="row" fxLayoutAlign="space-between center">
+
+        <div>
+
+          <button mat-raised-button [routerLink]="['/purchaseOrder']" class="demo-button">
+            Cancel
+          </button>
+        </div>
+        <div style="margin:18px 0px">
+          <button mat-raised-button (click)="saveAsDraft()" type="submit" class="demo-button">
+            Save as Draft
+          </button>
+          <button mat-raised-button (click)="save()" type="submit" class="demo-button">
+            Submit
+          </button>
+        </div>
+      </div>
+
+  </div>
+</div>

@@ -74,12 +74,16 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "proxyConfig": "src/proxy.conf.json"
+          },
           "configurations": {
             "production": {
               "browserTarget": "reiphy-pharma:build:production"
             },
             "development": {
-              "browserTarget": "reiphy-pharma:build:development"
+              "browserTarget": "reiphy-pharma:build:development",
+
             }
           },
           "defaultConfiguration": "development"

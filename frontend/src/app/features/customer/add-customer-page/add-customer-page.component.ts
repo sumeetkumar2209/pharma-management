@@ -1,25 +1,23 @@
 import { Component, ViewChild } from '@angular/core';
 import { Observable, ReplaySubject } from 'rxjs';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatSort } from '@angular/material/sort';
-import { MatPaginator } from '@angular/material/paginator';
+
 import { FormBuilder, FormControl, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { NGXLogger } from 'ngx-logger';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SupplierInterface } from '../supplier.interface';
-import { SupplierService } from '../supplier.service';
+import { CustomerInterface } from '../customer.interface';
+import { CustomerService } from '../customer.service';
 
 
 @Component({
-  selector: 'app-add-supplier-page',
-  templateUrl: './add-supplier-page.component.html',
-  styleUrls: ['./add-supplier-page.component.css']
+  selector: 'app-add-customer-page',
+  templateUrl: './add-customer-page.component.html',
+  styleUrls: ['./add-customer-page.component.css']
 })
-export class AddSupplierPageComponent {
-  addSupplierForm: FormGroup;
-  supplier: any;
+export class AddCustomerPageComponent {
+  addCustomerForm: FormGroup;
+  customer: any;
   countryList: String[] = ['IN', 'UK', 'USA'];
   currencyList: String[] = ['INR', 'USD', 'GBP'];
   statusList: String[] = ['Active', 'Inactive'];
@@ -28,12 +26,12 @@ export class AddSupplierPageComponent {
   approvalStatusOption: String[] = ['Approved', 'Rejected'];
   editForm: boolean = false;
   approverForm: boolean = false;
-  _supplier!: SupplierInterface;
+  _customer!: CustomerInterface;
 
   constructor(private fb: FormBuilder, private titleService: Title,
     private logger: NGXLogger, private notificationService: NotificationService,
     private router: Router,
-    private service: SupplierService) {
+    private service: CustomerService) {
     if (this.router.url.includes('edit')) {
       this.editForm = true;
       this.approverForm = false;
@@ -42,8 +40,8 @@ export class AddSupplierPageComponent {
       this.editForm = false;
       this.approverForm = true;
     }
-    this.addSupplierForm = this.fb.group({
-      'supplierId': new FormControl({ value: null, disabled: this.approverForm || this.editForm }),
+    this.addCustomerForm = this.fb.group({
+      'customerId': new FormControl({ value: null, disabled: this.approverForm || this.editForm }),
       'initialAdditionDate': new FormControl({ value: null, disabled: this.approverForm || this.editForm }),
       'companyName': new FormControl({ value: null, disabled: this.approverForm }, Validators.required),
       'contactName': new FormControl({ value: null, disabled: this.approverForm }, Validators.required),
@@ -67,7 +65,7 @@ export class AddSupplierPageComponent {
     });
 
     if (this.editForm) {
-      this._supplier = this.service.selectedSupplier;
+      this._customer = this.service.selectedCustomer;
       this.populateFormFields();
     } else if (this.approverForm) {
 
@@ -79,39 +77,39 @@ export class AddSupplierPageComponent {
   }
   ngOnInit() {
     console.log(this.editForm);
-    this.titleService.setTitle('Reiphy Pharma - Add Supplier');
-    this.logger.log('Add Supplier loaded');
+    this.titleService.setTitle('Reiphy Pharma - Add Customer');
+    this.logger.log('Add Customer loaded');
 
     setTimeout(() => {
-      this.notificationService.openSnackBar('Fill in the form to Add Supplier!');
+      this.notificationService.openSnackBar('Fill in the form to Add Customer!');
     });
 
   }
   populateFormFields() {
-    this.addSupplierForm.get('supplierId')?.setValue(this._supplier.supplierId);
-    this.addSupplierForm.get('initialAdditionDate')?.setValue(this._supplier.initialAdditionDate);
-    this.addSupplierForm.get('companyName')?.setValue(this._supplier.companyName);
-    this.addSupplierForm.get('contactName')?.setValue(this._supplier.contactName);
-    this.addSupplierForm.get('contactEmail')?.setValue(this._supplier.contactEmail);
-    this.addSupplierForm.get('contactNumber')?.setValue(this._supplier.contactNumber);
-    this.addSupplierForm.get('contactCountry')?.setValue(this._supplier.country);
-    this.addSupplierForm.get('currency')?.setValue(this._supplier.currency);
-    this.addSupplierForm.get('status')?.setValue(this._supplier.supplierStatus);
-    this.addSupplierForm.get('qualification')?.setValue(this._supplier.supplierQualificationStatus);
-    this.addSupplierForm.get('validTill')?.setValue(this._supplier.validTill);
-    this.addSupplierForm.get('address1')?.setValue(this._supplier.addressLine1);
-    this.addSupplierForm.get('address2')?.setValue(this._supplier.addressLine2);
-    this.addSupplierForm.get('address3')?.setValue(this._supplier.addressLine3);
-    this.addSupplierForm.get('town')?.setValue(this._supplier.town);
-    this.addSupplierForm.get('postcode')?.setValue(this._supplier.postalCode);
-    this.addSupplierForm.get('approver')?.setValue(this._supplier.approver);
+    this.addCustomerForm.get('customerId')?.setValue(this._customer.customerId);
+    this.addCustomerForm.get('initialAdditionDate')?.setValue(this._customer.initialAdditionDate);
+    this.addCustomerForm.get('companyName')?.setValue(this._customer.companyName);
+    this.addCustomerForm.get('contactName')?.setValue(this._customer.contactName);
+    this.addCustomerForm.get('contactEmail')?.setValue(this._customer.contactEmail);
+    this.addCustomerForm.get('contactNumber')?.setValue(this._customer.contactNumber);
+    this.addCustomerForm.get('contactCountry')?.setValue(this._customer.country);
+    this.addCustomerForm.get('currency')?.setValue(this._customer.currency);
+    this.addCustomerForm.get('status')?.setValue(this._customer.customerStatus);
+    this.addCustomerForm.get('qualification')?.setValue(this._customer.customerQualificationStatus);
+    this.addCustomerForm.get('validTill')?.setValue(this._customer.validTill);
+    this.addCustomerForm.get('address1')?.setValue(this._customer.addressLine1);
+    this.addCustomerForm.get('address2')?.setValue(this._customer.addressLine2);
+    this.addCustomerForm.get('address3')?.setValue(this._customer.addressLine3);
+    this.addCustomerForm.get('town')?.setValue(this._customer.town);
+    this.addCustomerForm.get('postcode')?.setValue(this._customer.postalCode);
+    this.addCustomerForm.get('approver')?.setValue(this._customer.approver);
   }
   onSubmit(post: any) {
-    this.supplier = post;
+    this.customer = post;
   }
 
   get apControls(): { [key: string]: AbstractControl } {
-    return this.addSupplierForm.controls;
+    return this.addCustomerForm.controls;
   }
 
   getError(controlName: string) {

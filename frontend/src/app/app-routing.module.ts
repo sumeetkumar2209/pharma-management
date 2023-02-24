@@ -14,8 +14,18 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'customers',
-    loadChildren: () => import('./features/customers/customers.module').then(m => m.CustomersModule),
+    path: 'supplier',
+    loadChildren: () => import('./features/supplier/supplier.module').then(m => m.SupplierModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'customer',
+    loadChildren: () => import('./features/customer/customer.module').then(m => m.CustomerModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'purchase-order',
+    loadChildren: () => import('./features/purchase-order/purchase-order.module').then(m => m.PurchaseOrderModule),
     canActivate: [AuthGuard]
   },
   {
@@ -39,11 +49,7 @@ const appRoutes: Routes = [
     loadChildren: () => import('./features/about/about.module').then(m => m.AboutModule),
     canActivate: [AuthGuard]
   },
-  {
-    path: 'supplier',
-    loadChildren: () => import('./features/supplier/supplier.module').then(m => m.SupplierModule),
-    canActivate: [AuthGuard]
-  },
+ 
   {
     path: 'product',
     loadChildren: () => import('./features/product/product.module').then(m => m.ProductModule),
@@ -58,7 +64,7 @@ const appRoutes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes,{ enableTracing: true })
   ],
   exports: [RouterModule],
   providers: []

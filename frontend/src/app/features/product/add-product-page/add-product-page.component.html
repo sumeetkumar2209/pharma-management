@@ -4,109 +4,243 @@
 
       <div>
 
-        <h2><mat-icon></mat-icon>Add Product</h2>
+        <h2 *ngIf="!(editForm||approverForm)"><mat-icon></mat-icon>Add Product</h2>
+        <h2 *ngIf="editForm"><mat-icon></mat-icon>Modify Product</h2>
+        <h2 *ngIf="approverForm"><mat-icon></mat-icon>Approve Product</h2>
       </div>
 
     </div>
+    <form [formGroup]="addProductForm" (ngSubmit)="onSubmit(addProductForm.value)" class="form">
 
-    <mat-card>
-      <mat-card-content>
+      <mat-card>
+        <mat-card-content>
+         
 
-        <form [formGroup]="addProductForm" (ngSubmit)="onSubmit(addProductForm.value)" class="form">
           <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="16px grid">
+
+            
+              <mat-form-field fxFlex="25%" fxFlex.lt-sm="100%" *ngIf="editForm||approverForm">
+                <input matInput placeholder="Product Id" formControlName="productId">
+  
+              </mat-form-field>
+              <mat-form-field fxFlex="25%" fxFlex.lt-sm="100%" *ngIf="editForm||approverForm">
+                <input matInput placeholder="Initial Addition Date" formControlName="initialAdditionDate">
+  
+              </mat-form-field>
+              <div class="break" *ngIf="editForm||approverForm"></div> 
+              <mat-form-field fxFlex="50%" fxFlex.lt-sm="100%">
+                <mat-select formControlName="productManufacturer" placeholder="Product Manufacturer">            
+                  <mat-option *ngFor="let statusVal of statusList" [value]="statusVal">{{statusVal}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="!apControls['productManufacturer'].valid && apControls['productManufacturer'].touched">
+                  {{ getError('productManufacturer') }}
+                </mat-error>
+              </mat-form-field>
+         
+
             <mat-form-field fxFlex="50%" fxFlex.lt-sm="100%">
-              <input matInput placeholder="Client" formControlName="client">
-              <mat-error *ngIf="!apControls['client'].valid && apControls['client'].touched">
-                {{ getError('client') }}
+              <mat-select formControlName="productManufacturerCountry" placeholder="Product Manufacturer Country">            
+                <mat-option *ngFor="let statusVal of statusList" [value]="statusVal">{{statusVal}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="!apControls['productManufacturerCountry'].valid && apControls['productManufacturerCountry'].touched">
+                {{ getError('productManufacturerCountry') }}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field fxFlex="50%" fxFlex.lt-sm="100%">
+              <input matInput placeholder="Product Name" formControlName="productName">
+              <mat-error *ngIf="!apControls['productName'].valid && apControls['productName'].touched">
+                {{ getError('productName') }}
               </mat-error>
             </mat-form-field>
 
             <mat-form-field fxFlex="50%" fxFlex.lt-sm="100%">
-              <input matInput placeholder="SKU" formControlName="sku">
-              <mat-error *ngIf="!apControls['sku'].valid && apControls['sku'].touched">
-                {{ getError('sku') }}
+              <input matInput placeholder="License Number" formControlName="licenseNumber">
+              <mat-error *ngIf="!apControls['licenseNumber'].valid && apControls['licenseNumber'].touched">
+                {{ getError('licenseNumber') }}
               </mat-error>
             </mat-form-field>
 
             <mat-form-field fxFlex="50%" fxFlex.lt-sm="100%">
-              <input matInput placeholder="EAN Barcode" formControlName="ean_barcode">
-              <mat-error *ngIf="!apControls['ean_barcode'].valid && apControls['ean_barcode'].touched">
-                {{ getError('ean_barcode') }}
+              <mat-select formControlName="productApprovingAuthority" placeholder="Product Approving Authority">            
+                <mat-option *ngFor="let statusVal of statusList" [value]="statusVal">{{statusVal}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="!apControls['productApprovingAuthority'].valid && apControls['productApprovingAuthority'].touched">
+                {{ getError('productApprovingAuthority') }}
               </mat-error>
             </mat-form-field>
-            <mat-form-field fxFlex="50%" fxFlex.lt-sm="100%">
-              <input matInput placeholder="UPC Barcode" formControlName="upc_barcode">
-              <mat-error *ngIf="!apControls['upc_barcode'].valid && apControls['upc_barcode'].touched">
-                {{ getError('upc_barcode') }}
+
+            <mat-form-field fxFlex="25%" fxFlex.lt-sm="50%">
+              <mat-select formControlName="dosageForm" placeholder="Dosage Form">            
+                <mat-option *ngFor="let statusVal of statusList" [value]="statusVal">{{statusVal}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="!apControls['dosageForm'].valid && apControls['dosageForm'].touched">
+                {{ getError('dosageForm') }}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="25%" fxFlex.lt-sm="50%">
+              <mat-select formControlName="packType" placeholder="Pack Type">            
+                <mat-option *ngFor="let statusVal of statusList" [value]="statusVal">{{statusVal}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="!apControls['packType'].valid && apControls['packType'].touched">
+                {{ getError('packType') }}
               </mat-error>
             </mat-form-field>
 
             <mat-form-field fxFlex="50%" fxFlex.lt-sm="100%">
-              <input matInput placeholder="Name" formControlName="name">
-              <mat-error *ngIf="!apControls['name'].valid && apControls['name'].touched">
-                {{ getError('name') }}
+              <mat-select formControlName="productStatus" placeholder="Product Approval Status">            
+                <mat-option *ngFor="let statusVal of statusList" [value]="statusVal">{{statusVal}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="!apControls['productStatus'].valid && apControls['productStatus'].touched">
+                {{ getError('productStatus') }}
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field fxFlex="100%">
-              <textarea matInput placeholder="Description" formControlName="description"></textarea>
-              <mat-error *ngIf="!apControls['description'].valid && apControls['description'].touched">
-                {{ getError('description') }}
-              </mat-error>
-            </mat-form-field>
-            <mat-form-field fxFlex="100%">
-              <textarea matInput placeholder="Custom Description" formControlName="customDescription"></textarea>
-              <mat-error *ngIf="!apControls['customDescription'].valid && apControls['customDescription'].touched">
-                {{ getError('customDescription') }}
-              </mat-error>
-            </mat-form-field>
-            <mat-form-field fxFlex="50%" fxFlex.lt-sm="100%">
-              <input matInput placeholder="Country of Manufacture" formControlName="countryManufacture">
-              <mat-error *ngIf="!apControls['countryManufacture'].valid && apControls['countryManufacture'].touched">
-                {{ getError('countryManufacture') }}
-              </mat-error>
-            </mat-form-field>
-            <mat-form-field fxFlex="50%" fxFlex.lt-sm="100%">
-              <input matInput placeholder="Commodity Code" formControlName="commodityCode">
-              <mat-error *ngIf="!apControls['commodityCode'].valid && apControls['commodityCode'].touched">
-                {{ getError('commodityCode') }}
-              </mat-error>
-            </mat-form-field>
-            <mat-form-field fxFlex="50%" fxFlex.lt-sm="100%">
-              <mat-slide-toggle formControlName="discontinued">Discontinued</mat-slide-toggle>
-              <textarea matInput hidden></textarea>
-
-              <mat-error *ngIf="!apControls['discontinued'].valid && apControls['discontinued'].touched">
-                {{ getError('discontinued') }}
+            <mat-form-field fxFlex="25%" fxFlex.lt-sm="50%">
+              <mat-select formControlName="packSize" placeholder="Pack Size">            
+                <mat-option *ngFor="let statusVal of statusList" [value]="statusVal">{{statusVal}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="!apControls['packSize'].valid && apControls['packSize'].touched">
+                {{ getError('packSize') }}
               </mat-error>
             </mat-form-field>
 
+            <mat-form-field fxFlex="25%" fxFlex.lt-sm="50%">
+              <mat-select formControlName="pricePerPack" placeholder="Price per Pack">            
+                <mat-option *ngFor="let statusVal of statusList" [value]="statusVal">{{statusVal}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="!apControls['pricePerPack'].valid && apControls['pricePerPack'].touched">
+                {{ getError('pricePerPack') }}
+              </mat-error>
+            </mat-form-field>
 
-            <mat-form-field fxFlex="50%" fxFlex.lt-sm="100%">
-              <mat-slide-toggle formControlName="preorderable">Pre-orderable</mat-slide-toggle>
-              <textarea matInput hidden></textarea>
-              <mat-error *ngIf="!apControls['preorderable'].valid && apControls['preorderable'].touched">
-                {{ getError('preorderable') }}
+            <mat-form-field fxFlex="25%" fxFlex.lt-sm="50%">
+              <input matInput placeholder="Tax%" formControlName="taxPercentage">
+              <mat-error *ngIf="!apControls['taxPercentage'].valid && apControls['taxPercentage'].touched">
+                {{ getError('taxPercentage') }}
               </mat-error>
             </mat-form-field>
-            <mat-form-field fxFlex="50%" fxFlex.lt-sm="100%">
-              <input matInput placeholder="Image URL" formControlName="imageUrl">
-              <mat-error *ngIf="!apControls['imageUrl'].valid && apControls['imageUrl'].touched">
-                {{ getError('imageUrl') }}
+
+            <mat-form-field fxFlex="25%" fxFlex.lt-sm="50%">
+              <mat-select formControlName="taxationType" placeholder="Taxation Type">            
+                <mat-option *ngFor="let statusVal of statusList" [value]="statusVal">{{statusVal}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="!apControls['taxationType'].valid && apControls['taxationType'].touched">
+                {{ getError('taxationType') }}
               </mat-error>
             </mat-form-field>
+
+            <mat-form-field fxFlex="25%" fxFlex.lt-sm="50%">
+              <mat-select formControlName="strength" placeholder="Strength">            
+                <mat-option *ngFor="let statusVal of statusList" [value]="statusVal">{{statusVal}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="!apControls['strength'].valid && apControls['strength'].touched">
+                {{ getError('strength') }}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="25%" fxFlex.lt-sm="50%">
+              <mat-select formControlName="currency" placeholder="Currency">            
+                <mat-option *ngFor="let statusVal of statusList" [value]="statusVal">{{statusVal}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="!apControls['currency'].valid && apControls['currency'].touched">
+                {{ getError('currency') }}
+              </mat-error>
+            </mat-form-field>
+
     
 
-          </div>
-          <div fxLayout="row" fxLayoutAlign="end center"> 
-            <button mat-raised-button color="primary" type="submit" class="button" 
-              [disabled]="!addProductForm.valid">Next</button>
-          </div>
-        
-        </form>
+            <!-- upload file -->
+            <div fxFlex="50%" fxFlex.lt-sm="100%">
+              <mat-toolbar *ngIf="currentFile" class="progress-bar">
+                <mat-progress-bar color="accent" [value]="progress"></mat-progress-bar>
+                <span class="progress">{{ progress }}%</span>
+              </mat-toolbar>
+            
+              <mat-form-field>
+                <div>
+                  <mat-toolbar>
+                    <input matInput placeholder="Product Photo" [value]="fileName" />
+            
+                    <button
+                      mat-flat-button
+                      color="primary"
+                      [disabled]="!currentFile"
+                      (click)="upload()"
+                    >
+                      Upload
+                    </button>
+                  </mat-toolbar>
+            
+                  <input
+                    type="file"
+                    id="fileInput"
+                    (change)="selectFile($event)"
+                    name="fileInput"
+                  />
+                </div>
+              </mat-form-field>
+            </div> 
 
-      </mat-card-content>
-    </mat-card>
+            <!--  -->
+
+           
+          
+            <mat-divider fxFlex="95%"></mat-divider>
+
+            <mat-form-field fxFlex="50%" fxFlex.lt-sm="100%" *ngIf="!approverForm">
+              <mat-select formControlName="approver" placeholder="Select Approver">
+
+                <mat-option *ngFor="let al of approverList" [value]="al">{{al}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="!apControls['approver'].valid && apControls['approver'].touched">
+                {{ getError('approver') }}
+              </mat-error>
+             
+
+            </mat-form-field>
+            <div class="break"></div> 
+
+            <mat-form-field fxFlex="50%" fxFlex.lt-sm="100%" *ngIf="approverForm">
+              <mat-select formControlName="approvalStatus" placeholder="Select Approval Status">
+
+                <mat-option *ngFor="let al of approvalStatusOption" [value]="al">{{al}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="!apControls['approvalStatus'].valid && apControls['approvalStatus'].touched">
+                {{ getError('approvalStatus') }}
+              </mat-error>             
+            </mat-form-field>
+            <mat-form-field fxFlex="50%" fxFlex.lt-sm="100%" *ngIf="approverForm">
+              <input matInput placeholder="Comments" formControlName="approvalComments">
+            
+            </mat-form-field>
+
+
+          </div>
+
+
+
+        </mat-card-content>
+      </mat-card>
+
+      <div class="container" fxLayout="row" fxLayoutAlign="space-between center">
+
+        <div>
+
+          <button mat-raised-button [routerLink]="['/product']" class="demo-button">
+            Cancel
+          </button>
+        </div>
+        <div style="margin:18px 0px">
+          <button mat-raised-button (click)="addProductForm.reset();" class="demo-button">
+            Clear
+          </button>
+          <button mat-raised-button (click)="save()" type="submit" class="demo-button">
+            Save
+          </button>
+        </div>
+      </div>
+    </form>
 
   </div>
 </div>

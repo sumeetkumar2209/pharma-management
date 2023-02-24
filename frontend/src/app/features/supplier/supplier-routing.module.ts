@@ -12,6 +12,9 @@ const routes: Routes = [
     children: [
       { path: '', component: SupplierPageComponent },
       { path: 'add', component: AddSupplierPageComponent },
+      { path: 'edit', component: AddSupplierPageComponent },
+      { path: 'approve', component: AddSupplierPageComponent },
+
     ]
   }
 ];
