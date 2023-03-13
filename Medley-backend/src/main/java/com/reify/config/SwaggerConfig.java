@@ -16,7 +16,8 @@ public class SwaggerConfig {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.reify.login.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.reify.login.controller")
+                        .or(RequestHandlerSelectors.basePackage("com.reify.supplier.controller")))
                 .paths(PathSelectors.any())
                 .build();
     }
