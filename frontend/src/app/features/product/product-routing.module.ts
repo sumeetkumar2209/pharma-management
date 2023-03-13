@@ -11,8 +11,9 @@ const routes: Routes = [
     component: LayoutComponent,
     children: [
       { path: '', component: ProductPageComponent },
-      { path: 'overview', component: ProductPageComponent },
       { path: 'add', component: AddProductPageComponent },
+      { path: 'edit', component: AddProductPageComponent },
+      { path: 'approve', component: AddProductPageComponent },
 
     ]
   }

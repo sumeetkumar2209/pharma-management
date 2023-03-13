@@ -4,18 +4,18 @@
 
       <div>
 
-        <h2><mat-icon>flare</mat-icon>Suppliers</h2>
+        <h2><mat-icon>flare</mat-icon>PurchaseOrders</h2>
       </div>
       <div style="margin:18px 0px">
-        <button mat-raised-button [routerLink]="['/supplier/add']"  class="demo-button">
-          New Supplier
+        <button mat-raised-button [routerLink]="['/purchase-order/create']"  class="demo-button">
+          New PurchaseOrder
         </button>
 
       </div>
     </div>
     <mat-accordion>
       <mat-expansion-panel [expanded]="true" style="margin-bottom:16px;">
-        <form [formGroup]="filterSupplierForm" (ngSubmit)="filterSuppliers(filterSupplierForm.value)">
+        <form [formGroup]="filterPurchaseOrderForm" (ngSubmit)="filterPurchaseOrders(filterPurchaseOrderForm.value)">
 
         <mat-expansion-panel-header>
           <mat-panel-title>
@@ -28,8 +28,8 @@
 
 
             <mat-form-field fxFlex="25%">
-              <mat-label>Supplier ID</mat-label>
-              <input matInput #input formControlName="supplierId">
+              <mat-label>Purchase Order Number</mat-label>
+              <input matInput #input formControlName="purchaseOrderNumber">
             </mat-form-field>
 
             <mat-form-field fxFlex="25%">
@@ -37,13 +37,13 @@
               <input matInput #input formControlName="supplierName">
             </mat-form-field>
             <mat-form-field fxFlex="25%">
-              <mat-label>Postcode</mat-label>
-              <input matInput #input formControlName="postalCode">
+              <mat-label>Purchase Order Date</mat-label>
+              <input matInput #input formControlName="purchaseOrderDate">
             </mat-form-field>
             <mat-form-field  fxFlex="25%">
-              <mat-label>Supplier Status</mat-label>
-              <mat-select [formControl]="supplierStatusControl" name="supplierStatus">
-                <mat-option *ngFor="let sso of supplierStatusOptions" [value]="sso.value">
+              <mat-label>PurchaseOrder Status</mat-label>
+              <mat-select [formControl]="purchaseOrderStatusControl" name="purchaseOrderStatus">
+                <mat-option *ngFor="let sso of purchaseOrderStatusOptions" [value]="sso.value">
                   {{sso.viewValue}}
                 </mat-option>
               </mat-select>
@@ -69,7 +69,7 @@
 
     <mat-card>
       <mat-card-content>
-        <p-table [columns]="tableSelectedColumns" [value]="suppliers" [tableStyle]="{'min-width': '50rem'}" dataKey="supplierId"
+        <p-table [columns]="tableSelectedColumns" [value]="purchaseOrders" [tableStyle]="{'min-width': '50rem'}" dataKey="purchaseOrderId"
           [rowHover]="true" [rows]="rows" [showCurrentPageReport]="true" [rowsPerPageOptions]="rowsPerPageOptions" [totalRecords]="totalRecords"
           [loading]="loading" [paginator]="true"  [lazy]="true" (onLazyLoad)="paginate($event)"
           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
@@ -79,7 +79,7 @@
           <ng-template pTemplate="caption">
             <div class="table-header" fxLayout="row" fxLayoutAlign="space-between center">
               <div>
-                List of Suppliers</div>
+                List of PurchaseOrders</div>
               <div class="p-input-icon-left">
 
                 <mat-form-field>
@@ -90,7 +90,7 @@
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
-                <button mat-icon-button aria-label="edit supplier icon" (click)="print()">
+                <button mat-icon-button aria-label="edit purchaseOrder icon" (click)="print()">
                   <mat-icon>print</mat-icon>
                 </button>
               </div>
@@ -107,25 +107,25 @@
               <th [pSortableColumn]="col.field" style="min-width: 4rem" *ngFor="let col of columns">
                 <div class="flex justify-content-between align-items-center">
                   {{col.header}}
-                  <p-sortIcon field="supplierId"></p-sortIcon>
+                  <p-sortIcon field="purchaseOrderId"></p-sortIcon>
 
                 </div>
               </th>
               <th style="width: 2rem"></th>
             </tr>
           </ng-template>
-          <ng-template pTemplate="body" let-supplier let-columns="columns">
+          <ng-template pTemplate="body" let-purchaseOrder let-columns="columns">
             <tr>
 
               <td>
-                <p-tableCheckbox [value]="supplier"></p-tableCheckbox>
+                <p-tableCheckbox [value]="purchaseOrder"></p-tableCheckbox>
               </td>
               <td *ngFor="let col of columns">
-                <span class="p-column-title">Supplier Id</span>
-                {{supplier[col.field]}}
+                <span class="p-column-title">PurchaseOrder Id</span>
+                {{purchaseOrder[col.field]}}
               </td>
               <td style="text-align: center">
-                <button mat-icon-button aria-label="edit supplier icon" (click)="modify(supplier)">
+                <button mat-icon-button aria-label="edit purchaseOrder icon" (click)="modify(purchaseOrder)">
                   <mat-icon>edit</mat-icon>
                 </button>
               </td>

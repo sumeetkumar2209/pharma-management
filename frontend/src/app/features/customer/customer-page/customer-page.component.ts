@@ -6,36 +6,36 @@ import { NotificationService } from 'src/app/core/services/notification.service'
 import { NGXLogger } from 'ngx-logger';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { SupplierInterface, SupplierQualificationStatus, SupplierStatus, WorkflowStatus } from 'src/app/features/supplier/supplier.interface';
 import { Router } from '@angular/router';
-import { SupplierService } from '../supplier.service';
+import { CustomerService } from '../customer.service';
+import { CustomerInterface, CustomerQualificationStatus, CustomerStatus, WorkflowStatus } from '../customer.interface';
 
 
 
 @Component({
-  selector: 'app-supplier-page',
-  templateUrl: './supplier-page.component.html',
-  styleUrls: ['./supplier-page.component.css'],
+  selector: 'app-customer-page',
+  templateUrl: './customer-page.component.html',
+  styleUrls: ['./customer-page.component.css'],
 
 })
-export class SupplierPageComponent {
-  filterSupplierForm!: FormGroup;
+export class CustomerPageComponent {
+  filterCustomerForm!: FormGroup;
 
   animal!: string;
   name!: string;
-  suppliers: SupplierInterface[] = [
+  customers: CustomerInterface[] = [
     {
-      supplierId: 101,
+      customerId: 101,
       companyName: 'MEDLEY PHARMACEUTICAL LTD',
       contactName: 'Vikas',
       contactNumber: 9999999,
       contactEmail: 'v@yahoo.com',
       country: 'UK',
       currency: 'GBP',
-      supplierQualificationStatus: SupplierQualificationStatus.Qualified,
+      customerQualificationStatus: CustomerQualificationStatus.Qualified,
 
       validTill: 'Dec 31 2023',
-      supplierStatus: SupplierStatus.Active,
+      customerStatus: CustomerStatus.Active,
       addressLine1: '',
       town: '',
       postalCode: '',
@@ -46,17 +46,17 @@ export class SupplierPageComponent {
       flowStatus: WorkflowStatus.Approved
     },
     {
-      supplierId: 102,
+      customerId: 102,
       companyName: 'RICHI PHARMACEUTICAL LTD',
       contactName: 'Prakash',
       contactNumber: 11111111,
       contactEmail: 'p@gamil.com',
       country: 'USA',
       currency: 'USD',
-      supplierQualificationStatus: SupplierQualificationStatus.Qualified,
+      customerQualificationStatus: CustomerQualificationStatus.Qualified,
 
       validTill: 'Dec 31 2030',
-      supplierStatus: SupplierStatus.Active,
+      customerStatus: CustomerStatus.Active,
       addressLine1: '',
       town: '',
       postalCode: '',
@@ -70,7 +70,7 @@ export class SupplierPageComponent {
   ];
 
   cols = [
-    { header: 'Supplier Id', field: 'supplierId' },
+    { header: 'Customer Id', field: 'customerId' },
     { header: 'Company Name', field: 'companyName' },
     { header: 'Contact Name', field: 'contactName' },
     { header: 'Contact Email', field: 'contactEmail' },
@@ -80,19 +80,19 @@ export class SupplierPageComponent {
     { header: 'Status', field: 'qualificationStatus' },
     { header: 'Valid Till', field: 'validTill' },
   ];
-  selectedSuppliers!: SupplierInterface[];
+  selectedCustomers!: CustomerInterface[];
   loading: boolean = false;
 
 
 
   //Filters
-  supplierStatusOptions: SupplierStatusOption[] =
+  customerStatusOptions: CustomerStatusOption[] =
     [{ value: '', viewValue: '' },
     { value: 'Active', viewValue: 'Active' },
     { value: 'Inactive', viewValue: 'Not Active' }]
 
   clmns = this.cols.map(el => el.header);
-  supplierStatusControl = new FormControl('');
+  customerStatusControl = new FormControl('');
   selectedColumns = new FormControl(this.clmns);
 
   tableSelectedColumns: any[] = this.cols;
@@ -110,7 +110,7 @@ export class SupplierPageComponent {
     private notificationService: NotificationService,
     public dialog: MatDialog,
     private router: Router,
-    private service:SupplierService) {
+    private service:CustomerService) {
 
     this.initalizeFilter();
     console.log(this.clmns);
@@ -123,21 +123,21 @@ export class SupplierPageComponent {
 
   }
   initalizeFilter() {
-    this.filterSupplierForm = this.fb.group({
+    this.filterCustomerForm = this.fb.group({
 
-      'supplierId': new FormControl(''),
-      'supplierName': new FormControl(''),
+      'customerId': new FormControl(''),
+      'customerName': new FormControl(''),
       'postalCode': new FormControl(''),
-      'supplierStatusControl': this.supplierStatusControl
+      'customerStatusControl': this.customerStatusControl
 
     });
   }
   ngAfterViewInit() {
-    this.titleService.setTitle('Reiphy Pharma - Suppliers');
-    this.logger.log('Supplier loaded');
+    this.titleService.setTitle('Reiphy Pharma - Customers');
+    this.logger.log('Customer loaded');
 
     setTimeout(() => {
-      this.notificationService.openSnackBar('Supplier section loaded!');
+      this.notificationService.openSnackBar('Customer section loaded!');
     });
 
 
@@ -146,15 +146,15 @@ export class SupplierPageComponent {
 
 
 
-  modify(supplier: SupplierInterface) {
-    console.log(supplier);
-    this.service.selectedSupplier = supplier;
-    this.router.navigate(['/supplier/edit']);
+  modify(customer: CustomerInterface) {
+    console.log(customer);
+    this.service.selectedCustomer = customer;
+    this.router.navigate(['/customer/edit']);
 
   }
   print() { }
 
-  filterSuppliers(formdata: any) {
+  filterCustomers(formdata: any) {
     console.log(formdata);
   }
   resetFilters() {
@@ -171,7 +171,7 @@ export class SupplierPageComponent {
 }
 
 
-interface SupplierStatusOption {
+interface CustomerStatusOption {
   value: string;
   viewValue: string;
 }

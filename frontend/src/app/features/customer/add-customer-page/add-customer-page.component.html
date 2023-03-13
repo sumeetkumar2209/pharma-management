@@ -4,13 +4,13 @@
 
       <div>
 
-        <h2 *ngIf="!(editForm||approverForm)"><mat-icon></mat-icon>Add Supplier</h2>
-        <h2 *ngIf="editForm"><mat-icon></mat-icon>Modify Supplier</h2>
-        <h2 *ngIf="approverForm"><mat-icon></mat-icon>Approve Supplier</h2>
+        <h2 *ngIf="!(editForm||approverForm)"><mat-icon></mat-icon>Add Customer</h2>
+        <h2 *ngIf="editForm"><mat-icon></mat-icon>Modify Customer</h2>
+        <h2 *ngIf="approverForm"><mat-icon></mat-icon>Approve Customer</h2>
       </div>
 
     </div>
-    <form [formGroup]="addSupplierForm" (ngSubmit)="onSubmit(addSupplierForm.value)" class="form">
+    <form [formGroup]="addCustomerForm" (ngSubmit)="onSubmit(addCustomerForm.value)" class="form">
 
       <mat-card>
         <mat-card-content>
@@ -20,7 +20,7 @@
 
             
               <mat-form-field fxFlex="25%" fxFlex.lt-sm="100%" *ngIf="editForm||approverForm">
-                <input matInput placeholder="Supplier Id" formControlName="supplierId">
+                <input matInput placeholder="Customer Id" formControlName="customerId">
   
               </mat-form-field>
               <mat-form-field fxFlex="25%" fxFlex.lt-sm="100%" *ngIf="editForm||approverForm">
@@ -38,7 +38,7 @@
             </mat-form-field>
 
             <mat-form-field fxFlex="25%" fxFlex.lt-sm="50%">
-              <mat-select formControlName="status" placeholder="Supplier Status">
+              <mat-select formControlName="status" placeholder="Customer Status">
                 <mat-select-trigger>
                   {{!apControls['status'].value?.[0] || ''}}
                   <span *ngIf="(apControls['status'].value?.length || 0) > 1" class="example-additional-selection">
@@ -54,7 +54,7 @@
               </mat-error>
             </mat-form-field>
             <mat-form-field fxFlex="25%" fxFlex.lt-sm="50%">
-              <mat-select formControlName="qualification" placeholder="Supplier Qualification">
+              <mat-select formControlName="qualification" placeholder="Customer Qualification">
                 <mat-select-trigger>
                   {{!apControls['qualification'].value?.[0] || ''}}
                   <span *ngIf="(apControls['qualification'].value?.length || 0) > 1"
@@ -214,12 +214,12 @@
 
         <div>
 
-          <button mat-raised-button [routerLink]="['/supplier']" class="demo-button">
+          <button mat-raised-button [routerLink]="['/customer']" class="demo-button">
             Cancel
           </button>
         </div>
         <div style="margin:18px 0px">
-          <button mat-raised-button (click)="addSupplierForm.reset();" class="demo-button">
+          <button mat-raised-button (click)="addCustomerForm.reset();" class="demo-button">
             Clear
           </button>
           <button mat-raised-button (click)="save()" type="submit" class="demo-button">

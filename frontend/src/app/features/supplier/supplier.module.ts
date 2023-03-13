@@ -6,6 +6,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { SupplierPageComponent } from './supplier-page/supplier-page.component';
 import { CustomMaterialModule } from 'src/app/custom-material/custom-material.module';
 import { AddSupplierPageComponent } from './add-supplier-page/add-supplier-page.component';
+import { SupplierService } from './supplier.service';
 
 @NgModule({
   declarations: [SupplierPageComponent,AddSupplierPageComponent],
@@ -14,6 +15,7 @@ import { AddSupplierPageComponent } from './add-supplier-page/add-supplier-page.
     SharedModule,
     SupplierRoutingModule,
     CustomMaterialModule
-  ]
+  ],
+  providers:[SupplierService]
 })
 export class SupplierModule { }
