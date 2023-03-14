@@ -75,44 +75,44 @@ public class SupplierServiceImpl implements SupplierService {
             throw new RecordNotFoundException("record not found");
         }
 
-        SupplierDO_INT SupplierDO_INT = supplierIdOpt.get();
+        SupplierDO_INT supplierDO_INT = supplierIdOpt.get();
 
-        SupplierDO_INT.setContactName(supplierDTO.getContactName());
-        SupplierDO_INT.setCompanyName(supplierDTO.getCompanyName());
-        SupplierDO_INT.setContactNumber(supplierDTO.getContactNumber());
-        SupplierDO_INT.setAddressLine1(supplierDTO.getAddressLine1());
-        SupplierDO_INT.setAddressLine2(supplierDTO.getAddressLine2());
-        SupplierDO_INT.setAddressLine3(supplierDTO.getAddressLine3());
-        SupplierDO_INT.setApprovedBy(supplierDTO.getApprovedBy());
-        SupplierDO_INT.setContactEmail(supplierDTO.getContactEmail());
-        SupplierDO_INT.setPostalCode(supplierDTO.getPostalCode());
-        SupplierDO_INT.setTown(supplierDTO.getTown());
-        SupplierDO_INT.setUserId(supplierDTO.getUserId());
-        SupplierDO_INT.setValidTill(supplierDTO.getValidTillDate().getTime());
-        SupplierDO_INT.setLastUpdatedBy(supplierDTO.getLastUpdatedBy());
-        SupplierDO_INT.setLastUpdatedTimeStamp(System.currentTimeMillis()/1000);
+        supplierDO_INT.setContactName(supplierDTO.getContactName());
+        supplierDO_INT.setCompanyName(supplierDTO.getCompanyName());
+        supplierDO_INT.setContactNumber(supplierDTO.getContactNumber());
+        supplierDO_INT.setAddressLine1(supplierDTO.getAddressLine1());
+        supplierDO_INT.setAddressLine2(supplierDTO.getAddressLine2());
+        supplierDO_INT.setAddressLine3(supplierDTO.getAddressLine3());
+        supplierDO_INT.setApprovedBy(supplierDTO.getApprovedBy());
+        supplierDO_INT.setContactEmail(supplierDTO.getContactEmail());
+        supplierDO_INT.setPostalCode(supplierDTO.getPostalCode());
+        supplierDO_INT.setTown(supplierDTO.getTown());
+        supplierDO_INT.setUserId(supplierDTO.getUserId());
+        supplierDO_INT.setValidTill(supplierDTO.getValidTillDate().getTime());
+        supplierDO_INT.setLastUpdatedBy(supplierDTO.getLastUpdatedBy());
+        supplierDO_INT.setLastUpdatedTimeStamp(System.currentTimeMillis()/1000);
 
         CountryDO countryDO = context.getBean(CountryDO.class);
         countryDO.setCountryCode(supplierDTO.getCountry().getCountryCode());
-        SupplierDO_INT.setCountry(countryDO);
+        supplierDO_INT.setCountry(countryDO);
 
         CurrencyDO currencyDO = context.getBean(CurrencyDO.class);
         currencyDO.setCurrencyCode(supplierDTO.getCurrency().getCurrencyCode());
-        SupplierDO_INT.setCurrency(currencyDO);
+        supplierDO_INT.setCurrency(currencyDO);
 
         SupplierStatusDO supplierStatusDO = context.getBean(SupplierStatusDO.class);
         supplierStatusDO.setSupplierStatusCode(supplierDTO.getSupplierStatus().getSupplierStatusCode());
-        SupplierDO_INT.setSupplierStatus(supplierStatusDO);
+        supplierDO_INT.setSupplierStatus(supplierStatusDO);
 
         SupplierQualificationStatusDO supplierQualificationStatusDO = context.getBean(SupplierQualificationStatusDO.class);
         supplierQualificationStatusDO.setSupplierQfCode(supplierDTO.getSupplierQualificationStatus().getSupplierQfCode());
-        SupplierDO_INT.setSupplierQualificationStatus(supplierQualificationStatusDO);
+        supplierDO_INT.setSupplierQualificationStatus(supplierQualificationStatusDO);
 
         ReviewStatusDO reviewStatusDO = context.getBean(ReviewStatusDO.class);
         reviewStatusDO.setReviewCode("PE");
-        SupplierDO_INT.setReviewStatus(reviewStatusDO);
+        supplierDO_INT.setReviewStatus(reviewStatusDO);
 
-        supplierIntRepo.save(SupplierDO_INT);
+        supplierIntRepo.save(supplierDO_INT);
 
     }
 
@@ -141,10 +141,12 @@ public class SupplierServiceImpl implements SupplierService {
               }
 
               supplierDO.setReviewStatus(reviewStatusDO);
+              supplierDO.setLastUpdatedTimeStamp(System.currentTimeMillis()/1000);
 
               supplierRepo.save(supplierDO);
 
               supplierDOInt.setReviewStatus(reviewStatusDO);
+              supplierDOInt.setLastUpdatedTimeStamp(System.currentTimeMillis()/1000);
               supplierIntRepo.save(supplierDOInt);
 
               return true;
