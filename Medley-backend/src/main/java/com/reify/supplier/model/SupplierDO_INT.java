@@ -1,13 +1,16 @@
 package com.reify.supplier.model;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Component
 @Data
@@ -15,11 +18,19 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Scope( value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @Entity
-@Table(name = "SUPPLIER")
-public class SupplierDO {
+@Table(name = "INT_SUPPLIER")
+public class SupplierDO_INT implements Serializable {
 
     @Id
     @Column(length = 8)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "supplier_seq")
+    @GenericGenerator(name = "supplier_seq",
+            strategy = "com.reify.common.CustomIdGenerator",
+    parameters = {
+            @org.hibernate.annotations.Parameter(name = "prefix", value = "MED"),
+            @org.hibernate.annotations.Parameter(name = "seqName", value = "supplier_seq"),
+            @org.hibernate.annotations.Parameter(name = "seqLength", value = "5")
+    })
     private String supplierId;
 
     @ManyToOne(cascade = CascadeType.REFRESH)

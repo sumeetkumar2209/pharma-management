@@ -1,5 +1,6 @@
 package com.reify.supplier.controller;
 
+import com.reify.common.exception.RecordNotFoundException;
 import com.reify.supplier.DTO.SupplierDTO;
 import com.reify.supplier.service.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +25,29 @@ public class SupplierController {
     }
 
     @PutMapping(value = "/modifySupplier")
-    public ResponseEntity<?> modifySupplier(@RequestHeader("Authorization") String token,@RequestBody SupplierDTO supplierDTO){
+    public ResponseEntity<?> modifySupplier(@RequestHeader("Authorization") String token,
+                                            @RequestBody SupplierDTO supplierDTO) {
 
-        supplierService.modifySupplier(supplierDTO);
+        try {
+            supplierService.modifySupplier(supplierDTO);
+        } catch (RecordNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("supplier id not present");
+        }
 
-        return ResponseEntity.status(HttpStatus.CREATED).body("supplier updated");
+        return ResponseEntity.status(HttpStatus.OK).body("supplier updated");
+    }
+
+    @PostMapping(value = "/approveRejectSupplier")
+    public ResponseEntity<?> approveRejectSupplier(@RequestHeader("Authorization") String token,
+                                             @RequestParam("supplierId") String supplierId,
+                                                   @RequestParam String decision){
+
+        boolean res = supplierService.approveRejectSupplier(supplierId, decision);
+        if (res) {
+            return ResponseEntity.status(HttpStatus.OK).body("supplier approved");
+        }
+
+         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("supplier not approved");
     }
 
 }
