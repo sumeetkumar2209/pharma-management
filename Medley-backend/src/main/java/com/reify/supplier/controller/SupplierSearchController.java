@@ -2,7 +2,6 @@ package com.reify.supplier.controller;
 
 import com.reify.supplier.DTO.SupplierDTO;
 import com.reify.supplier.DTO.SupplierSearchDTO;
-import com.reify.supplier.repo.SupplierRepo;
 import com.reify.supplier.service.SupplierSearchService;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -12,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -22,7 +20,7 @@ public class SupplierSearchController {
     @Autowired
     SupplierSearchService supplierSearchService;
 
-    @PostMapping(value = "/getSupplier")
+    @PostMapping(value = "/getSuppliers")
     public ResponseEntity<?> getSupplier(@RequestHeader("Authorization") String token,
                                          @RequestBody SupplierSearchDTO supplierSearchDTO){
 
@@ -44,10 +42,17 @@ public class SupplierSearchController {
             jsonObject.put("contactName",supplierDTO.getContactName());
             jsonObject.put("contactEmail",supplierDTO.getContactEmail());
             jsonObject.put("contactNumber",supplierDTO.getContactNumber());
-            jsonObject.put("country",supplierDTO.getCountry());
-            jsonObject.put("currency",supplierDTO.getCurrency());
-            jsonObject.put("supplierQualificationStatus",supplierDTO.getSupplierQualificationStatus());
+            jsonObject.put("countryCode",supplierDTO.getCountry().getCountryCode());
+            jsonObject.put("countryName",supplierDTO.getCountry().getCountryName());
+            jsonObject.put("currencyCode",supplierDTO.getCurrency().getCurrencyCode());
+            jsonObject.put("currencyName",supplierDTO.getCurrency().getCurrencyName());
+            jsonObject.put("supplierQualificationStatusCode",supplierDTO.getSupplierQualificationStatus().getSupplierQfCode());
+            jsonObject.put("supplierQualificationStatusName",supplierDTO.getSupplierQualificationStatus().getSupplierQfName());
             jsonObject.put("validTillDate",supplierDTO.getValidTillDate());
+            jsonObject.put("reviewStatusCode",supplierDTO.getReviewStatus().getReviewCode());
+            jsonObject.put("reviewStatusName",supplierDTO.getReviewStatus().getReviewName());
+            jsonObject.put("supplierStatusCode",supplierDTO.getSupplierStatus().getSupplierStatusCode());
+            jsonObject.put("supplierStatusName",supplierDTO.getSupplierStatus().getSupplierStatusName());
 
             jsonArray.put(jsonObject);
 

@@ -1,7 +1,6 @@
 package com.reify.supplier.service.impl;
 
-import com.reify.supplier.DTO.SupplierDTO;
-import com.reify.supplier.DTO.SupplierSearchDTO;
+import com.reify.supplier.DTO.*;
 import com.reify.supplier.model.SupplierDO;
 import com.reify.supplier.repo.SupplierRepo;
 import com.reify.supplier.service.SupplierSearchService;
@@ -36,6 +35,34 @@ public class SupplierSearchServiceImpl implements SupplierSearchService {
 
                SupplierDTO supplierDTO = context.getBean(SupplierDTO.class);
                BeanUtils.copyProperties(obj, supplierDTO);
+
+               CountryDTO countryDTO = CountryDTO.builder()
+                       .countryName(obj.getCountry().getCountryName())
+                       .countryCode(obj.getCountry().getCountryCode())
+                       .build();
+
+               CurrencyDTO currencyDTO = CurrencyDTO.builder()
+                       .currencyCode(obj.getCurrency().getCurrencyCode())
+                       .currencyName(obj.getCurrency().getCurrencyName())
+                       .build();
+
+               SupplierStatusDTO supplierStatusDTO = SupplierStatusDTO.builder()
+                       .supplierStatusCode(obj.getSupplierStatus().getSupplierStatusCode())
+                       .supplierStatusName(obj.getSupplierStatus().getSupplierStatusName())
+                       .build();
+
+               ReviewStatusDTO reviewStatusDTO = ReviewStatusDTO.builder()
+                       .reviewCode(obj.getReviewStatus().getReviewCode())
+                       .reviewName(obj.getReviewStatus().getReviewName())
+                       .build();
+
+               SupplierQualificationStatusDTO supplierQualificationStatusDTO = context.getBean(SupplierQualificationStatusDTO.class);
+
+               supplierDTO.setCountry(countryDTO);
+               supplierDTO.setCurrency(currencyDTO);
+               supplierDTO.setSupplierStatus(supplierStatusDTO);
+               supplierDTO.setReviewStatus(reviewStatusDTO);
+               supplierDTO.setSupplierQualificationStatus(supplierQualificationStatusDTO);
 
                return supplierDTO;
 
