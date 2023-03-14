@@ -133,7 +133,8 @@ public class SupplierServiceImpl implements SupplierService {
 
               ReviewStatusDO reviewStatusDO = context.getBean(ReviewStatusDO.class);
 
-              if(decision.equalsIgnoreCase("APPROVE")) {
+              if(decision.equalsIgnoreCase("APPROVE") ||
+                      decision.equalsIgnoreCase("AP")) {
                   reviewStatusDO.setReviewCode("AP");
               } else {
                   reviewStatusDO.setReviewCode("RE");

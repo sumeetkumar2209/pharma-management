@@ -1,6 +1,7 @@
 package com.reify.supplier.helper;
 
 import com.reify.supplier.DTO.SupplierSearchDTO;
+import com.reify.supplier.model.ReviewStatusDO;
 import com.reify.supplier.model.SupplierDO;
 import com.reify.supplier.model.SupplierStatusDO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +22,9 @@ public class SearchSupplierImpl implements SearchSupplier{
     public List<SupplierDO> searchSupplierByFilter(SupplierSearchDTO supplierSearchDTO) {
 
         CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<SupplierDO> criteriaQuery = cb.createQuery(SupplierDO.class);
+        CriteriaQuery<SupplierDO> query = cb.createQuery(SupplierDO.class);
 
-        Root<SupplierDO> suppliers = criteriaQuery.from(SupplierDO.class);
-
-        suppliers.fetch("supplierStatusCode", JoinType.LEFT);
-        //Join<SupplierDO, SupplierStatusDO> supplierStatusJoin = suppliers.join("supplierStatusCode", JoinType.LEFT);
-        //Fetch<SupplierDO, SupplierStatusDO> supplierStatusFetch = suppliers.fetch("supplierStatusCode", JoinType.LEFT);
-
+        Root<SupplierDO> suppliers = query.from(SupplierDO.class);
 
         List<Predicate> predicates = new ArrayList<>();
 
@@ -38,7 +34,11 @@ public class SearchSupplierImpl implements SearchSupplier{
         }
         if(supplierSearchDTO.getFilter().getSupplierStatus() != null){
 
-            predicates.add(cb.equal(suppliers.get("supplierStatusCode"),
+            Join<SupplierDO, SupplierStatusDO> supplierStatusDOJoin =
+                    suppliers.join("supplierStatus", JoinType.INNER);
+
+
+            predicates.add(cb.equal(supplierStatusDOJoin.get("supplierStatusCode"),
                     supplierSearchDTO.getFilter().getSupplierStatus()));
         }
         if(supplierSearchDTO.getFilter().getCompanyName()!= null){
@@ -46,22 +46,26 @@ public class SearchSupplierImpl implements SearchSupplier{
             predicates.add(cb.equal(suppliers.get("companyName"),
                     supplierSearchDTO.getFilter().getCompanyName()));
         }
-       /* if(supplierSearchDTO.getFilter().getReviewStatus() != null){
+        if(supplierSearchDTO.getFilter().getReviewStatus() != null){
 
-            predicates.add(cb.equal(suppliers.get("reviewStatus.reviewCode"),
+            Join<SupplierDO, ReviewStatusDO> reviewStatusDOJoin =
+                    suppliers.join("reviewStatus", JoinType.INNER);
+
+
+            predicates.add(cb.equal(reviewStatusDOJoin.get("reviewCode"),
                     supplierSearchDTO.getFilter().getReviewStatus()));
-        }*/
+        }
         if(supplierSearchDTO.getFilter().getPostalCode() != null){
 
             predicates.add(cb.equal(suppliers.get("postalCode"),
                     supplierSearchDTO.getFilter().getPostalCode()));
         }
 
-        criteriaQuery.where(
+        query.where(
                 cb.and(predicates.toArray(new Predicate[predicates.size()]))
         );
 
-        return em.createQuery(criteriaQuery).getResultList();
+        return em.createQuery(query).getResultList();
 
     }
 }
