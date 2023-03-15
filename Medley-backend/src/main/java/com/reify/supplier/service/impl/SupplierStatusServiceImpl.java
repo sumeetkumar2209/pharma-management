@@ -1,7 +1,7 @@
 package com.reify.supplier.service.impl;
 
-import com.reify.supplier.DTO.SupplierStatusDTO;
-import com.reify.supplier.model.SupplierStatusDO;
+import com.reify.common.DTO.StatusDTO;
+import com.reify.common.model.StatusDO;
 import com.reify.supplier.repo.SupplierStatusRepo;
 import com.reify.supplier.service.SupplierStatusService;
 import org.springframework.beans.BeanUtils;
@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,17 +22,17 @@ public class SupplierStatusServiceImpl implements SupplierStatusService {
     ApplicationContext context;
 
     @Override
-    public List<SupplierStatusDTO> getAllStatus() {
+    public List<StatusDTO> getAllStatus() {
 
-        List<SupplierStatusDO> supplierStatusDOList = supplierStatusRepo.findAll();
+        List<StatusDO> supplierStatusDOList = supplierStatusRepo.findAll();
 
-        List<SupplierStatusDTO> supplierStatusDTOList;
+        List<StatusDTO> supplierStatusDTOList;
 
         if(!supplierStatusDOList.isEmpty()){
 
             supplierStatusDTOList = supplierStatusDOList.stream().map(obj -> {
 
-                SupplierStatusDTO supplierStatusDTO = context.getBean(SupplierStatusDTO.class);
+                StatusDTO supplierStatusDTO = context.getBean(StatusDTO.class);
                 BeanUtils.copyProperties(obj,supplierStatusDTO);
                 return supplierStatusDTO;
             }).collect(Collectors.toList());

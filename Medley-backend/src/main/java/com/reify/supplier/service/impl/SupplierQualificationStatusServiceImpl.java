@@ -1,7 +1,7 @@
 package com.reify.supplier.service.impl;
 
-import com.reify.supplier.DTO.SupplierQualificationStatusDTO;
-import com.reify.supplier.model.SupplierQualificationStatusDO;
+import com.reify.common.DTO.QualificationStatusDTO;
+import com.reify.common.model.QualificationStatusDO;
 import com.reify.supplier.repo.SupplierQualificationStatusRepo;
 import com.reify.supplier.service.SupplierQualificationStatusService;
 import org.springframework.beans.BeanUtils;
@@ -22,17 +22,17 @@ public class SupplierQualificationStatusServiceImpl implements SupplierQualifica
     SupplierQualificationStatusRepo supplierQualificationStatusRepo;
 
     @Override
-    public List<SupplierQualificationStatusDTO> getAllSupplierQualificationStatus() {
+    public List<QualificationStatusDTO> getAllSupplierQualificationStatus() {
 
-    List<SupplierQualificationStatusDO> supplierQualificationStatusDOList = supplierQualificationStatusRepo.findAll();
+    List<QualificationStatusDO> supplierQualificationStatusDOList = supplierQualificationStatusRepo.findAll();
 
-    List<SupplierQualificationStatusDTO> supplierQualificationStatusDTOList;
+    List<QualificationStatusDTO> supplierQualificationStatusDTOList;
 
     if(!supplierQualificationStatusDOList.isEmpty()){
 
         supplierQualificationStatusDTOList = supplierQualificationStatusDOList.stream().map(obj -> {
 
-            SupplierQualificationStatusDTO supplierQualificationStatusDTO = context.getBean(SupplierQualificationStatusDTO.class);
+            QualificationStatusDTO supplierQualificationStatusDTO = context.getBean(QualificationStatusDTO.class);
             BeanUtils.copyProperties(obj,supplierQualificationStatusDTO);
             return supplierQualificationStatusDTO;
         }).collect(Collectors.toList());

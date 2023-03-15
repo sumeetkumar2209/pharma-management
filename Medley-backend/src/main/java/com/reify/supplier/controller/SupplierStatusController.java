@@ -1,6 +1,6 @@
 package com.reify.supplier.controller;
 
-import com.reify.supplier.DTO.SupplierStatusDTO;
+import com.reify.common.DTO.StatusDTO;
 import com.reify.supplier.service.SupplierStatusService;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.w3c.dom.stylesheets.LinkStyle;
 
 import java.util.List;
 
@@ -25,15 +24,15 @@ public class SupplierStatusController {
     @GetMapping(value = "/getAllSupplierStatus")
     public ResponseEntity<?> getAllSupplierStatus(@RequestHeader("Authorization") String token){
 
-        List<SupplierStatusDTO> supplierStatusList = supplierStatusService.getAllStatus();
+        List<StatusDTO> supplierStatusList = supplierStatusService.getAllStatus();
 
         JSONArray jsonArray = new JSONArray();
 
-        for (SupplierStatusDTO supplierStatusDTO :supplierStatusList) {
+        for (StatusDTO supplierStatusDTO :supplierStatusList) {
 
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("code", supplierStatusDTO.getSupplierStatusCode());
-            jsonObject.put("supplierStatus",supplierStatusDTO.getSupplierStatusName());
+            jsonObject.put("code", supplierStatusDTO.getStatusCode());
+            jsonObject.put("supplierStatus",supplierStatusDTO.getStatusName());
 
             jsonArray.put(jsonObject);
         }

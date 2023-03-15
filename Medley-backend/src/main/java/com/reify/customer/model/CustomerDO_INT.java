@@ -1,11 +1,12 @@
-package com.reify.supplier.model;
+package com.reify.customer.model;
 
-import com.reify.common.model.QualificationStatusDO;
-import com.reify.common.model.StatusDO;
+
+import com.reify.common.model.CountryDO;
+import com.reify.common.model.CurrencyDO;
+import com.reify.common.model.ReviewStatusDO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -19,30 +20,26 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Scope( value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @Entity
-@Table(name = "INT_SUPPLIER")
-public class SupplierDO_INT implements Serializable {
+@Table(name = "INT_CUSTOMER")
+public class CustomerDO_INT implements Serializable {
 
     @Id
     @Column(length = 8)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "supplier_seq")
-    @GenericGenerator(name = "supplier_seq",
-            strategy = "com.reify.common.helper.CustomIdGenerator",
-    parameters = {
-            @org.hibernate.annotations.Parameter(name = "prefix", value = "MED"),
-            @org.hibernate.annotations.Parameter(name = "seqName", value = "supplier_seq"),
-            @org.hibernate.annotations.Parameter(name = "seqLength", value = "5")
-    })
-    private String supplierId;
+    private String customerId;
+
 
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "supplierStatusCode")
-    private StatusDO supplierStatus;
+    @JoinColumn(name = "customerStatusCode")
+    private CustomerStatusDO customerStatus;
+
     @Column(length = 100)
-    private String companyName;
+    private String customerName;
+
     @Column(length = 100)
     private String contactName;
     @Column(length = 15)
     private String contactNumber;
+
     @Column(length = 50)
     private String contactEmail;
     @Column(length = 50)
@@ -53,35 +50,38 @@ public class SupplierDO_INT implements Serializable {
     private String addressLine3;
     @Column(length = 30)
     private String town;
-
     @ManyToOne
     @JoinColumn(name = "countryCode")
-    private CountryDO country;
+    private CountryDO countryDO;
+
+    @ManyToOne
+    @JoinColumn(name = "currencyCode")
+    private CurrencyDO currencyDO;
 
     @Column(length = 15)
     private String postalCode;
 
     @ManyToOne
-    @JoinColumn(name = "supplierQfCode")
-    private QualificationStatusDO supplierQualificationStatus;
+    @JoinColumn(name = "customerQfCode")
+    private CustomerQualificationStatusDO customerQualificationStatusDO;
+
     @Column(length = 10)
     private long validTill;
-
-    @ManyToOne
-    @JoinColumn(name = "currencyCode")
-    private CurrencyDO currency;
     @Column(length = 50)
     private String approvedBy;
     @Column(length = 50)
     private String userId;
+
     private long initialAdditionDate;
     @Column(length = 50)
     private String lastUpdatedBy;
 
-    private long lastUpdatedTimeStamp;
-
     @ManyToOne
     @JoinColumn(name = "reviewCode")
     private ReviewStatusDO reviewStatus;
+
+    private String option;
+
+
 
 }

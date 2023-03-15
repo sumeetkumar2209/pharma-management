@@ -1,4 +1,4 @@
-package com.reify.supplier.DTO;
+package com.reify.common.DTO;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Builder;
@@ -10,10 +10,10 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-@JsonIgnoreProperties(value = {"supplierStatusName"})
+@JsonIgnoreProperties(value = {"statusName"})
 @Builder
-public class SupplierStatusDTO {
+public class StatusDTO {
 
-    private String supplierStatusCode;
-    private String supplierStatusName;
+    private String statusCode;
+    private String statusName;
 }

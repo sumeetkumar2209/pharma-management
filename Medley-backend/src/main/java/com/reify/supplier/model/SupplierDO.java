@@ -1,5 +1,7 @@
 package com.reify.supplier.model;
 
+import com.reify.common.model.QualificationStatusDO;
+import com.reify.common.model.StatusDO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,7 +26,7 @@ public class SupplierDO {
 
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "supplierStatusCode")
-    private SupplierStatusDO supplierStatus;
+    private StatusDO supplierStatus;
     @Column(length = 100)
     private String companyName;
     @Column(length = 100)
@@ -51,7 +53,7 @@ public class SupplierDO {
 
     @ManyToOne
     @JoinColumn(name = "supplierQfCode")
-    private SupplierQualificationStatusDO supplierQualificationStatus;
+    private QualificationStatusDO supplierQualificationStatus;
     @Column(length = 10)
     private long validTill;
 

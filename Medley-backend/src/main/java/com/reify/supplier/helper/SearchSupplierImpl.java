@@ -1,9 +1,9 @@
 package com.reify.supplier.helper;
 
+import com.reify.common.model.StatusDO;
 import com.reify.supplier.DTO.SupplierSearchDTO;
 import com.reify.supplier.model.ReviewStatusDO;
 import com.reify.supplier.model.SupplierDO;
-import com.reify.supplier.model.SupplierStatusDO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -19,7 +19,7 @@ public class SearchSupplierImpl implements SearchSupplier{
     EntityManager em;
 
     @Override
-    public List<SupplierDO> searchSupplierByFilter(SupplierSearchDTO supplierSearchDTO) {
+    public List<SupplierDO>  searchSupplierByFilter(SupplierSearchDTO supplierSearchDTO) {
 
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<SupplierDO> query = cb.createQuery(SupplierDO.class);
@@ -34,7 +34,7 @@ public class SearchSupplierImpl implements SearchSupplier{
         }
         if(supplierSearchDTO.getFilter().getSupplierStatus() != null){
 
-            Join<SupplierDO, SupplierStatusDO> supplierStatusDOJoin =
+            Join<SupplierDO, StatusDO> supplierStatusDOJoin =
                     suppliers.join("supplierStatus", JoinType.INNER);
 
 

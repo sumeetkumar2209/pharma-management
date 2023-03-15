@@ -1,6 +1,6 @@
 package com.reify.supplier.controller;
 
-import com.reify.supplier.DTO.SupplierQualificationStatusDTO;
+import com.reify.common.DTO.QualificationStatusDTO;
 import com.reify.supplier.service.SupplierQualificationStatusService;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -24,15 +24,15 @@ public class SupplierQualificationStatusController {
     @GetMapping(value = "/getAllSupplierQualificationStatus")
     public ResponseEntity<?> getAllSupplierQualificationStatus(@RequestHeader("Authorization") String token){
 
-        List<SupplierQualificationStatusDTO> supplierQualificationStatusList = supplierQualificationStatusService.getAllSupplierQualificationStatus();
+        List<QualificationStatusDTO> supplierQualificationStatusList = supplierQualificationStatusService.getAllSupplierQualificationStatus();
 
         JSONArray jsonArray = new JSONArray();
 
-        for (SupplierQualificationStatusDTO supplierQualificationStatusDTO : supplierQualificationStatusList) {
+        for (QualificationStatusDTO supplierQualificationStatusDTO : supplierQualificationStatusList) {
 
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("code",supplierQualificationStatusDTO.getSupplierQfCode());
-            jsonObject.put("status",supplierQualificationStatusDTO.getSupplierQfName());
+            jsonObject.put("code",supplierQualificationStatusDTO.getQualificationCode());
+            jsonObject.put("status",supplierQualificationStatusDTO.getQualificationName());
 
             jsonArray.put(jsonObject);
         }

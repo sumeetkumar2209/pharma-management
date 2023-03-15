@@ -1,11 +1,10 @@
 package com.reify.supplier.service;
 
-import com.reify.supplier.DTO.SupplierStatusDTO;
-import com.reify.supplier.model.SupplierStatusDO;
+import com.reify.common.DTO.StatusDTO;
 
 import java.util.List;
 
 public interface SupplierStatusService {
 
-    public List<SupplierStatusDTO> getAllStatus();
+    public List<StatusDTO> getAllStatus();
 }

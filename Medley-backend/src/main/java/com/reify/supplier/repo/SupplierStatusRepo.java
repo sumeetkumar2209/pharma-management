@@ -1,10 +1,10 @@
 package com.reify.supplier.repo;
 
-import com.reify.supplier.model.SupplierStatusDO;
+import com.reify.common.model.StatusDO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface SupplierStatusRepo extends JpaRepository<SupplierStatusDO, String> {
+public interface SupplierStatusRepo extends JpaRepository<StatusDO, String> {
 
 }

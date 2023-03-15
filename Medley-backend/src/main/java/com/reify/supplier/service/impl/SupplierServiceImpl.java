@@ -1,6 +1,8 @@
 package com.reify.supplier.service.impl;
 
 import com.reify.common.exception.RecordNotFoundException;
+import com.reify.common.model.QualificationStatusDO;
+import com.reify.common.model.StatusDO;
 import com.reify.supplier.DTO.SupplierDTO;
 import com.reify.supplier.model.*;
 import com.reify.supplier.repo.SupplierIntRepo;
@@ -30,8 +32,8 @@ public class SupplierServiceImpl implements SupplierService {
 
         SupplierDO_INT SupplierDO_INT = context.getBean(SupplierDO_INT.class);
         ReviewStatusDO reviewStatusDO = context.getBean(ReviewStatusDO.class);
-        SupplierStatusDO supplierStatusDO = context.getBean(SupplierStatusDO.class);
-        SupplierQualificationStatusDO supplierQualificationStatusDO = context.getBean(SupplierQualificationStatusDO.class);
+        StatusDO supplierStatusDO = context.getBean(StatusDO.class);
+        QualificationStatusDO supplierQualificationStatusDO = context.getBean(QualificationStatusDO.class);
         CountryDO countryDO = context.getBean(CountryDO.class);
         CurrencyDO currencyDO = context.getBean(CurrencyDO.class);
 
@@ -50,10 +52,10 @@ public class SupplierServiceImpl implements SupplierService {
 
         SupplierDO_INT.setReviewStatus(reviewStatusDO);
 
-        supplierStatusDO.setSupplierStatusCode(supplierDTO.getSupplierStatus().getSupplierStatusCode());
+        supplierStatusDO.setStatusCode(supplierDTO.getSupplierStatus().getStatusCode());
         SupplierDO_INT.setSupplierStatus(supplierStatusDO);
 
-        supplierQualificationStatusDO.setSupplierQfCode(supplierDTO.getSupplierQualificationStatus().getSupplierQfCode());
+        supplierQualificationStatusDO.setQualificationCode(supplierDTO.getSupplierQualificationStatus().getQualificationCode());
         SupplierDO_INT.setSupplierQualificationStatus(supplierQualificationStatusDO);
 
         countryDO.setCountryCode(supplierDTO.getCountry().getCountryCode());
@@ -100,12 +102,12 @@ public class SupplierServiceImpl implements SupplierService {
         currencyDO.setCurrencyCode(supplierDTO.getCurrency().getCurrencyCode());
         supplierDO_INT.setCurrency(currencyDO);
 
-        SupplierStatusDO supplierStatusDO = context.getBean(SupplierStatusDO.class);
-        supplierStatusDO.setSupplierStatusCode(supplierDTO.getSupplierStatus().getSupplierStatusCode());
+        StatusDO supplierStatusDO = context.getBean(StatusDO.class);
+        supplierStatusDO.setStatusCode(supplierDTO.getSupplierStatus().getStatusCode());
         supplierDO_INT.setSupplierStatus(supplierStatusDO);
 
-        SupplierQualificationStatusDO supplierQualificationStatusDO = context.getBean(SupplierQualificationStatusDO.class);
-        supplierQualificationStatusDO.setSupplierQfCode(supplierDTO.getSupplierQualificationStatus().getSupplierQfCode());
+        QualificationStatusDO supplierQualificationStatusDO = context.getBean(QualificationStatusDO.class);
+        supplierQualificationStatusDO.setQualificationCode(supplierDTO.getSupplierQualificationStatus().getQualificationCode());
         supplierDO_INT.setSupplierQualificationStatus(supplierQualificationStatusDO);
 
         ReviewStatusDO reviewStatusDO = context.getBean(ReviewStatusDO.class);

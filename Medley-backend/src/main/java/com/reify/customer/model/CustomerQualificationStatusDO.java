@@ -1,4 +1,4 @@
-package com.reify.supplier.model;
+package com.reify.customer.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,13 +19,13 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @Entity
-@Table(name = "SUPPLIER_STATUS")
-public class SupplierStatusDO implements Serializable {
+@Table(name = "CUSTOMER_QUALIFICATION_STATUS")
+public class CustomerQualificationStatusDO implements Serializable {
 
     @Id
     @Column(length = 2)
-    private String supplierStatusCode;
+    private String customerQfCode;
 
-    @Column(length = 8)
-    private String supplierStatusName;
+    @Column(length = 15)
+    private String customerQfName;
 }

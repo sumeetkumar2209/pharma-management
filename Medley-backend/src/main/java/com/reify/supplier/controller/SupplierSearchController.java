@@ -46,13 +46,13 @@ public class SupplierSearchController {
             jsonObject.put("countryName",supplierDTO.getCountry().getCountryName());
             jsonObject.put("currencyCode",supplierDTO.getCurrency().getCurrencyCode());
             jsonObject.put("currencyName",supplierDTO.getCurrency().getCurrencyName());
-            jsonObject.put("supplierQualificationStatusCode",supplierDTO.getSupplierQualificationStatus().getSupplierQfCode());
-            jsonObject.put("supplierQualificationStatusName",supplierDTO.getSupplierQualificationStatus().getSupplierQfName());
+            jsonObject.put("supplierQualificationStatusCode",supplierDTO.getSupplierQualificationStatus().getQualificationCode());
+            jsonObject.put("supplierQualificationStatusName",supplierDTO.getSupplierQualificationStatus().getQualificationName());
             jsonObject.put("validTillDate",supplierDTO.getValidTillDate());
             jsonObject.put("reviewStatusCode",supplierDTO.getReviewStatus().getReviewCode());
             jsonObject.put("reviewStatusName",supplierDTO.getReviewStatus().getReviewName());
-            jsonObject.put("supplierStatusCode",supplierDTO.getSupplierStatus().getSupplierStatusCode());
-            jsonObject.put("supplierStatusName",supplierDTO.getSupplierStatus().getSupplierStatusName());
+            jsonObject.put("supplierStatusCode",supplierDTO.getSupplierStatus().getStatusCode());
+            jsonObject.put("supplierStatusName",supplierDTO.getSupplierStatus().getStatusName());
 
             jsonArray.put(jsonObject);
 

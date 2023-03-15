@@ -1,4 +1,4 @@
-package com.reify.common;
+package com.reify.common.helper;
 
 import org.hibernate.HibernateException;
 import org.hibernate.MappingException;
