@@ -1,8 +1,8 @@
 package com.reify.supplier.helper;
 
+import com.reify.common.model.ReviewStatusDO;
 import com.reify.common.model.StatusDO;
 import com.reify.supplier.DTO.SupplierSearchDTO;
-import com.reify.supplier.model.ReviewStatusDO;
 import com.reify.supplier.model.SupplierDO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

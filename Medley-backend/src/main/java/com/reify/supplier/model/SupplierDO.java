@@ -1,7 +1,6 @@
 package com.reify.supplier.model;
 
-import com.reify.common.model.QualificationStatusDO;
-import com.reify.common.model.StatusDO;
+import com.reify.common.model.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

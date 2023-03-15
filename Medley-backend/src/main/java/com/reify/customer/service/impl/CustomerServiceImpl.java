@@ -1,10 +1,10 @@
 package com.reify.customer.service.impl;
 
+import com.reify.common.model.CountryDO;
 import com.reify.customer.DTO.CustomerDTO;
 import com.reify.customer.model.CustomerDO_INT;
 import com.reify.customer.repo.CustomerRepo;
 import com.reify.customer.service.CustomerService;
-import com.reify.supplier.model.CountryDO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -28,6 +28,8 @@ public class CustomerServiceImpl implements CustomerService {
 
         CountryDO countryDO = context.getBean(CountryDO.class);
         countryDO.setCountryCode(customerDTO.getCountryDO().getCountryCode());
+        customerDOInt.setCountryDO(countryDO);
+
 
     }
 }

@@ -1,7 +1,7 @@
 package com.reify.supplier.service.impl;
 
+import com.reify.common.model.ReviewStatusDO;
 import com.reify.supplier.DTO.ReviewStatusDTO;
-import com.reify.supplier.model.ReviewStatusDO;
 import com.reify.supplier.repo.ReviewStatusRepo;
 import com.reify.supplier.service.ReviewStatusService;
 import org.springframework.beans.factory.annotation.Autowired;

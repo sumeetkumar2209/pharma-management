@@ -1,10 +1,10 @@
 package com.reify.supplier.service.impl;
 
 import com.reify.common.exception.RecordNotFoundException;
-import com.reify.common.model.QualificationStatusDO;
-import com.reify.common.model.StatusDO;
+import com.reify.common.model.*;
 import com.reify.supplier.DTO.SupplierDTO;
-import com.reify.supplier.model.*;
+import com.reify.supplier.model.SupplierDO;
+import com.reify.supplier.model.SupplierDO_INT;
 import com.reify.supplier.repo.SupplierIntRepo;
 import com.reify.supplier.repo.SupplierRepo;
 import com.reify.supplier.service.SupplierService;
