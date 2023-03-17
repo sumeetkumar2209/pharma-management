@@ -38,7 +38,7 @@ public class SearchSupplierImpl implements SearchSupplier{
                     suppliers.join("supplierStatus", JoinType.INNER);
 
 
-            predicates.add(cb.equal(supplierStatusDOJoin.get("supplierStatusCode"),
+            predicates.add(cb.equal(supplierStatusDOJoin.get("statusCode"),
                     supplierSearchDTO.getFilter().getSupplierStatus()));
         }
         if(supplierSearchDTO.getFilter().getCompanyName()!= null){

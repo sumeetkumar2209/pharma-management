@@ -1,7 +1,5 @@
-package com.reify.supplier.DTO;
+package com.reify.customer.DTO;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Builder;
 import lombok.Data;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
@@ -9,12 +7,12 @@ import org.springframework.stereotype.Component;
 
 @Data
 @Component
-@JsonIgnoreProperties(value = {"reviewName"})
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-@Builder
-public class ReviewStatusDTO {
+public class CustomerFilterDTO {
 
-    private String reviewCode;
-    private String reviewName;
-
+    private String customerId;
+    private String companyName;
+    private String customerStatus;
+    private String postalCode;
+    private String reviewStatus;
 }

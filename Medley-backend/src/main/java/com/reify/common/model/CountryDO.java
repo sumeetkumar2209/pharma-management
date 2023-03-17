@@ -20,6 +20,7 @@ import java.io.Serializable;
 @Scope( value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @Entity
 @Table(name = "COUNTRY")
+
 public class CountryDO implements Serializable {
 
     @Id

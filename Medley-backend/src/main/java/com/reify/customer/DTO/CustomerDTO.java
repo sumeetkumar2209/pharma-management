@@ -1,15 +1,14 @@
 package com.reify.customer.DTO;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.reify.common.model.CountryDO;
-import com.reify.common.model.CurrencyDO;
-import com.reify.common.model.ReviewStatusDO;
-import com.reify.customer.model.CustomerQualificationStatusDO;
-import com.reify.customer.model.CustomerStatusDO;
+import com.reify.common.DTO.*;
+import com.reify.common.model.*;
 import lombok.Data;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
+import java.util.Date;
 
 @Data
 @Component
@@ -20,7 +19,7 @@ public class CustomerDTO {
 
     private String customerId;
 
-    private CustomerStatusDO customerStatus;
+    private StatusDTO customerStatus;
     private String customerName;
     private String contactName;
     private String contactNumber;
@@ -32,13 +31,13 @@ public class CustomerDTO {
     private String addressLine3;
 
     private String town;
-    private CountryDO countryDO;
+    private CountryDTO country;
 
-    private CurrencyDO currencyDO;
+    private CurrencyDTO currency;
     private String postalCode;
-    private CustomerQualificationStatusDO customerQualificationStatusDO;
+    private QualificationStatusDTO customerQualificationStatus;
 
-    private long validTill;
+    private Date validTillDate;
 
     private String approvedBy;
 
@@ -47,6 +46,11 @@ public class CustomerDTO {
     private long initialAdditionDate;
 
     private String lastUpdatedBy;
-    private ReviewStatusDO reviewStatus;
+
+    private long lastUpdatedTimeStamp;
+    private ReviewStatusDTO reviewStatus;
+
+    private String option;
+
 
 }

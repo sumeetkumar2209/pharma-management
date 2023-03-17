@@ -1,8 +1,8 @@
 package com.reify.supplier.service.impl;
 
-import com.reify.common.DTO.QualificationStatusDTO;
-import com.reify.common.DTO.StatusDTO;
-import com.reify.supplier.DTO.*;
+import com.reify.common.DTO.*;
+import com.reify.supplier.DTO.SupplierDTO;
+import com.reify.supplier.DTO.SupplierSearchDTO;
 import com.reify.supplier.model.SupplierDO;
 import com.reify.supplier.repo.SupplierRepo;
 import com.reify.supplier.service.SupplierSearchService;
@@ -58,7 +58,11 @@ public class SupplierSearchServiceImpl implements SupplierSearchService {
                        .reviewName(obj.getReviewStatus().getReviewName())
                        .build();
 
-               QualificationStatusDTO supplierQualificationStatusDTO = context.getBean(QualificationStatusDTO.class);
+               QualificationStatusDTO supplierQualificationStatusDTO = QualificationStatusDTO.builder()
+                       .qualificationCode(obj.getSupplierQualificationStatus().getQualificationCode())
+                       .qualificationName(obj.getSupplierQualificationStatus().getQualificationName())
+                       .build();
+
 
                supplierDTO.setCountry(countryDTO);
                supplierDTO.setCurrency(currencyDTO);

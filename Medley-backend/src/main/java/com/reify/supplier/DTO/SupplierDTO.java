@@ -2,8 +2,7 @@ package com.reify.supplier.DTO;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.reify.common.DTO.QualificationStatusDTO;
-import com.reify.common.DTO.StatusDTO;
+import com.reify.common.DTO.*;
 import lombok.Data;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;

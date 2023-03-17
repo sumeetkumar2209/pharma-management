@@ -1,39 +1,25 @@
 package com.reify.customer.model;
 
-
 import com.reify.common.model.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
-import java.io.Serializable;
-
 @Component
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Scope( value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @Entity
-@Table(name = "INT_CUSTOMER")
-public class CustomerDO_INT implements Serializable {
-
+@Table(name = "CUSTOMER")
+public class CustomerDO {
     @Id
     @Column(length = 9)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_seq")
-    @GenericGenerator(name = "customer_seq",
-            strategy = "com.reify.common.helper.CustomIdGenerator",
-            parameters = {
-                    @org.hibernate.annotations.Parameter(name = "prefix", value = "CUST"),
-                    @org.hibernate.annotations.Parameter(name = "seqName", value = "customer_seq"),
-                    @org.hibernate.annotations.Parameter(name = "seqLength", value = "5")
-            })
     private String customerId;
-
 
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "customerStatusCode")
@@ -88,6 +74,4 @@ public class CustomerDO_INT implements Serializable {
     @ManyToOne
     @JoinColumn(name = "reviewCode")
     private ReviewStatusDO reviewStatus;
-
-
 }

@@ -44,10 +44,10 @@ public class SupplierController {
 
         boolean res = supplierService.approveRejectSupplier(supplierId, decision);
         if (res) {
-            return ResponseEntity.status(HttpStatus.OK).body("supplier approved");
+            return ResponseEntity.status(HttpStatus.OK).body("Supplier approved");
         }
 
-         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("supplier not approved");
+         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Supplier not approved");
     }
 
 }

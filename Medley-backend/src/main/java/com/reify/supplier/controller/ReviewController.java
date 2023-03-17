@@ -1,6 +1,6 @@
 package com.reify.supplier.controller;
 
-import com.reify.supplier.DTO.ReviewStatusDTO;
+import com.reify.common.DTO.ReviewStatusDTO;
 import com.reify.supplier.service.ReviewStatusService;
 import org.json.JSONArray;
 import org.json.JSONObject;
