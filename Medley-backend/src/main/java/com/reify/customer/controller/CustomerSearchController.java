@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/customerSearch")
+@RequestMapping(value = "/api")
 public class CustomerSearchController {
 
     @Autowired
     CustomerSearchservice customerSearchservice;
 
-    @PostMapping(value = "/getCustomer")
+    @PostMapping(value = "/customers")
     public ResponseEntity<?> getCustomer(@RequestHeader("Authorization") String token,
                                          @RequestBody CustomerSearchDTO customerSearchDTO){
 

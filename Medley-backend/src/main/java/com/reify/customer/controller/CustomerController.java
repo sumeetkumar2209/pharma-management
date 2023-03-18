@@ -10,13 +10,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/customer")
+@RequestMapping(value = "/api")
 public class CustomerController {
 
     @Autowired
     CustomerService customerService;
 
-    @PostMapping(value = "/addCustomer")
+    @PostMapping(value = "/customer")
     public ResponseEntity<?> addCustomer(@RequestHeader("Authorization") String token,
                                          @RequestBody CustomerDTO customerDTO){
 
@@ -26,7 +26,7 @@ public class CustomerController {
 
     }
 
-    @PutMapping(value = "/modifyCustomer")
+    @PutMapping(value = "/customer")
     public ResponseEntity<?> modifyCustomer(@RequestHeader("Authorization") String token,
                                             @RequestBody CustomerDTO customerDTO){
         try {

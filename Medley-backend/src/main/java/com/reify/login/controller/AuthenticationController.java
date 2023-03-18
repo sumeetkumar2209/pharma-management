@@ -45,7 +45,7 @@ public class AuthenticationController {
             @ApiResponse(code = 401, message = "Authentication failed")
     })
     @PostMapping(value = "/authenticate")
-    public ResponseEntity<?> createAuthenticationToken (@RequestHeader("Credentials") String cred) {
+    public ResponseEntity<?> createAuthenticationToken (@RequestHeader("Authorization") String cred) {
 
         String base64Credentials = cred.substring("Basic".length()).trim();
         byte[] credDecoded = Base64.getDecoder().decode(base64Credentials);

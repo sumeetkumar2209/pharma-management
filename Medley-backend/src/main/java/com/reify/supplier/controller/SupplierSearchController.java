@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/SupplierSearch")
+@RequestMapping(value = "/api")
 public class SupplierSearchController {
 
     @Autowired
     SupplierSearchService supplierSearchService;
 
-    @PostMapping(value = "/getSuppliers")
+    @PostMapping(value = "/suppliers")
     public ResponseEntity<?> getSupplier(@RequestHeader("Authorization") String token,
                                          @RequestBody SupplierSearchDTO supplierSearchDTO){
 
