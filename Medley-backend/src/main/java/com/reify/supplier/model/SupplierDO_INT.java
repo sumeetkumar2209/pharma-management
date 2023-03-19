@@ -23,14 +23,17 @@ public class SupplierDO_INT implements Serializable {
 
     @Id
     @Column(length = 8)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "supplier_seq")
-    @GenericGenerator(name = "supplier_seq",
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "supplier_wf_seq")
+    @GenericGenerator(name = "supplier_wf_seq",
             strategy = "com.reify.common.helper.CustomIdGenerator",
-    parameters = {
-            @org.hibernate.annotations.Parameter(name = "prefix", value = "MED"),
-            @org.hibernate.annotations.Parameter(name = "seqName", value = "supplier_seq"),
-            @org.hibernate.annotations.Parameter(name = "seqLength", value = "5")
-    })
+            parameters = {
+                    @org.hibernate.annotations.Parameter(name = "prefix", value = "WFS"),
+                    @org.hibernate.annotations.Parameter(name = "seqName", value = "supplier_wf_seq"),
+                    @org.hibernate.annotations.Parameter(name = "seqLength", value = "5")
+            })
+    private String workFlowId;
+
+    @Column(length = 8)
     private String supplierId;
 
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -70,10 +73,10 @@ public class SupplierDO_INT implements Serializable {
     @JoinColumn(name = "currencyCode")
     private CurrencyDO currency;
     @Column(length = 50)
-    private String approvedBy;
+    private String approver;
     @Column(length = 50)
-    private String userId;
     private long initialAdditionDate;
+
     @Column(length = 50)
     private String lastUpdatedBy;
 
@@ -82,5 +85,7 @@ public class SupplierDO_INT implements Serializable {
     @ManyToOne
     @JoinColumn(name = "reviewCode")
     private ReviewStatusDO reviewStatus;
+    private String userId;
+
 
 }

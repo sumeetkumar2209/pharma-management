@@ -4,6 +4,7 @@ import com.reify.common.model.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -21,6 +22,14 @@ public class SupplierDO {
 
     @Id
     @Column(length = 8)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "supplier_seq")
+    @GenericGenerator(name = "supplier_seq",
+            strategy = "com.reify.common.helper.CustomIdGenerator",
+            parameters = {
+                    @org.hibernate.annotations.Parameter(name = "prefix", value = "MED"),
+                    @org.hibernate.annotations.Parameter(name = "seqName", value = "supplier_seq"),
+                    @org.hibernate.annotations.Parameter(name = "seqLength", value = "5")
+            })
     private String supplierId;
 
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -60,7 +69,7 @@ public class SupplierDO {
     @JoinColumn(name = "currencyCode")
     private CurrencyDO currency;
     @Column(length = 50)
-    private String approvedBy;
+    private String approver;
     @Column(length = 50)
     private String userId;
     private long initialAdditionDate;
