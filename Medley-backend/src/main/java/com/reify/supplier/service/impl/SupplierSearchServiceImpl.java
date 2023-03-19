@@ -64,11 +64,11 @@ public class SupplierSearchServiceImpl implements SupplierSearchService {
                        .build();
 
 
-               supplierDTO.setCountry(countryDTO);
-               supplierDTO.setCurrency(currencyDTO);
-               supplierDTO.setSupplierStatus(supplierStatusDTO);
-               supplierDTO.setReviewStatus(reviewStatusDTO);
-               supplierDTO.setSupplierQualificationStatus(supplierQualificationStatusDTO);
+               supplierDTO.setCountry(countryDTO.getCountryCode());
+               supplierDTO.setCurrency(currencyDTO.getCurrencyCode());
+               supplierDTO.setSupplierStatus(supplierStatusDTO.getStatusCode());
+               supplierDTO.setReviewStatus(reviewStatusDTO.getReviewCode());
+               supplierDTO.setSupplierQualificationStatus(supplierQualificationStatusDTO.getQualificationCode());
 
                return supplierDTO;
 

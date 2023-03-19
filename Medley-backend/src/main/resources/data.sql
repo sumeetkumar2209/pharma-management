@@ -20,8 +20,17 @@ INSERT INTO QUALIFICATION_STATUS (QUALIFICATION_CODE,QUALIFICATION_NAME )  VALUE
 INSERT INTO QUALIFICATION_STATUS (QUALIFICATION_CODE,QUALIFICATION_NAME )  VALUES ('NQ','NON QUALIFIED');
 
 <!-- newly added  -->
-INSERT INTO MENU VALUES(1,'Supplier',1,1,'/medley/api/suppliers');
-INSERT INTO MENU VALUES(2,'Customer',1,1,'/medley/api/customers');
+INSERT INTO MENU (menu_id,label, icon, link, menu_order) VALUES (1,'Dashboard', 'dashboard','/dashboard',0);
+INSERT INTO MENU (menu_id,label, icon, link, menu_order) VALUES (2,'Supplier', 'flare','/supplier',1);
+INSERT INTO MENU (menu_id,label, icon, link, menu_order) VALUES (3,'Customer', 'phonelink','/customer',2);
+INSERT INTO MENU (menu_id,label, icon, link, menu_order) VALUES (4,'Transport', 'local_shipping','/transport',3);
+
+INSERT INTO MENU (menu_id,label, icon, link, menu_order) VALUES (5,'Product', 'account_balance_wallet','/product/add',0);
+INSERT INTO MENU (menu_id,label, icon, link, menu_order) VALUES (6,'Purchase Orders', 'home','/warehouse',1);
+INSERT INTO MENU (menu_id,label, icon, link, menu_order) VALUES (7,'Warehouse', 'shopping_cart','/menu_orders',2);
+INSERT INTO MENU (menu_id,label, icon, link, menu_order) VALUES (8,'Goods Returned', 'compare_arrows','/goods',3);
+INSERT INTO MENU (menu_id,label, icon, link, menu_order) VALUES (9,'Reports', 'next_week','/reports',3);
+INSERT INTO MENU (menu_id,label, icon, link, menu_order) VALUES (10,'Audit Trail', 'account_balance','/audit',3);
 
 insert into ROLE_MENU values (1,1);
 insert into ROLE_MENU values(1,2);

@@ -75,7 +75,7 @@ public class UserController {
         }
 
 
-        return ResponseEntity.status(HttpStatus.OK).body("Password reset successfull");
+        return ResponseEntity.status(HttpStatus.OK).body("Password reset successfully");
 
     }
 

@@ -52,16 +52,16 @@ public class SupplierServiceImpl implements SupplierService {
 
         SupplierDO_INT.setReviewStatus(reviewStatusDO);
 
-        supplierStatusDO.setStatusCode(supplierDTO.getSupplierStatus().getStatusCode());
+        supplierStatusDO.setStatusCode(supplierDTO.getSupplierStatus());
         SupplierDO_INT.setSupplierStatus(supplierStatusDO);
 
-        supplierQualificationStatusDO.setQualificationCode(supplierDTO.getSupplierQualificationStatus().getQualificationCode());
+        supplierQualificationStatusDO.setQualificationCode(supplierDTO.getSupplierQualificationStatus());
         SupplierDO_INT.setSupplierQualificationStatus(supplierQualificationStatusDO);
 
-        countryDO.setCountryCode(supplierDTO.getCountry().getCountryCode());
+        countryDO.setCountryCode(supplierDTO.getCountry());
         SupplierDO_INT.setCountry(countryDO);
 
-        currencyDO.setCurrencyCode(supplierDTO.getCurrency().getCurrencyCode());
+        currencyDO.setCurrencyCode(supplierDTO.getCurrency());
         SupplierDO_INT.setCurrency(currencyDO);
 
         supplierIntRepo.save(SupplierDO_INT);
@@ -95,19 +95,19 @@ public class SupplierServiceImpl implements SupplierService {
         supplierDO_INT.setLastUpdatedTimeStamp(System.currentTimeMillis()/1000);
 
         CountryDO countryDO = context.getBean(CountryDO.class);
-        countryDO.setCountryCode(supplierDTO.getCountry().getCountryCode());
+        countryDO.setCountryCode(supplierDTO.getCountry());
         supplierDO_INT.setCountry(countryDO);
 
         CurrencyDO currencyDO = context.getBean(CurrencyDO.class);
-        currencyDO.setCurrencyCode(supplierDTO.getCurrency().getCurrencyCode());
+        currencyDO.setCurrencyCode(supplierDTO.getCurrency());
         supplierDO_INT.setCurrency(currencyDO);
 
         StatusDO supplierStatusDO = context.getBean(StatusDO.class);
-        supplierStatusDO.setStatusCode(supplierDTO.getSupplierStatus().getStatusCode());
+        supplierStatusDO.setStatusCode(supplierDTO.getSupplierStatus());
         supplierDO_INT.setSupplierStatus(supplierStatusDO);
 
         QualificationStatusDO supplierQualificationStatusDO = context.getBean(QualificationStatusDO.class);
-        supplierQualificationStatusDO.setQualificationCode(supplierDTO.getSupplierQualificationStatus().getQualificationCode());
+        supplierQualificationStatusDO.setQualificationCode(supplierDTO.getSupplierQualificationStatus());
         supplierDO_INT.setSupplierQualificationStatus(supplierQualificationStatusDO);
 
         ReviewStatusDO reviewStatusDO = context.getBean(ReviewStatusDO.class);

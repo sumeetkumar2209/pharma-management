@@ -20,7 +20,7 @@ public class SupplierDTO {
 
     private String supplierId;
 
-    private StatusDTO supplierStatus;
+    private String supplierStatus;
     private String companyName;
     private String contactName;
     private String contactNumber;
@@ -29,18 +29,18 @@ public class SupplierDTO {
     private String addressLine2;
     private String addressLine3;
     private String town;
-    private CountryDTO country;
+    private String country;
     private String postalCode;
 
-    private QualificationStatusDTO supplierQualificationStatus;
+    private String supplierQualificationStatus;
     private Date validTillDate;
-    private CurrencyDTO currency;
+    private String currency;
     private String approvedBy;
     private String userId;
     private long initialAdditionDate;
     private String lastUpdatedBy;
     private long lastUpdatedTimeStamp;
-    private ReviewStatusDTO reviewStatus;
+    private String reviewStatus;
 
     private String option;
 
