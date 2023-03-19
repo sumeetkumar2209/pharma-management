@@ -4,7 +4,6 @@ import com.reify.common.model.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -12,25 +11,19 @@ import org.springframework.stereotype.Component;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Component
 @Data
+@Component
 @AllArgsConstructor
 @NoArgsConstructor
-@Scope( value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @Entity
-@Table(name = "INT_SUPPLIER")
-public class SupplierDO_INT implements Serializable {
+@Table(name = "SUPPLIER_AUDIT")
+public class SupplierAuditDO implements Serializable {
 
     @Id
-    @Column(length = 8)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "supplier_wf_seq")
-    @GenericGenerator(name = "supplier_wf_seq",
-            strategy = "com.reify.common.helper.CustomIdGenerator",
-            parameters = {
-                    @org.hibernate.annotations.Parameter(name = "prefix", value = "WFS"),
-                    @org.hibernate.annotations.Parameter(name = "seqName", value = "supplier_wf_seq"),
-                    @org.hibernate.annotations.Parameter(name = "seqLength", value = "5")
-            })
+    @GeneratedValue
+    private int supplierAuditId;
+
     private String workFlowId;
 
     @Column(length = 8)
@@ -86,6 +79,4 @@ public class SupplierDO_INT implements Serializable {
     @JoinColumn(name = "reviewCode")
     private ReviewStatusDO reviewStatus;
     private String userId;
-
-
 }

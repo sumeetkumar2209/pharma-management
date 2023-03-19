@@ -8,6 +8,7 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.Column;
 import java.util.Date;
 
 
@@ -15,8 +16,10 @@ import java.util.Date;
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @JsonIgnoreProperties(value = {"countryName","currencyName","initialAdditionDate",
-"lastUpdatedBy"})
+"lastUpdatedBy","workFlowId"})
 public class SupplierDTO {
+
+    private String workFlowId;
 
     private String supplierId;
 
@@ -35,7 +38,7 @@ public class SupplierDTO {
     private String supplierQualificationStatus;
     private Date validTillDate;
     private String currency;
-    private String approvedBy;
+    private String approver;
     private String userId;
     private long initialAdditionDate;
     private String lastUpdatedBy;

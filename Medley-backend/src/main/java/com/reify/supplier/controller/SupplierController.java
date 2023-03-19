@@ -39,10 +39,10 @@ public class SupplierController {
 
     @PostMapping(value = "/approveRejectSupplier")
     public ResponseEntity<?> approveRejectSupplier(@RequestHeader("Authorization") String token,
-                                             @RequestParam("supplierId") String supplierId,
+                                             @RequestParam("workflowId") String workflowId,
                                                    @RequestParam String decision){
 
-        boolean res = supplierService.approveRejectSupplier(supplierId, decision);
+        boolean res = supplierService.approveRejectSupplier(workflowId, decision);
         if (res) {
             return ResponseEntity.status(HttpStatus.OK).body("Supplier approved");
         }

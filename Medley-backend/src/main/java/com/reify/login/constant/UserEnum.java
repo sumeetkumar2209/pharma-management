@@ -12,7 +12,9 @@ public enum UserEnum {
     LASTLOGINTIME("lastLoginTime"),
     ROLEID("roleId"),
     ROLENAME("roleName"),
-    MENU_LIST("menuList");
+    MENU_LIST("menuList"),
+
+    APPROVER_MAP("approverMap");
 
 
     private String name;

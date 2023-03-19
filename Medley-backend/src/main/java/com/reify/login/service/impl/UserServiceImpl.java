@@ -6,12 +6,19 @@ import com.reify.login.model.RoleDO;
 import com.reify.login.model.UserDO;
 import com.reify.login.repo.UserRepo;
 import com.reify.login.service.UserService;
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -56,14 +63,38 @@ public class UserServiceImpl implements UserService {
     public String getUserDetails(String emailId) {
 
         UserDO userDO = userRepo.findByEmailId(emailId);
-        return convertUserDOToJson(userDO);
+
+        List<UserDO> allUser = userRepo.findAll();
+
+        Map<String, String> approverMap = allUser.stream().filter(obj -> {
+            if (obj.getRoleDO().getRoleId() == 2){
+               return true;
+            }
+            return false;
+        }).map(obj -> {
+            StringJoiner sj = new StringJoiner(" ");
+            if (!StringUtils.isBlank(obj.getFirstName())) {
+                sj.add(obj.getFirstName());
+            }
+            if (!StringUtils.isBlank(obj.getMiddleName())) {
+                sj.add(obj.getMiddleName());
+            }
+            if (!StringUtils.isBlank(obj.getLastName())) {
+                sj.add(obj.getLastName());
+            }
+
+            return new String[]{obj.getUserId().toString().replace("-",""), sj.toString()};
+        }).collect(Collectors.toMap(data -> data[0], data -> data[1]));
+
+
+        return convertUserDOToJson(userDO, approverMap);
     }
 
-    private String convertUserDOToJson(UserDO userDO){
+    private String convertUserDOToJson(UserDO userDO, Map<String, String> approverMap){
 
         JSONObject jsonObject = new JSONObject();
 
-        jsonObject.put(UserEnum.USERID.getName(), userDO.getUserId());
+        jsonObject.put(UserEnum.USERID.getName(), userDO.getUserId().toString().replace("-",""));
         jsonObject.put(UserEnum.EMAILID.getName(), userDO.getEmailId());
         jsonObject.put(UserEnum.FIRSTNAME.getName(), userDO.getFirstName());
         jsonObject.put(UserEnum.MIDDLENAME.getName(), userDO.getMiddleName());
@@ -74,6 +105,7 @@ public class UserServiceImpl implements UserService {
         jsonObject.put(UserEnum.ROLEID.getName(), userDO.getRoleDO().getRoleId());
         jsonObject.put(UserEnum.ROLENAME.getName(), userDO.getRoleDO().getRoleName());
         jsonObject.put(UserEnum.MENU_LIST.getName(), userDO.getRoleDO().getMenuList());
+        jsonObject.put(UserEnum.APPROVER_MAP.getName(), approverMap);
 
        return jsonObject.toString();
 
