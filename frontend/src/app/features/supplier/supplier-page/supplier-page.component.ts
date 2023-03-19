@@ -9,6 +9,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { SupplierInterface, SupplierQualificationStatus, SupplierStatus, WorkflowStatus } from 'src/app/features/supplier/supplier.interface';
 import { Router } from '@angular/router';
 import { SupplierService } from '../supplier.service';
+import { SelectionItem } from 'src/app/core/interfaces/interface';
+import { STATUS_OPTION } from 'src/app/core/constants/constant';
 
 
 
@@ -23,51 +25,53 @@ export class SupplierPageComponent {
 
   animal!: string;
   name!: string;
-  suppliers: SupplierInterface[] = [
-    {
-      supplierId: 101,
-      companyName: 'MEDLEY PHARMACEUTICAL LTD',
-      contactName: 'Vikas',
-      contactNumber: 9999999,
-      contactEmail: 'v@yahoo.com',
-      country: 'UK',
-      currency: 'GBP',
-      supplierQualificationStatus: SupplierQualificationStatus.Qualified,
+  suppliers!: SupplierInterface[];
+ 
+  //  = [
+  //   {
+  //     supplierId: 101,
+  //     companyName: 'MEDLEY PHARMACEUTICAL LTD',
+  //     contactName: 'Vikas',
+  //     contactNumber: 9999999,
+  //     contactEmail: 'v@yahoo.com',
+  //     country: 'UK',
+  //     currency: 'GBP',
+  //     supplierQualificationStatus: SupplierQualificationStatus.Qualified,
 
-      validTill: 'Dec 31 2023',
-      supplierStatus: SupplierStatus.Active,
-      addressLine1: '',
-      town: '',
-      postalCode: '',
-      approver: '',
-      userId: '',
-      initialAdditionDate: '',
-      lastUpdatedBy: '',
-      flowStatus: WorkflowStatus.Approved
-    },
-    {
-      supplierId: 102,
-      companyName: 'RICHI PHARMACEUTICAL LTD',
-      contactName: 'Prakash',
-      contactNumber: 11111111,
-      contactEmail: 'p@gamil.com',
-      country: 'USA',
-      currency: 'USD',
-      supplierQualificationStatus: SupplierQualificationStatus.Qualified,
+  //     validTill: 'Dec 31 2023',
+  //     supplierStatus: SupplierStatus.Active,
+  //     addressLine1: '',
+  //     town: '',
+  //     postalCode: '',
+  //     approver: '',
+  //     userId: '',
+  //     initialAdditionDate: '',
+  //     lastUpdatedBy: '',
+  //     flowStatus: WorkflowStatus.Approved
+  //   },
+  //   {
+  //     supplierId: 102,
+  //     companyName: 'RICHI PHARMACEUTICAL LTD',
+  //     contactName: 'Prakash',
+  //     contactNumber: 11111111,
+  //     contactEmail: 'p@gamil.com',
+  //     country: 'USA',
+  //     currency: 'USD',
+  //     supplierQualificationStatus: SupplierQualificationStatus.Qualified,
 
-      validTill: 'Dec 31 2030',
-      supplierStatus: SupplierStatus.Active,
-      addressLine1: '',
-      town: '',
-      postalCode: '',
-      approver: 'Vijay',
-      userId: '',
-      initialAdditionDate: 'Feb 1 2023',
-      lastUpdatedBy: '',
-      flowStatus: WorkflowStatus.Approved
+  //     validTill: 'Dec 31 2030',
+  //     supplierStatus: SupplierStatus.Active,
+  //     addressLine1: '',
+  //     town: '',
+  //     postalCode: '',
+  //     approver: 'Vijay',
+  //     userId: '',
+  //     initialAdditionDate: 'Feb 1 2023',
+  //     lastUpdatedBy: '',
+  //     flowStatus: WorkflowStatus.Approved
 
-    },
-  ];
+  //   },
+  // ];
 
   cols = [
     { header: 'Supplier Id', field: 'supplierId' },
@@ -86,13 +90,9 @@ export class SupplierPageComponent {
 
 
   //Filters
-  supplierStatusOptions: SupplierStatusOption[] =
-    [{ value: '', viewValue: '' },
-    { value: 'Active', viewValue: 'Active' },
-    { value: 'Inactive', viewValue: 'Not Active' }]
+  statusList: SelectionItem[] = STATUS_OPTION;
 
   clmns = this.cols.map(el => el.header);
-  supplierStatusControl = new FormControl('');
   selectedColumns = new FormControl(this.clmns);
 
   tableSelectedColumns: any[] = this.cols;
@@ -100,7 +100,9 @@ export class SupplierPageComponent {
   //pagination
   totalRecords = 100;
   rows = 10;
-  rowsPerPageOptions = [10, 25, 50]
+  rowsPerPageOptions = [10, 25, 50];
+  start = 0;
+  end = this.rows;
 
 
   constructor(
@@ -125,16 +127,17 @@ export class SupplierPageComponent {
   initalizeFilter() {
     this.filterSupplierForm = this.fb.group({
 
-      'supplierId': new FormControl(''),
-      'supplierName': new FormControl(''),
-      'postalCode': new FormControl(''),
-      'supplierStatusControl': this.supplierStatusControl
+      'supplierId': new FormControl(null),
+      'companyName': new FormControl(null),
+      'postalCode': new FormControl(null),
+      'supplierStatus': new FormControl(null),
+      'reviewStatus': new FormControl(null)
 
     });
   }
   ngAfterViewInit() {
     this.titleService.setTitle('Reiphy Pharma - Suppliers');
-    this.logger.log('Supplier loaded');
+    this.fetchSuppliersData();
 
     setTimeout(() => {
       this.notificationService.openSnackBar('Supplier section loaded!');
@@ -143,8 +146,18 @@ export class SupplierPageComponent {
 
   }
 
+  fetchSuppliersData( filter={}){
+    this.service.fetchSuppliers({
+      endIndex: this.end,
+      filter: filter,
+      startIndex: this.start
+    }).
+    subscribe((res:any)=>{
+      this.suppliers = res.suppliers;
+      this.totalRecords = res.totalCount;
 
-
+    });
+  }
 
   modify(supplier: SupplierInterface) {
     console.log(supplier);
@@ -156,6 +169,9 @@ export class SupplierPageComponent {
 
   filterSuppliers(formdata: any) {
     console.log(formdata);
+
+    this.fetchSuppliersData(formdata);
+
   }
   resetFilters() {
     this.initalizeFilter();
@@ -165,7 +181,15 @@ export class SupplierPageComponent {
     //event.rows = Number of rows to display in new page
     //event.page = Index of the new page
     //event.pageCount = Total number of pages
+
+    this.start = event.first ;
+    this.end = this.start + event.rows ;
+    this.rows = event.rows;
     console.log(event);
+  }
+
+  refreshSuppliers(){
+    this.fetchSuppliersData();
   }
 
 }

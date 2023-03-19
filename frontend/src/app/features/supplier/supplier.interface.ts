@@ -12,13 +12,14 @@ export interface SupplierInterface {
     country: string;
     postalCode: string;
     supplierQualificationStatus: SupplierQualificationStatus;
-    validTill: string; // validation for future dateD
+    validTillDate: string; // validation for future dateD
     currency: string;
-    approver: string;
+    approvedBy?: string;
     userId: string;
     initialAdditionDate: string;
-    lastUpdatedBy: string;
-    flowStatus: WorkflowStatus;
+    lastUpdatedBy?: string;
+    lastUpdatedTimeStamp?:string;
+    reviewStatus?: WorkflowStatus;
 }
 
 export enum SupplierStatus {
@@ -37,3 +38,4 @@ export interface SupplierFilterInterface {
     postalCode: string;
     supplierStatus: string;
 }
+

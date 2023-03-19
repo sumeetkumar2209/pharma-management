@@ -108,15 +108,22 @@
                     <td>
                         <div class="flex align-items-center justify-content-center gap-2">
                             <!-- <button  pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" (click)="onRowEditInit(po)" class="p-button-rounded p-button-text"></button> -->
+                            <div  fxLayout="row" fxLayoutAlign="center center">
+                           
                             <button mat-icon-button aria-label="edit purchaseOrder icon" (click)="onRowEditInit(po)" *ngIf="!editing" pInitEditableRow>
                               <mat-icon>edit</mat-icon>
                             </button>
+                            <button mat-icon-button aria-label="edit purchaseOrder icon" (click)="deleteRow(po,ri)" *ngIf="!editing" >
+                              <mat-icon>delete</mat-icon>
+                            </button>
+                         
                             <button mat-icon-button aria-label="edit purchaseOrder icon" (click)="onRowEditSave(po)" *ngIf="editing" pSaveEditableRow>
                               <mat-icon>check</mat-icon>
                             </button>
                             <button mat-icon-button aria-label="edit purchaseOrder icon" (click)="onRowEditCancel(po, ri)" *ngIf="editing" pCancelEditableRow>
                               <mat-icon>close</mat-icon>
                             </button>
+                          </div>
                             <!-- <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSave(po)" class="p-button-rounded p-button-text p-button-success mr-2"></button>
                             <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" (click)="onRowEditCancel(po, ri)" class="p-button-rounded p-button-text p-button-danger"></button> -->
                         </div>
@@ -129,9 +136,7 @@
 
                 <div>
         
-                  <button mat-raised-button [routerLink]="['/purchaseOrder']" class="demo-button">
-                    Delete Row
-                  </button>
+             
                 </div>
                 <div style="margin:18px 0px">             
                   <button mat-raised-button (click)="onAddNewRow()" type="submit" class="demo-button">

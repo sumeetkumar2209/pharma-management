@@ -38,15 +38,20 @@ export class LoginComponent implements OnInit {
     }
 
     login() {
-        const email = this.loginForm.get('email')?.value;
-        const password = this.loginForm.get('password')?.value;
+        // const email = this.loginForm.get('email')?.value;
+        // const password = this.loginForm.get('password')?.value;
         const rememberMe = this.loginForm.get('rememberMe')?.value;
+
+        //TODO: remove later
+        const email = 'sumeet@gmail.com';
+        const password = 'sumeet@12345';
 
         this.loading = true;
         this.authenticationService
             .login(email.toLowerCase(), password)
             .subscribe(
                 data => {
+                    console.log(data);
                     if (rememberMe) {
                         localStorage.setItem('savedUserEmail', email);
                     } else {

@@ -15,9 +15,11 @@
 
     <span class="navbar-spacer"></span>
 
-    <button mat-icon-button [matMenuTriggerFor]="notificationMenu" >
-      <mat-icon [matBadge]="notificationItems.length" matBadgeColor="accent" *ngIf="notificationItems.length!==0">notifications</mat-icon>
-      <mat-icon  *ngIf="notificationItems.length===0">notifications</mat-icon>
+    <button mat-icon-button [matMenuTriggerFor]="notificationMenu">
+      <mat-icon [matBadge]="notificationItems.length" matBadgeColor="accent"
+        *ngIf="notificationItems.length!==0">notifications</mat-icon>
+      <mat-icon *ngIf="notificationItems.length===0">notifications</mat-icon>
+
 
     </button>
 
@@ -62,106 +64,34 @@
       [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" class="sidenav">
 
       <mat-nav-list>
-        <!-- <h3 mat-subheader>Home</h3>
-
-        <a mat-list-item [routerLink]="['/dashboard']" routerLinkActive="active">
-          <mat-icon mat-list-icon>
-            dashboard
-          </mat-icon>
-          <p mat-line> Dashboard </p>
-        </a>
-
-        <a mat-list-item [routerLink]="['/customers']" routerLinkActive="active">
-          <mat-icon mat-list-icon>
-            business
-          </mat-icon>
-          <p mat-line> Customers </p>
-        </a>
-        <a mat-list-item [routerLink]="['/users']" routerLinkActive="active">
-          <mat-icon mat-list-icon>
-            people
-          </mat-icon>
-          <p mat-line> Users </p>
-        </a>
-
-        <a mat-list-item [routerLink]="['/account/profile']">
-          <mat-icon mat-list-icon>person</mat-icon>
-          <p mat-line> Account </p>
-        </a> -->
-
-       
 
         <ng-container *ngFor="let item of sideNavItems">
-          <mat-expansion-panel [disabled]="item.subitem.length===0">
+          <!-- <mat-expansion-panel [disabled]="item.subitem.length===0"> -->
+          <mat-expansion-panel [disabled]="true">
             <mat-expansion-panel-header>
-               <a mat-list-item [routerLink]="item.subitem.length===0?item.link:[]">
-                  <mat-icon mat-list-icon>{{item.icon}}</mat-icon>
-                  <p mat-line> {{item.label}} </p>
-                </a>
-            
-           
-              </mat-expansion-panel-header>
-              <mat-nav-list *ngIf="item.subitem.length !==0">
-      
-                  <a mat-list-item [routerLink]="si.link" *ngFor="let si of item.subitem">
-                    <mat-icon mat-list-icon>remove</mat-icon>
-                    <p mat-line> {{si.label}} </p>
-                  </a>
-                  </mat-nav-list>
-              </mat-expansion-panel>
-           
+              <!-- <a mat-list-item [routerLink]="item.subitem.length===0?item.link:[]"> -->
+              <a mat-list-item [routerLink]="[item.link]">
+                <mat-icon mat-list-icon>{{item.icon}}</mat-icon>
+                <p mat-line> {{item.label}} </p>
+              </a>
+
+
+            </mat-expansion-panel-header>
+            <!-- <mat-nav-list *ngIf="item.subitem.length !==0">
+
+              <a mat-list-item [routerLink]="[si.link]" *ngFor="let si of item.subitem">
+                <mat-icon mat-list-icon>remove</mat-icon>
+                <p mat-line> {{si.label}} </p>
+              </a>
+            </mat-nav-list> -->
+          </mat-expansion-panel>
+
 
         </ng-container>
-        
-      
-        <!-- <mat-divider></mat-divider>
-
-        <h3 mat-subheader>Resources</h3>
-
-        <a mat-list-item [routerLink]="['/icons']" routerLinkActive="active">
-          <mat-icon mat-list-icon>
-            toll
-          </mat-icon>
-          <p mat-line> Icons </p>
-        </a>
-        <a mat-list-item [routerLink]="['/typography']" routerLinkActive="active">
-          <mat-icon mat-list-icon>
-            font_download
-          </mat-icon>
-          <p mat-line> Typography </p>
-        </a>
-
-        <a mat-list-item href="https://material.angular.io/components/categories" target="_blank">
-          <mat-icon mat-list-icon>
-            link
-          </mat-icon>
-          <p mat-line> Material Components </p>
-        </a>
--->
-<!-- <a mat-list-item [routerLink]="['/auth/login']" routerLinkActive="active">
-  <mat-icon mat-list-icon>
-    exit_to_app
-  </mat-icon>
-  <p mat-line>Log out </p>
-</a> -->
-
-<!-- <mat-expansion-panel [disabled]="true"><
-<mat-expansion-panel-header>
-  <a mat-list-item [routerLink]="['/auth/login']">
-     <mat-icon mat-list-icon>exit_to_app</mat-icon>
-     <p mat-line> Log out </p>
-   </a>
 
 
- </mat-expansion-panel-header>
- </mat-expansion-panel> -->
 
- 
-        <!-- <a id="push-bottom" mat-list-item [routerLink]="['/auth/login']" routerLinkActive="active">
-          <mat-icon mat-list-icon>exit_to_app</mat-icon>
-          <p mat-line> Log out </p>
-        </a> -->
-      </mat-nav-list> 
+      </mat-nav-list>
 
     </mat-sidenav>
 
@@ -171,7 +101,7 @@
       <div class="progress-bar-container">
         <mat-progress-bar color="accent" mode="indeterminate" *ngIf="spinnerService.visibility | async">
         </mat-progress-bar>
-        <!-- <mat-spinner class="spinner" [diameter]="50" *ngIf="showSpinner"></mat-spinner> -->
+        <mat-spinner class="spinner" [diameter]="50" *ngIf="showSpinner"></mat-spinner>
       </div>
 
 
