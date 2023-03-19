@@ -24,6 +24,6 @@ public class MenuDO implements Serializable {
 
     private String link;
 
-    private int order;
+    private int menuOrder;
 
 }
