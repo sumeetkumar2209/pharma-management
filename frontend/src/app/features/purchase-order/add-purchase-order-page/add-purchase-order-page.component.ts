@@ -132,7 +132,9 @@ export class AddPurchaseOrderPageComponent {
   onRowEditInit(product: PurchaseOrderLineItemInterface) {
     this.clonedProducts[product.productId] = {...product};
 }
-
+deleteRow(product: PurchaseOrderLineItemInterface, index: number){
+  
+}
 onRowEditSave(product: PurchaseOrderLineItemInterface) {
     // if (product.price > 0) {
     //     delete this.clonedProducts[product.productId];
@@ -164,7 +166,7 @@ onAddNewRow() {
       pricePerPack: 0,
       totalProductAmount: ''
   };
-  this.products.unshift(newP);
+  this.products.push(newP);
   //Caution: guard again dataKey here
   this.pTable.editingRowKeys[newP[this.pTable.dataKey as keyof PurchaseOrderLineItemInterface]] = true;
   this.onRowEditInit(newP);

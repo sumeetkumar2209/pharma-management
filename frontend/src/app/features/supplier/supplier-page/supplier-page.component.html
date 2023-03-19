@@ -34,19 +34,17 @@
 
             <mat-form-field fxFlex="25%">
               <mat-label>Supplier Name</mat-label>
-              <input matInput #input formControlName="supplierName">
+              <input matInput #input formControlName="companyName">
             </mat-form-field>
             <mat-form-field fxFlex="25%">
               <mat-label>Postcode</mat-label>
               <input matInput #input formControlName="postalCode">
             </mat-form-field>
-            <mat-form-field  fxFlex="25%">
-              <mat-label>Supplier Status</mat-label>
-              <mat-select [formControl]="supplierStatusControl" name="supplierStatus">
-                <mat-option *ngFor="let sso of supplierStatusOptions" [value]="sso.value">
-                  {{sso.viewValue}}
-                </mat-option>
-              </mat-select>
+          
+            <mat-form-field fxFlex="25%" >
+              <mat-select formControlName="supplierStatus" placeholder="Supplier Status">              
+                <mat-option *ngFor="let statusVal of statusList" [value]="statusVal.value">{{statusVal.label}}</mat-option>
+              </mat-select>            
             </mat-form-field>
            
           
@@ -79,7 +77,11 @@
           <ng-template pTemplate="caption">
             <div class="table-header" fxLayout="row" fxLayoutAlign="space-between center">
               <div>
-                List of Suppliers</div>
+                List of Suppliers 
+                <button mat-icon-button aria-label="refresh supplier icon" (click)="refreshSuppliers()">
+                  <mat-icon>refresh</mat-icon>
+                </button>
+              </div>
               <div class="p-input-icon-left">
 
                 <mat-form-field>

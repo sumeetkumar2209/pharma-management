@@ -1,9 +1,27 @@
-import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { SupplierInterface } from './supplier.interface';
+import { map } from 'rxjs/operators';
 
 @Injectable()
-export class SupplierService {
+export class SupplierService{
     selectedSupplier!:SupplierInterface;
-    constructor() { }
+    headers = new HttpHeaders().set("Content-Type", "application/json");
+    constructor(private http: HttpClient) {
+
+     }
+
+    
+     fetchSuppliers(request:any): Observable<any>{
+        return this.http.post('/medley/api/suppliers', request, {headers:this.headers})
+     }
+
+     addSupplier(request:any): Observable<any>{
+        return this.http.post('/medley/api/supplier', request, {headers:this.headers, responseType: 'text' });
+     }
+     editSupplier(request:any): Observable<any>{
+        return this.http.put('/medley/api/suppliers', request, {headers:this.headers, responseType: 'text' });
+     }
     
 }

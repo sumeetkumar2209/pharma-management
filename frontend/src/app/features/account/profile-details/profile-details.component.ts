@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserDetails } from 'src/app/core/classes/user-details';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 
 @Component({
@@ -15,8 +16,10 @@ export class ProfileDetailsComponent implements OnInit {
   constructor(private authService: AuthenticationService) { }
 
   ngOnInit() {
-    this.fullName = this.authService.getCurrentUser().fullName;
-    this.email = this.authService.getCurrentUser().email;
+    this.authService.currentUserDetails.subscribe((user:UserDetails) => {
+      this.fullName = user.fullName;
+      this.email = user.email;
+    })
   }
 
 }

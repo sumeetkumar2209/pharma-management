@@ -1,15 +1,15 @@
-import { Component, ViewChild } from '@angular/core';
-import { Observable, ReplaySubject } from 'rxjs';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatSort } from '@angular/material/sort';
-import { MatPaginator } from '@angular/material/paginator';
+import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { NGXLogger } from 'ngx-logger';
 import { NotificationService } from 'src/app/core/services/notification.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { SupplierInterface } from '../supplier.interface';
 import { SupplierService } from '../supplier.service';
+import { AuthenticationService } from 'src/app/core/services/auth.service';
+import { SelectionItem } from 'src/app/core/interfaces/interface';
+import { APPROVAL_STATUS_OPTION, COUNTRY_OPTION, CURRENCY_OPTION, QUALIFICATION_STATUS_OPTION, STATUS_OPTION } from 'src/app/core/constants/constant';
+import * as moment from 'moment';
 
 
 @Component({
@@ -20,12 +20,12 @@ import { SupplierService } from '../supplier.service';
 export class AddSupplierPageComponent {
   addSupplierForm: FormGroup;
   supplier: any;
-  countryList: String[] = ['IN', 'UK', 'USA'];
-  currencyList: String[] = ['INR', 'USD', 'GBP'];
-  statusList: String[] = ['Active', 'Inactive'];
-  qualifyList: String[] = ['QUALIFIED', 'NOT-QUALIFIED'];
-  approverList: String[] = ['Vijay', 'Prakash'];
-  approvalStatusOption: String[] = ['Approved', 'Rejected'];
+  countryList: SelectionItem[] = COUNTRY_OPTION;
+  currencyList: SelectionItem[] = CURRENCY_OPTION;
+  statusList: SelectionItem[] = STATUS_OPTION;
+  qualifyList: SelectionItem[] = QUALIFICATION_STATUS_OPTION;
+  approverList: SelectionItem[] = [{ label: 'Vijay', value: '009e8ce0afcd4d1098ff7e26dbb2755c' }];
+  approvalStatusOption: SelectionItem[] = APPROVAL_STATUS_OPTION;
   editForm: boolean = false;
   approverForm: boolean = false;
   _supplier!: SupplierInterface;
@@ -33,7 +33,8 @@ export class AddSupplierPageComponent {
   constructor(private fb: FormBuilder, private titleService: Title,
     private logger: NGXLogger, private notificationService: NotificationService,
     private router: Router,
-    private service: SupplierService) {
+    private service: SupplierService,
+    private authService: AuthenticationService) {
     if (this.router.url.includes('edit')) {
       this.editForm = true;
       this.approverForm = false;
@@ -98,16 +99,65 @@ export class AddSupplierPageComponent {
     this.addSupplierForm.get('currency')?.setValue(this._supplier.currency);
     this.addSupplierForm.get('status')?.setValue(this._supplier.supplierStatus);
     this.addSupplierForm.get('qualification')?.setValue(this._supplier.supplierQualificationStatus);
-    this.addSupplierForm.get('validTill')?.setValue(this._supplier.validTill);
+    this.addSupplierForm.get('validTill')?.setValue(this._supplier.validTillDate);
     this.addSupplierForm.get('address1')?.setValue(this._supplier.addressLine1);
     this.addSupplierForm.get('address2')?.setValue(this._supplier.addressLine2);
     this.addSupplierForm.get('address3')?.setValue(this._supplier.addressLine3);
     this.addSupplierForm.get('town')?.setValue(this._supplier.town);
     this.addSupplierForm.get('postcode')?.setValue(this._supplier.postalCode);
-    this.addSupplierForm.get('approver')?.setValue(this._supplier.approver);
+    this.addSupplierForm.get('approver')?.setValue(this._supplier.approvedBy);
   }
   onSubmit(post: any) {
-    this.supplier = post;
+    console.log(post);
+    const addSupplierRequest: SupplierInterface = {
+      supplierId: post.supplierId,
+      initialAdditionDate: post.initialAdditionDate,
+      companyName: post.companyName,
+      contactName: post.contactName,
+      contactEmail: post.contactEmail,
+      contactNumber: post.contactNumber,// +post.contactCountry,
+      // contactCountry: post.contactCountry,
+      currency: post.currency,
+      supplierStatus: post.status,
+      supplierQualificationStatus: post.qualification,
+      validTillDate: moment(post.validTill).format('YYYY-MM-DD'),
+      addressLine1: post.address1,
+      addressLine2: post.address2,
+      addressLine3: post.address3,
+      town: post.town,
+      postalCode: post.postcode,
+      country: post.country,
+      approvedBy: post.approver,
+      userId: this.authService.getCurrentUserDetails().userId,
+    }
+
+    if (!this.editForm && !this.approverForm) {
+      this.service.addSupplier(addSupplierRequest).subscribe(res => {
+        console.log(res);
+
+        setTimeout(() => {
+          this.notificationService.openSnackBar('Supplier Added and sent for Approval. Redirecting to supplier page');
+        });
+        setTimeout(() => {
+          this.addSupplierForm.reset()
+          this.router.navigate(['/supplier']);
+        }, 2000);
+      });
+    } else if (this.editForm) {
+      this.service.editSupplier(addSupplierRequest).subscribe(res => {
+        console.log(res);
+        setTimeout(() => {
+          this.notificationService.openSnackBar('Supplier Modified and sent for Approval. Redirecting to supplier page');
+        });
+        setTimeout(() => {
+          this.addSupplierForm.reset()
+          this.router.navigate(['/supplier']);
+        }, 2000);
+      });
+    } else {
+
+    }
+
   }
 
   get apControls(): { [key: string]: AbstractControl } {
