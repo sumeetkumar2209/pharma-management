@@ -72,7 +72,8 @@ export class AddSupplierPageComponent {
       this.populateFormFields();
     } else if (this.approverForm) {
 
-
+      this._supplier = this.service.selectedSupplier;
+      this.populateFormFields();
 
     }
 
@@ -84,7 +85,17 @@ export class AddSupplierPageComponent {
     this.logger.log('Add Supplier loaded');
 
     setTimeout(() => {
-      this.notificationService.openSnackBar('Fill in the form to Add Supplier!');
+      
+      if (this.editForm) {
+        this.notificationService.openSnackBar('Edit Supplier Form and save to Modify Supplier!');
+
+      } else if (this.approverForm) {
+  
+        this.notificationService.openSnackBar('Select Approver Status to Approve/Reject Supplier!');
+  
+      }else{
+        this.notificationService.openSnackBar('Fill in the Supplier form to Add Supplier!');
+      }
     });
 
   }
@@ -155,7 +166,23 @@ export class AddSupplierPageComponent {
         }, 2000);
       });
     } else {
-
+      const requestBody = {
+        supplierId: this._supplier.supplierId,
+        approvalStatus:post.approvalStatus,
+        approvalComments:post.approvalComments
+      }
+      const approvalStatus = post.approvalStatus;
+      const approvalComments = post.approvalComments;
+      this.service.approveSupplier(requestBody).subscribe(res => {
+        console.log(res);
+        setTimeout(() => {
+          this.notificationService.openSnackBar('Supplier Modified and sent for Approval. Redirecting to supplier page');
+        });
+        setTimeout(() => {
+          this.addSupplierForm.reset()
+          this.router.navigate(['/supplier']);
+        }, 2000);
+      });
     }
 
   }
@@ -171,5 +198,10 @@ export class AddSupplierPageComponent {
   }
 
   save() { }
-
+  cancelAction(){
+    if (this.approverForm){
+      this.router.navigate(['/supplier/pending']);
+    }else{
+    this.router.navigate(['/supplier']);}
+  }
 }

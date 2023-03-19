@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { LayoutComponent } from '../../shared/layout/layout.component';
 import { AddSupplierPageComponent } from './add-supplier-page/add-supplier-page.component';
+import { PendingSupplierPageComponent } from './pending-supplier-page/pending-supplier-page.component';
 import { SupplierPageComponent } from './supplier-page/supplier-page.component';
 
 const routes: Routes = [
@@ -14,6 +15,7 @@ const routes: Routes = [
       { path: 'add', component: AddSupplierPageComponent },
       { path: 'edit', component: AddSupplierPageComponent },
       { path: 'approve', component: AddSupplierPageComponent },
+      { path: 'pending', component: PendingSupplierPageComponent },
 
     ]
   }

@@ -181,12 +181,12 @@
 
         <div>
 
-          <button mat-raised-button [routerLink]="['/supplier']" class="demo-button">
+          <button mat-raised-button (click)="cancelAction()" class="demo-button">
             Cancel
           </button>
         </div>
         <div style="margin:18px 0px">
-          <button mat-raised-button (click)="addSupplierForm.reset();" class="demo-button">
+          <button mat-raised-button (click)="addSupplierForm.reset();" class="demo-button" *ngIf="!approverForm">
             Clear
           </button>
           <button mat-raised-button (click)="save()" type="submit" class="demo-button">
