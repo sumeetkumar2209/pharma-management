@@ -19,8 +19,11 @@ public class MenuDO implements Serializable {
     private int menuId;
 
     private String label;
-    private String urlMapping;
-    private int level;
-    private int sortOrder;
+
+    private String icon;
+
+    private String link;
+
+    private int order;
 
 }

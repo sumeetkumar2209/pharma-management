@@ -23,6 +23,6 @@ INSERT INTO QUALIFICATION_STATUS (QUALIFICATION_CODE,QUALIFICATION_NAME )  VALUE
 INSERT INTO MENU VALUES(1,'Supplier',1,1,'/medley/api/suppliers');
 INSERT INTO MENU VALUES(2,'Customer',1,1,'/medley/api/customers');
 
-insert into ROLE_MENU (1,1);
-insert into ROLE_MENU (1,2);
+insert into ROLE_MENU values (1,1);
+insert into ROLE_MENU values(1,2);
 
