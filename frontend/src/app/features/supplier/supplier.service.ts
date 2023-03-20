@@ -21,7 +21,15 @@ export class SupplierService{
         return this.http.post('/medley/api/supplier', request, {headers:this.headers, responseType: 'text' });
      }
      editSupplier(request:any): Observable<any>{
-        return this.http.put('/medley/api/suppliers', request, {headers:this.headers, responseType: 'text' });
+        return this.http.put('/medley/api/supplier', request, {headers:this.headers, responseType: 'text' });
      }
+     approveSupplier(request:any): Observable<any>{
+        return this.http.put(`/medley/api/approveRejectSupplier`, request, {headers:this.headers, responseType: 'text' });
+     }
+
+     fetchPendingSuppliers(request:any): Observable<any>{
+      return this.http.post('/medley/api/suppliers', request, {headers:this.headers})
+   }
+     
     
 }

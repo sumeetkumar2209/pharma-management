@@ -4,17 +4,16 @@
 
       <div>
 
-        <h2><mat-icon>flare</mat-icon>Supplier Overview</h2>
+        <h2><mat-icon>flare</mat-icon>Workflow</h2>
       </div>
       <div style="margin:18px 0px">
-        <button mat-raised-button [routerLink]="['/supplier/add']"  class="demo-button">
-          New Supplier
-        </button>
-        <button mat-raised-button [routerLink]="['/supplier/pending']"  class="demo-button">
-          Workflow
+       
+        <button mat-raised-button [routerLink]="['/supplier']"  class="demo-button">
+          Return to Overview
         </button>
 
       </div>
+     
     </div>
     <mat-accordion>
       <mat-expansion-panel [expanded]="true" style="margin-bottom:16px;">
@@ -40,8 +39,8 @@
               <input matInput #input formControlName="companyName">
             </mat-form-field>
             <mat-form-field fxFlex="25%">
-              <mat-label>Postcode</mat-label>
-              <input matInput #input formControlName="postalCode">
+              <mat-label>Reveiw Status</mat-label>
+              <input matInput #input formControlName="reviewStatus">
             </mat-form-field>
           
             <mat-form-field fxFlex="25%" >
@@ -63,11 +62,6 @@
         </form>
       </mat-expansion-panel></mat-accordion>
 
-
-
-
-
-
     <mat-card>
       <mat-card-content>
         <p-table [columns]="tableSelectedColumns" [value]="suppliers" [tableStyle]="{'min-width': '50rem'}" dataKey="supplierId"
@@ -80,7 +74,7 @@
           <ng-template pTemplate="caption">
             <div class="table-header" fxLayout="row" fxLayoutAlign="space-between center">
               <div>
-                List of Suppliers 
+                Suppliers in Workflow
                 <button mat-icon-button aria-label="refresh supplier icon" (click)="refreshSuppliers()">
                   <mat-icon>refresh</mat-icon>
                 </button>
@@ -95,9 +89,9 @@
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
-                <button mat-icon-button aria-label="edit supplier icon" (click)="print()">
+                <!-- <button mat-icon-button aria-label="edit supplier icon" (click)="print()">
                   <mat-icon>print</mat-icon>
-                </button>
+                </button> -->
               </div>
             </div>
 
@@ -105,7 +99,11 @@
           <ng-template pTemplate="header" let-columns>
             <tr>
               <th style="width: 4rem">
-                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>Select All
+                <div class="flex justify-content-between align-items-center">
+                 
+                 Approve
+
+                </div>
               </th>
 
 
@@ -127,8 +125,13 @@
           <ng-template pTemplate="body" let-supplier let-columns="columns">
             <tr>
 
-              <td>
+              <!-- <td>
                 <p-tableCheckbox [value]="supplier"></p-tableCheckbox>
+              </td> -->
+              <td style="text-align: center">
+                <button mat-icon-button aria-label="approve supplier icon" (click)="approve(supplier)">
+                  <mat-icon>check_circle</mat-icon>
+                </button>
               </td>
               <td *ngFor="let col of columns">
                 <span class="p-column-title">Supplier Id</span>
