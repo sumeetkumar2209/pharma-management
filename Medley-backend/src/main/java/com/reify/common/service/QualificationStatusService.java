@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface QualificationStatusService {
 
-    public List<QualificationStatusDTO> getAllSupplierQualificationStatus();
+    public List<QualificationStatusDTO> getAllQualificationStatus();
 }

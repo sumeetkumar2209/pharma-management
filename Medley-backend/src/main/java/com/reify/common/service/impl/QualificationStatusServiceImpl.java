@@ -22,11 +22,11 @@ public class QualificationStatusServiceImpl implements QualificationStatusServic
     QualificationStatusRepo supplierQualificationStatusRepo;
 
     @Override
-    public List<QualificationStatusDTO> getAllSupplierQualificationStatus() {
+    public List<QualificationStatusDTO> getAllQualificationStatus() {
 
     List<QualificationStatusDO> supplierQualificationStatusDOList = supplierQualificationStatusRepo.findAll();
 
-    List<QualificationStatusDTO> supplierQualificationStatusDTOList;
+    List<QualificationStatusDTO> supplierQualificationStatusDTOList = null;
 
     if(!supplierQualificationStatusDOList.isEmpty()){
 
@@ -37,10 +37,8 @@ public class QualificationStatusServiceImpl implements QualificationStatusServic
             return supplierQualificationStatusDTO;
         }).collect(Collectors.toList());
 
-        return supplierQualificationStatusDTOList;
-
     }
 
-        return null;
+        return supplierQualificationStatusDTOList;
     }
 }

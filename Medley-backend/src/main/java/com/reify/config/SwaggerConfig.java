@@ -18,7 +18,8 @@ public class SwaggerConfig {
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.reify.login.controller")
                         .or(RequestHandlerSelectors.basePackage("com.reify.supplier.controller")
-                                .or(RequestHandlerSelectors.basePackage("com.reify.customer.controller"))) )
+                                .or(RequestHandlerSelectors.basePackage("com.reify.customer.controller")))
+                        .or(RequestHandlerSelectors.basePackage("com.reify.common.controller")))
                 .paths(PathSelectors.any())
                 .build();
     }

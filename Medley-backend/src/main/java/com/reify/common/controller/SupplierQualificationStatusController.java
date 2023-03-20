@@ -24,7 +24,7 @@ public class SupplierQualificationStatusController {
     @GetMapping(value = "/getAllSupplierQualificationStatus")
     public ResponseEntity<?> getAllSupplierQualificationStatus(@RequestHeader("Authorization") String token){
 
-        List<QualificationStatusDTO> supplierQualificationStatusList = supplierQualificationStatusService.getAllSupplierQualificationStatus();
+        List<QualificationStatusDTO> supplierQualificationStatusList = supplierQualificationStatusService.getAllQualificationStatus();
 
         JSONArray jsonArray = new JSONArray();
 
