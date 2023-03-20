@@ -87,5 +87,7 @@ public class SupplierDO_INT implements Serializable {
     private ReviewStatusDO reviewStatus;
     private String userId;
 
+    private String comments;
+
 
 }

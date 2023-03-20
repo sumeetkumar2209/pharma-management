@@ -1,6 +1,7 @@
 package com.reify.supplier.service.impl;
 
 import com.reify.common.DTO.*;
+import com.reify.common.utils.DateConvertorUtils;
 import com.reify.supplier.DTO.SupplierDTO;
 import com.reify.supplier.DTO.SupplierSearchDTO;
 import com.reify.supplier.model.SupplierDO;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -69,6 +71,8 @@ public class SupplierSearchServiceImpl implements SupplierSearchService {
                supplierDTO.setSupplierStatus(supplierStatusDTO.getStatusCode());
                supplierDTO.setReviewStatus(reviewStatusDTO.getReviewCode());
                supplierDTO.setSupplierQualificationStatus(supplierQualificationStatusDTO.getQualificationCode());
+               supplierDTO.setValidTillDate(new Date(obj.getValidTill()));
+
 
                return supplierDTO;
 
@@ -78,5 +82,11 @@ public class SupplierSearchServiceImpl implements SupplierSearchService {
        }
 
         return null;
+    }
+
+    @Override
+    public long getTotalSupplierCount() {
+
+        return supplierRepo.count();
     }
 }

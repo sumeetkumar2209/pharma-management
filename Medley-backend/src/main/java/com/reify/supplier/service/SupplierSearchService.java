@@ -8,4 +8,6 @@ import java.util.List;
 public interface SupplierSearchService {
 
     public List<SupplierDTO> getSupplier(SupplierSearchDTO supplierSearchDTO);
+
+    public long getTotalSupplierCount();
 }

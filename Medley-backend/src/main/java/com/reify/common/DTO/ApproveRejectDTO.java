@@ -1,21 +1,19 @@
-package com.reify.supplier.DTO;
+package com.reify.common.DTO;
 
 import lombok.Data;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-@Data
 @Component
+@Data
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class SupplierSearchDTO {
+public class ApproveRejectDTO {
 
-    private FilterDTO filter;
+    private String workflowId;
 
-    private int startIndex;
+    private String decision;
 
-    private int endIndex;
-
-    private String orderBy;
+    private String comments;
 
 }

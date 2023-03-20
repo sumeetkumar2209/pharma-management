@@ -47,5 +47,7 @@ public class SupplierDTO {
 
     private String option;
 
+    private String comments;
+
 
 }

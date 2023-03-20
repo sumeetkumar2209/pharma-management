@@ -82,4 +82,6 @@ public class SupplierDO {
     @JoinColumn(name = "reviewCode")
     private ReviewStatusDO reviewStatus;
 
+    private String comments;
+
 }

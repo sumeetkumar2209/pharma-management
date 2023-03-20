@@ -1,4 +1,4 @@
-package com.reify.supplier.service;
+package com.reify.common.service;
 
 import com.reify.common.DTO.ReviewStatusDTO;
 

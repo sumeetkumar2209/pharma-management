@@ -1,4 +1,4 @@
-package com.reify.supplier.repo;
+package com.reify.common.repo;
 
 import com.reify.common.model.ReviewStatusDO;
 import org.springframework.data.jpa.repository.JpaRepository;

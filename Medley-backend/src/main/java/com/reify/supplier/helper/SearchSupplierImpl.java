@@ -65,7 +65,12 @@ public class SearchSupplierImpl implements SearchSupplier{
                 cb.and(predicates.toArray(new Predicate[predicates.size()]))
         );
 
-        query.orderBy(cb.desc(suppliers.get("lastUpdatedTimeStamp")));
+        if(supplierSearchDTO.getOrderBy() != null){
+
+            query.orderBy(cb.desc(suppliers.get(supplierSearchDTO.getOrderBy())));
+        } else {
+            query.orderBy(cb.desc(suppliers.get("lastUpdatedTimeStamp")));
+        }
 
         int maxResult = supplierSearchDTO.getEndIndex() - supplierSearchDTO.getStartIndex();
 

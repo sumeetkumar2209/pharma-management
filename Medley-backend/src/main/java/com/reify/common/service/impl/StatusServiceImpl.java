@@ -1,9 +1,9 @@
-package com.reify.supplier.service.impl;
+package com.reify.common.service.impl;
 
 import com.reify.common.DTO.StatusDTO;
 import com.reify.common.model.StatusDO;
-import com.reify.supplier.repo.SupplierStatusRepo;
-import com.reify.supplier.service.SupplierStatusService;
+import com.reify.common.repo.StatusRepo;
+import com.reify.common.service.StatusService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -13,10 +13,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class SupplierStatusServiceImpl implements SupplierStatusService {
+public class StatusServiceImpl implements StatusService {
 
     @Autowired
-    SupplierStatusRepo supplierStatusRepo;
+    StatusRepo supplierStatusRepo;
 
     @Autowired
     ApplicationContext context;

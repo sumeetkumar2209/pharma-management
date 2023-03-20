@@ -1,5 +1,6 @@
 package com.reify.supplier.controller;
 
+import com.reify.common.DTO.ApproveRejectDTO;
 import com.reify.common.exception.RecordNotFoundException;
 import com.reify.supplier.DTO.SupplierDTO;
 import com.reify.supplier.service.SupplierService;
@@ -39,10 +40,9 @@ public class SupplierController {
 
     @PostMapping(value = "/approveRejectSupplier")
     public ResponseEntity<?> approveRejectSupplier(@RequestHeader("Authorization") String token,
-                                             @RequestParam("workflowId") String workflowId,
-                                                   @RequestParam String decision){
+                                                   ApproveRejectDTO approveRejectDTO){
 
-        boolean res = supplierService.approveRejectSupplier(workflowId, decision);
+        boolean res = supplierService.approveRejectSupplier(approveRejectDTO);
         if (res) {
             return ResponseEntity.status(HttpStatus.OK).body("Supplier approved");
         }

@@ -1,7 +1,7 @@
-package com.reify.supplier.controller;
+package com.reify.common.controller;
 
-import com.reify.common.DTO.StatusDTO;
-import com.reify.supplier.service.SupplierStatusService;
+import com.reify.common.DTO.ReviewStatusDTO;
+import com.reify.common.service.ReviewStatusService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,28 +15,30 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/supplierStatus")
-public class SupplierStatusController {
+@RequestMapping(value = "/reviewStatus")
+public class ReviewController {
 
     @Autowired
-    SupplierStatusService supplierStatusService;
+    ReviewStatusService reviewStatusService;
 
-    @GetMapping(value = "/getAllSupplierStatus")
-    public ResponseEntity<?> getAllSupplierStatus(@RequestHeader("Authorization") String token){
+    @GetMapping(value = "/getAllReviewStatus")
+    public ResponseEntity<?> getAllReviewStatus(@RequestHeader("Authorization") String token){
 
-        List<StatusDTO> supplierStatusList = supplierStatusService.getAllStatus();
+        List<ReviewStatusDTO> reviewStatusList = reviewStatusService.getAllRoleStatus();
 
         JSONArray jsonArray = new JSONArray();
 
-        for (StatusDTO supplierStatusDTO :supplierStatusList) {
+        for ( ReviewStatusDTO reviewStatusDTO : reviewStatusList) {
 
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("code", supplierStatusDTO.getStatusCode());
-            jsonObject.put("supplierStatus",supplierStatusDTO.getStatusName());
+
+            jsonObject.put("code",reviewStatusDTO.getReviewCode());
+            jsonObject.put("status",reviewStatusDTO.getReviewName());
 
             jsonArray.put(jsonObject);
-        }
 
+        }
         return ResponseEntity.status(HttpStatus.OK).body(jsonArray.toString());
+
     }
 }

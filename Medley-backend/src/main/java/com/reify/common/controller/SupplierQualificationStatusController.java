@@ -1,7 +1,7 @@
-package com.reify.supplier.controller;
+package com.reify.common.controller;
 
 import com.reify.common.DTO.QualificationStatusDTO;
-import com.reify.supplier.service.SupplierQualificationStatusService;
+import com.reify.common.service.QualificationStatusService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import java.util.List;
 public class SupplierQualificationStatusController {
 
     @Autowired
-    SupplierQualificationStatusService supplierQualificationStatusService;
+    QualificationStatusService supplierQualificationStatusService;
 
     @GetMapping(value = "/getAllSupplierQualificationStatus")
     public ResponseEntity<?> getAllSupplierQualificationStatus(@RequestHeader("Authorization") String token){

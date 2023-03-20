@@ -1,5 +1,6 @@
 package com.reify.supplier.controller;
 
+import com.reify.common.utils.DateConvertorUtils;
 import com.reify.supplier.DTO.SupplierDTO;
 import com.reify.supplier.DTO.SupplierSearchDTO;
 import com.reify.supplier.service.SupplierSearchService;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @RestController
@@ -26,6 +28,9 @@ public class SupplierSearchController {
 
        List<SupplierDTO> supplierDTOList = supplierSearchService.getSupplier(supplierSearchDTO);
 
+       long supplierCount = supplierSearchService.getTotalSupplierCount();
+
+
         JSONArray jsonArray = new JSONArray();
 
         if(CollectionUtils.isEmpty(supplierDTOList)){
@@ -37,19 +42,30 @@ public class SupplierSearchController {
 
             JSONObject jsonObject = new JSONObject();
 
-            jsonObject.put("supplierId",supplierDTO.getSupplierId());
-            jsonObject.put("companyName",supplierDTO.getCompanyName());
-            jsonObject.put("contactName",supplierDTO.getContactName());
-            jsonObject.put("contactEmail",supplierDTO.getContactEmail());
-            jsonObject.put("contactNumber",supplierDTO.getContactNumber());
-            jsonObject.put("countryCode",supplierDTO.getCountry());
-            jsonObject.put("currencyCode",supplierDTO.getCurrency());
-            jsonObject.put("supplierQualificationStatusCode",supplierDTO.getSupplierQualificationStatus());
-            jsonObject.put("validTillDate",supplierDTO.getValidTillDate());
-            jsonObject.put("reviewStatusCode",supplierDTO.getReviewStatus());
-
-            jsonObject.put("supplierStatusCode",supplierDTO.getSupplierStatus());
-
+            jsonObject.put("workFlowId", supplierDTO.getWorkFlowId());
+            jsonObject.put("supplierId", supplierDTO.getSupplierId());
+            jsonObject.put("supplierStatus", supplierDTO.getSupplierStatus());
+            jsonObject.put("companyName", supplierDTO.getCompanyName());
+            jsonObject.put("contactName", supplierDTO.getContactName());
+            jsonObject.put("contactNumber", supplierDTO.getContactNumber());
+            jsonObject.put("contactEmail", supplierDTO.getContactEmail());
+            jsonObject.put("addressLine1", supplierDTO.getAddressLine1());
+            jsonObject.put("addressLine2", supplierDTO.getAddressLine2());
+            jsonObject.put("addressLine3", supplierDTO.getAddressLine3());
+            jsonObject.put("town", supplierDTO.getTown());
+            jsonObject.put("country", supplierDTO.getCountry());
+            jsonObject.put("postalCode", supplierDTO.getPostalCode());
+            jsonObject.put("supplierQualificationStatus", supplierDTO.getSupplierQualificationStatus());
+            jsonObject.put("validTillDate", new SimpleDateFormat("dd/MM/yyyy").format(supplierDTO.getValidTillDate()));
+            jsonObject.put("currency", supplierDTO.getCurrency());
+            jsonObject.put("approver", supplierDTO.getApprover());
+            jsonObject.put("userId", supplierDTO.getUserId());
+            jsonObject.put("initialAdditionDate", DateConvertorUtils.eprocToDDMMYYYYY(supplierDTO.getInitialAdditionDate()));
+            jsonObject.put("lastUpdatedBy", supplierDTO.getLastUpdatedBy());
+            jsonObject.put("lastUpdatedTimeStamp", DateConvertorUtils.eprocToDDMMYYYYY(supplierDTO.getLastUpdatedTimeStamp()));
+            jsonObject.put("reviewStatus", supplierDTO.getReviewStatus());
+            jsonObject.put("comments", supplierDTO.getComments());
+            jsonObject.put("totalCount", supplierCount);
 
             jsonArray.put(jsonObject);
 

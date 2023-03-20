@@ -1,9 +1,9 @@
-package com.reify.supplier.service.impl;
+package com.reify.common.service.impl;
 
 import com.reify.common.DTO.ReviewStatusDTO;
 import com.reify.common.model.ReviewStatusDO;
-import com.reify.supplier.repo.ReviewStatusRepo;
-import com.reify.supplier.service.ReviewStatusService;
+import com.reify.common.repo.ReviewStatusRepo;
+import com.reify.common.service.ReviewStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;

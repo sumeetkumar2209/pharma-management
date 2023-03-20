@@ -1,10 +1,10 @@
-package com.reify.supplier.service;
+package com.reify.common.service;
 
 import com.reify.common.DTO.QualificationStatusDTO;
 
 import java.util.List;
 
-public interface SupplierQualificationStatusService {
+public interface QualificationStatusService {
 
     public List<QualificationStatusDTO> getAllSupplierQualificationStatus();
 }

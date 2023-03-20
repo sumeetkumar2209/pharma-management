@@ -1,5 +1,6 @@
 package com.reify.supplier.service.impl;
 
+import com.reify.common.DTO.ApproveRejectDTO;
 import com.reify.common.exception.RecordNotFoundException;
 import com.reify.common.model.*;
 import com.reify.supplier.DTO.SupplierDTO;
@@ -47,7 +48,7 @@ public class SupplierServiceImpl implements SupplierService {
         supplierDO_INT.setWorkFlowId(supplierDTO.getWorkFlowId());
         supplierDO_INT.setInitialAdditionDate(System.currentTimeMillis()/1000);
         supplierDO_INT.setLastUpdatedTimeStamp(System.currentTimeMillis()/1000);
-        supplierDO_INT.setValidTill(supplierDTO.getValidTillDate().getTime());
+        supplierDO_INT.setValidTill(supplierDTO.getValidTillDate().getTime()/1000);
 
         if("DRAFT".equalsIgnoreCase(supplierDTO.getOption())) {
             reviewStatusDO.setReviewCode("DR");
@@ -84,7 +85,7 @@ public class SupplierServiceImpl implements SupplierService {
 
         supplierAuditDO.setInitialAdditionDate(System.currentTimeMillis()/1000);
         supplierAuditDO.setLastUpdatedTimeStamp(System.currentTimeMillis()/1000);
-        supplierAuditDO.setValidTill(supplierDTO.getValidTillDate().getTime());
+        supplierAuditDO.setValidTill(supplierDTO.getValidTillDate().getTime()/ 1000);
         supplierAuditDO.setWorkFlowId(insertedSupplierWorkFlowObj.getWorkFlowId());
 
         supplierAuditRepo.save(supplierAuditDO);
@@ -144,9 +145,9 @@ public class SupplierServiceImpl implements SupplierService {
     }
     @Transactional
     @Override
-    public boolean approveRejectSupplier(String workflowId, String decision) {
+    public boolean approveRejectSupplier(ApproveRejectDTO approveRejectDTO) {
 
-       Optional<SupplierDO_INT> optionalSupplierDOInt = supplierIntRepo.findById(workflowId);
+       Optional<SupplierDO_INT> optionalSupplierDOInt = supplierIntRepo.findById(approveRejectDTO.getWorkflowId());
 
        if(optionalSupplierDOInt.isPresent()){
 
@@ -160,8 +161,8 @@ public class SupplierServiceImpl implements SupplierService {
 
               ReviewStatusDO reviewStatusDO = context.getBean(ReviewStatusDO.class);
 
-              if(decision.equalsIgnoreCase("APPROVE") ||
-                      decision.equalsIgnoreCase("AP")) {
+              if(approveRejectDTO.getDecision().equalsIgnoreCase("APPROVE") ||
+                      approveRejectDTO.getDecision().equalsIgnoreCase("AP")) {
                   reviewStatusDO.setReviewCode("AP");
               } else {
                   reviewStatusDO.setReviewCode("RE");
@@ -170,11 +171,13 @@ public class SupplierServiceImpl implements SupplierService {
               supplierDO.setReviewStatus(reviewStatusDO);
               supplierDO.setLastUpdatedTimeStamp(System.currentTimeMillis()/1000);
               supplierDO.setLastUpdatedBy(supplierDOInt.getApprover());
+              supplierDO.setComments(approveRejectDTO.getComments());
 
               supplierRepo.save(supplierDO);
 
               supplierDOInt.setReviewStatus(reviewStatusDO);
               supplierDOInt.setLastUpdatedTimeStamp(System.currentTimeMillis()/1000);
+              supplierDOInt.setComments(approveRejectDTO.getComments());
               supplierIntRepo.save(supplierDOInt);
 
               SupplierAuditDO supplierAuditDO = context.getBean(SupplierAuditDO.class);
@@ -204,8 +207,9 @@ public class SupplierServiceImpl implements SupplierService {
 
               supplierAuditDO.setInitialAdditionDate(System.currentTimeMillis()/1000);
               supplierAuditDO.setLastUpdatedTimeStamp(System.currentTimeMillis()/1000);
-              supplierAuditDO.setValidTill(supplierDO.getValidTill());
-              supplierAuditDO.setWorkFlowId(workflowId);
+              supplierAuditDO.setValidTill(supplierDO.getValidTill()/ 1000);
+              supplierAuditDO.setWorkFlowId(approveRejectDTO.getWorkflowId());
+              supplierAuditDO.setComments(approveRejectDTO.getComments());
 
               supplierAuditRepo.save(supplierAuditDO);
 

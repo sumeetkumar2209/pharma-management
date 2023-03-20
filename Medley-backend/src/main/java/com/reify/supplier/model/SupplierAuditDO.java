@@ -79,4 +79,6 @@ public class SupplierAuditDO implements Serializable {
     @JoinColumn(name = "reviewCode")
     private ReviewStatusDO reviewStatus;
     private String userId;
+
+    private String comments;
 }
