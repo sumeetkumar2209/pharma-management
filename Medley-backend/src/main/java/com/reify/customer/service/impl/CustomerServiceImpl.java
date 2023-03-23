@@ -1,11 +1,14 @@
 package com.reify.customer.service.impl;
 
+import com.reify.common.DTO.ApproveRejectDTO;
 import com.reify.common.exception.InvalidStatusException;
 import com.reify.common.exception.RecordNotFoundException;
 import com.reify.common.model.*;
 import com.reify.customer.DTO.CustomerDTO;
+import com.reify.customer.model.CustomerAuditDO;
 import com.reify.customer.model.CustomerDO;
 import com.reify.customer.model.CustomerDO_INT;
+import com.reify.customer.repo.CustomerAuditRepo;
 import com.reify.customer.repo.CustomerIntRepo;
 import com.reify.customer.repo.CustomerRepo;
 import com.reify.customer.service.CustomerService;
@@ -14,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
@@ -28,13 +32,17 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     CustomerRepo customerRepo;
 
+    @Autowired
+    CustomerAuditRepo customerAuditRepo;
+
+    @Transactional
     @Override
     public void addCustomer(CustomerDTO customerDTO) {
 
         CustomerDO_INT customerDOInt = context.getBean(CustomerDO_INT.class);
 
         BeanUtils.copyProperties(customerDTO,customerDOInt);
-        System.out.println(customerDOInt.toString());
+
 
         CountryDO countryDO = context.getBean(CountryDO.class);
         countryDO.setCountryCode(customerDTO.getCountry().getCountryCode());
@@ -46,45 +54,63 @@ public class CustomerServiceImpl implements CustomerService {
 
         ReviewStatusDO reviewStatusDO = context.getBean(ReviewStatusDO.class);
         reviewStatusDO.setReviewCode(customerDTO.getReviewStatus().getReviewCode());
-        customerDOInt.setReviewStatus(reviewStatusDO);
-
         StatusDO customerStatusDO = context.getBean(StatusDO.class);
         customerStatusDO.setStatusCode(customerDTO.getCustomerStatus().getStatusCode());
-        customerDOInt.setCustomerStatus(customerStatusDO);
-
         QualificationStatusDO qualificationStatusDO = context.getBean(QualificationStatusDO.class);
         qualificationStatusDO.setQualificationCode(customerDTO.getCustomerQualificationStatus().getQualificationCode());
+
+        customerDOInt.setReviewStatus(reviewStatusDO);
+        customerDOInt.setCustomerStatus(customerStatusDO);
         customerDOInt.setCustomerQualificationStatus(qualificationStatusDO);
 
-        customerIntRepo.save(customerDOInt);
+        customerDOInt.setInitialAdditionDate(System.currentTimeMillis()/1000);
+        customerDOInt.setLastUpdatedTimeStamp(System.currentTimeMillis()/1000);
+        customerDOInt.setValidTill(customerDTO.getValidTillDate().getTime()/1000);
+
+        CustomerDO_INT insertedCustomerWorkFlowObj= customerIntRepo.save(customerDOInt);
+
+        //code added for audit table
+
+        CustomerAuditDO customerAuditDO = context.getBean(CustomerAuditDO.class);
+        BeanUtils.copyProperties(customerDTO,customerAuditDO);
+        customerAuditDO.setCustomerStatus(customerStatusDO);
+        customerAuditDO.setReviewStatus(reviewStatusDO);
+        customerAuditDO.setCustomerQualificationStatus(qualificationStatusDO);
+        customerAuditDO.setCountry(countryDO);
+        customerAuditDO.setCurrency(currencyDO);
+
+        customerAuditDO.setInitialAdditionDate(System.currentTimeMillis()/1000);
+        customerAuditDO.setLastUpdatedTimeStamp(System.currentTimeMillis()/1000);
+        customerAuditDO.setValidTill(customerDTO.getValidTillDate().getTime()/1000);
+        customerAuditDO.setWorkFlowId(insertedCustomerWorkFlowObj.getWorkFlowId());
+
+        customerAuditRepo.save(customerAuditDO);
 
     }
 
     @Override
     public void modifyCustomer(CustomerDTO customerDTO) throws RecordNotFoundException, InvalidStatusException {
 
-       Optional<CustomerDO_INT> CustomerOpt = customerIntRepo.findById(customerDTO.getCustomerId());
+       Optional<CustomerDO> CustomerOpt = customerRepo.findById(customerDTO.getCustomerId());
 
 
        if(!CustomerOpt.isPresent()){
 
            throw new RecordNotFoundException("record not found");
        }
-       CustomerDO_INT customerDOInt = CustomerOpt.get();
+       CustomerDO customerDO = CustomerOpt.get();
 
-       if(!(customerDOInt.getReviewStatus().getReviewCode().equalsIgnoreCase("AP")
-       || customerDOInt.getReviewStatus().getReviewCode().equalsIgnoreCase("RE"))){
+       CustomerDO_INT customerDOInt = context.getBean(CustomerDO_INT.class);
 
-         throw new InvalidStatusException("Only Approved or Rejected Review Status can be modified");
+       BeanUtils.copyProperties(customerDO, customerDOInt);
 
-       }
         customerDOInt.setCustomerName(customerDTO.getCustomerName());
         customerDOInt.setContactName(customerDTO.getContactName());
         customerDOInt.setContactNumber(customerDTO.getContactNumber());
         customerDOInt.setAddressLine1(customerDTO.getAddressLine1());
         customerDOInt.setAddressLine2(customerDTO.getAddressLine2());
         customerDOInt.setAddressLine3(customerDTO.getAddressLine3());
-        customerDOInt.setApprovedBy(customerDTO.getApprovedBy());
+        customerDOInt.setApprover(customerDTO.getApprover());
         customerDOInt.setContactEmail(customerDTO.getContactEmail());
         customerDOInt.setPostalCode(customerDTO.getPostalCode());
         customerDOInt.setTown(customerDTO.getTown());
@@ -118,9 +144,9 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public boolean approveRejectCustomer(String customerId, String decision) {
+    public boolean approveRejectCustomer(ApproveRejectDTO approveRejectDTO) {
 
-        Optional<CustomerDO_INT>  customerIntOpt= customerIntRepo.findById(customerId);
+        Optional<CustomerDO_INT>  customerIntOpt= customerIntRepo.findById(approveRejectDTO.getWorkflowId());
 
         if (customerIntOpt.isPresent()){
 
@@ -134,21 +160,57 @@ public class CustomerServiceImpl implements CustomerService {
 
                 ReviewStatusDO reviewStatusDO = context.getBean(ReviewStatusDO.class);
 
-                if (decision.equalsIgnoreCase("AP") ||
-                        decision.equalsIgnoreCase("APPROVE")){
+                if (approveRejectDTO.getDecision().equalsIgnoreCase("AP") ||
+                        approveRejectDTO.getDecision().equalsIgnoreCase("APPROVE")){
 
                     reviewStatusDO.setReviewCode("AP");
 
                 } else {
                     reviewStatusDO.setReviewCode("RE");
                 }
+                CountryDO countryDO = context.getBean(CountryDO.class);
+                countryDO.setCountryCode(customerDOInt.getCountry().getCountryCode());
+                CurrencyDO currencyDO = context.getBean(CurrencyDO.class);
+                currencyDO.setCurrencyCode(customerDOInt.getCurrency().getCurrencyCode());
+                StatusDO customerStatusDO = context.getBean(StatusDO.class);
+                customerStatusDO.setStatusCode(customerDOInt.getCustomerStatus().getStatusCode());
+                QualificationStatusDO customerQualificationStatusDO = context.getBean(QualificationStatusDO.class);
+                customerQualificationStatusDO.setQualificationCode(customerDOInt.getCustomerQualificationStatus().getQualificationCode());
+
+
+                customerDO.setCountry(countryDO);
+                customerDO.setCurrency(currencyDO);
+                customerDO.setCustomerStatus(customerStatusDO);
+                customerDO.setCustomerQualificationStatus(customerQualificationStatusDO);
                 customerDO.setReviewStatus(reviewStatusDO);
                 customerDO.setLastUpdatedTimeStamp(System.currentTimeMillis()/1000);
+                customerDO.setLastUpdatedBy(customerDOInt.getApprover());
+                customerDO.setComments(approveRejectDTO.getComments());
+
                 customerRepo.save(customerDO);
 
                 customerDOInt.setReviewStatus(reviewStatusDO);
                 customerDOInt.setLastUpdatedTimeStamp(System.currentTimeMillis()/1000);
+                customerDO.setComments(approveRejectDTO.getComments());
                 customerIntRepo.save(customerDOInt);
+
+                CustomerAuditDO customerAuditDO = context.getBean(CustomerAuditDO.class);
+                BeanUtils.copyProperties(customerDO, customerAuditDO);
+
+                customerAuditDO.setCountry(countryDO);
+                customerAuditDO.setCurrency(currencyDO);
+                customerAuditDO.setCustomerStatus(customerStatusDO);
+                customerAuditDO.setCustomerQualificationStatus(customerQualificationStatusDO);
+
+                customerAuditDO.setReviewStatus(reviewStatusDO);
+                customerAuditDO.setInitialAdditionDate(System.currentTimeMillis()/1000);
+                customerAuditDO.setLastUpdatedTimeStamp(System.currentTimeMillis()/1000);
+                customerAuditDO.setValidTill(customerDOInt.getValidTill()/ 1000);
+                customerAuditDO.setWorkFlowId(approveRejectDTO.getWorkflowId());
+                customerAuditDO.setComments(approveRejectDTO.getComments());
+
+                customerAuditRepo.save(customerAuditDO);
+
 
                 return true;
             }

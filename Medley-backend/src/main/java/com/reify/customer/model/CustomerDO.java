@@ -4,6 +4,7 @@ import com.reify.common.model.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -19,6 +20,14 @@ import javax.persistence.*;
 public class CustomerDO {
     @Id
     @Column(length = 9)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_seq")
+    @GenericGenerator(name = "customer_seq",
+            strategy = "com.reify.common.helper.CustomIdGenerator",
+            parameters = {
+                    @org.hibernate.annotations.Parameter(name = "prefix", value = "CUST"),
+                    @org.hibernate.annotations.Parameter(name = "seqName", value = "customer_seq"),
+                    @org.hibernate.annotations.Parameter(name = "seqLength", value = "5")
+            })
     private String customerId;
 
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -61,7 +70,7 @@ public class CustomerDO {
     @Column(length = 10)
     private long validTill;
     @Column(length = 50)
-    private String approvedBy;
+    private String approver;
     @Column(length = 50)
     private String userId;
 
@@ -74,4 +83,6 @@ public class CustomerDO {
     @ManyToOne
     @JoinColumn(name = "reviewCode")
     private ReviewStatusDO reviewStatus;
+
+    private String comments;
 }

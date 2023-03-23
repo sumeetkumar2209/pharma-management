@@ -23,15 +23,18 @@ import java.io.Serializable;
 public class CustomerDO_INT implements Serializable {
 
     @Id
-    @Column(length = 9)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_seq")
-    @GenericGenerator(name = "customer_seq",
+    @Column(length = 8)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_wf_seq")
+    @GenericGenerator(name = "customer_wf_seq",
             strategy = "com.reify.common.helper.CustomIdGenerator",
             parameters = {
-                    @org.hibernate.annotations.Parameter(name = "prefix", value = "CUST"),
-                    @org.hibernate.annotations.Parameter(name = "seqName", value = "customer_seq"),
+                    @org.hibernate.annotations.Parameter(name = "prefix", value = "WFS"),
+                    @org.hibernate.annotations.Parameter(name = "seqName", value = "customer_wf_seq"),
                     @org.hibernate.annotations.Parameter(name = "seqLength", value = "5")
             })
+    private String workFlowId;
+
+    @Column(length = 9)
     private String customerId;
 
 
@@ -75,7 +78,7 @@ public class CustomerDO_INT implements Serializable {
     @Column(length = 10)
     private long validTill;
     @Column(length = 50)
-    private String approvedBy;
+    private String approver;
     @Column(length = 50)
     private String userId;
 
@@ -88,6 +91,8 @@ public class CustomerDO_INT implements Serializable {
     @ManyToOne
     @JoinColumn(name = "reviewCode")
     private ReviewStatusDO reviewStatus;
+
+    private String comments;
 
 
 }

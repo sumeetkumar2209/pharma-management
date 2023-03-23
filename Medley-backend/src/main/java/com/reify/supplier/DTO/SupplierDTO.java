@@ -16,7 +16,7 @@ import java.util.Date;
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @JsonIgnoreProperties(value = {"countryName","currencyName","initialAdditionDate",
-"lastUpdatedBy","workFlowId"})
+"lastUpdatedBy","workFlowId","reviewStatus"})
 public class SupplierDTO {
 
     private String workFlowId;
@@ -45,9 +45,7 @@ public class SupplierDTO {
     private long lastUpdatedTimeStamp;
     private String reviewStatus;
 
-    private String option;
-
     private String comments;
 
-
+    private String action;
 }

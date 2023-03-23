@@ -9,4 +9,6 @@ public interface SearchSupplier {
 
     public List<SupplierDO> searchSupplierByFilter(SupplierSearchDTO supplierSearchDTO);
 
+    public long countSupplierByFilter(SupplierSearchDTO supplierSearchDTO);
+
 }

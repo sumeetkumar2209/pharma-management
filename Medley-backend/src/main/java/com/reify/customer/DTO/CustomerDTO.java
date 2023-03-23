@@ -39,7 +39,7 @@ public class CustomerDTO {
 
     private Date validTillDate;
 
-    private String approvedBy;
+    private String approver;
 
     private String userId;
 
@@ -51,6 +51,8 @@ public class CustomerDTO {
     private ReviewStatusDTO reviewStatus;
 
     private String option;
+
+    private String comments;
 
 
 }

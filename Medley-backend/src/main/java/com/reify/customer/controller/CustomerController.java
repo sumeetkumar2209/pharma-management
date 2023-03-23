@@ -1,5 +1,6 @@
 package com.reify.customer.controller;
 
+import com.reify.common.DTO.ApproveRejectDTO;
 import com.reify.common.exception.InvalidStatusException;
 import com.reify.common.exception.RecordNotFoundException;
 import com.reify.customer.DTO.CustomerDTO;
@@ -44,14 +45,13 @@ public class CustomerController {
 
     @PostMapping(value = "/approveRejectCustomer")
     public ResponseEntity<?> approveRejectCustomer(@RequestHeader("Authorization") String token,
-                                                   @RequestParam("customerId") String customerId,
-                                                   @RequestParam String decision){
+                                                   ApproveRejectDTO approveRejectDTO){
 
-        boolean res = customerService.approveRejectCustomer(customerId, decision);
+        boolean res = customerService.approveRejectCustomer(approveRejectDTO);
 
         if(res){
-            if(decision.equalsIgnoreCase("AP") ||
-                    decision.equalsIgnoreCase("APPROVE")){
+            if(approveRejectDTO.getDecision().equalsIgnoreCase("AP") ||
+                    approveRejectDTO.getDecision().equalsIgnoreCase("APPROVE")){
 
                 return ResponseEntity.status(HttpStatus.OK).body("Customer Approved");
             } else {

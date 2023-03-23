@@ -65,6 +65,7 @@ public class SearchSupplierImpl implements SearchSupplier{
                 cb.and(predicates.toArray(new Predicate[predicates.size()]))
         );
 
+
         if(supplierSearchDTO.getOrderBy() != null){
 
             query.orderBy(cb.desc(suppliers.get(supplierSearchDTO.getOrderBy())));
@@ -76,5 +77,56 @@ public class SearchSupplierImpl implements SearchSupplier{
 
         return em.createQuery(query).setFirstResult(supplierSearchDTO.getStartIndex()).setMaxResults(maxResult).getResultList();
 
+    }
+
+    @Override
+    public long countSupplierByFilter(SupplierSearchDTO supplierSearchDTO) {
+
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        CriteriaQuery<Long> query = builder.createQuery(Long.class);
+        Root<SupplierDO> root = query.from(SupplierDO.class);
+        query.select(builder.count(root.get("supplierId")));
+
+        List<Predicate> predicates = new ArrayList<>();
+
+        if(supplierSearchDTO.getFilter().getSupplierId() != null){
+            predicates.add(builder.equal(root.get("supplierId"),
+                    supplierSearchDTO.getFilter().getSupplierId()));
+        }
+        if(supplierSearchDTO.getFilter().getSupplierStatus() != null){
+
+            Join<SupplierDO, StatusDO> supplierStatusDOJoin =
+                    root.join("supplierStatus", JoinType.INNER);
+
+
+            predicates.add(builder.equal(supplierStatusDOJoin.get("statusCode"),
+                    supplierSearchDTO.getFilter().getSupplierStatus()));
+        }
+        if(supplierSearchDTO.getFilter().getCompanyName()!= null){
+
+            predicates.add(builder.equal(root.get("companyName"),
+                    supplierSearchDTO.getFilter().getCompanyName()));
+        }
+        if(supplierSearchDTO.getFilter().getReviewStatus() != null){
+
+            Join<SupplierDO, ReviewStatusDO> reviewStatusDOJoin =
+                    root.join("reviewStatus", JoinType.INNER);
+
+
+            predicates.add(builder.equal(reviewStatusDOJoin.get("reviewCode"),
+                    supplierSearchDTO.getFilter().getReviewStatus()));
+        }
+        if(supplierSearchDTO.getFilter().getPostalCode() != null){
+
+            predicates.add(builder.equal(root.get("postalCode"),
+                    supplierSearchDTO.getFilter().getPostalCode()));
+        }
+
+        query.where(
+                builder.and(predicates.toArray(new Predicate[predicates.size()]))
+        );
+        long result = (Long) em.createQuery(query).getSingleResult();
+
+        return  result;
     }
 }

@@ -1,5 +1,6 @@
 package com.reify.supplier.service;
 
+import com.reify.supplier.DTO.InProgressWorkFlowDTO;
 import com.reify.supplier.DTO.SupplierDTO;
 import com.reify.supplier.DTO.SupplierSearchDTO;
 
@@ -9,5 +10,9 @@ public interface SupplierSearchService {
 
     public List<SupplierDTO> getSupplier(SupplierSearchDTO supplierSearchDTO);
 
-    public long getTotalSupplierCount();
+    public long getTotalSupplierCount(SupplierSearchDTO supplierSearchDTO);
+
+    public List<SupplierDTO> getSupplierBasedOnUser(InProgressWorkFlowDTO inProgressWorkFlowDTO);
+
+    public long getSupplierCountBasedOnUser(InProgressWorkFlowDTO inProgressWorkFlowDTO);
 }
