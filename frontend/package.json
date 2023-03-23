@@ -1,6 +1,7 @@
 {
   "name": "reiphy-pharma",
   "version": "0.0.0",
+  "author": "BVT",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -8,7 +9,7 @@
     "watch": "ng build --watch --configuration development",
     "lint": "ng lint",
     "test": "ng test",
-    "build-production": "ng build --configuration=production --base-href=/mdeley/"
+    "build-production": "ng build --configuration=production"
   },
   "private": true,
   "dependencies": {
