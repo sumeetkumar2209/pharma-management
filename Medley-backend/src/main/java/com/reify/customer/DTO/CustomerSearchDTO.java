@@ -16,4 +16,6 @@ public class CustomerSearchDTO {
     private int startIndex;
 
     private int endIndex;
+
+    private String orderBy;
 }

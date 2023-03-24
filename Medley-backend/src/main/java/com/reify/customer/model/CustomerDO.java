@@ -30,6 +30,8 @@ public class CustomerDO {
             })
     private String customerId;
 
+    private String workFlowId;
+
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "customerStatusCode")
     private StatusDO customerStatus;

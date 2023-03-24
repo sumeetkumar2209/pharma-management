@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 public class CustomerFilterDTO {
 
     private String customerId;
-    private String companyName;
+    private String customerName;
     private String customerStatus;
     private String postalCode;
     private String reviewStatus;

@@ -13,10 +13,24 @@ import java.util.List;
 public interface SupplierIntRepo extends JpaRepository<SupplierDO_INT,String> {
 
 
-    List<SupplierDO_INT> findByUserId(String userId, Pageable pageable);
+    public static final String findUser_query = "Select cust from SupplierDO_INT cust " +
+            "JOIN cust.reviewStatus rev " +
+            "where cust.userId=:userId and  rev.reviewCode<> 'AP'";
 
-    List<SupplierDO_INT> findByApprover(String approver, Pageable pageable);
+    public static final String findApprover_query = "Select cust from SupplierDO_INT cust " +
+            "JOIN cust.reviewStatus rev " +
+            "where cust.approver=:approver and  rev.reviewCode<> 'AP'";
 
-    @Query("select count(*) FROM SupplierDO_INT where userId =:userId OR approver =:userId")
+    public static final String count_query = "select count(*) FROM SupplierDO_INT cust " +
+            "JOIN cust.reviewStatus rev " +
+            "where (cust.userId =:userId OR cust.approver =:userId) and rev.reviewCode <> 'AP'";
+
+    @Query(findUser_query)
+    List<SupplierDO_INT> findByUserId(@Param("userId") String userId, Pageable pageable);
+
+    @Query(findApprover_query)
+    List<SupplierDO_INT> findByApprover(@Param("approver") String approver, Pageable pageable);
+
+    @Query(count_query)
     long countByUserId(@Param("userId") String userId);
 }

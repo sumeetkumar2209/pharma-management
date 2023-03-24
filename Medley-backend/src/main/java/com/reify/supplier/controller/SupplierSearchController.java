@@ -79,7 +79,7 @@ public class SupplierSearchController {
         return ResponseEntity.status(HttpStatus.OK).body(root.toString());
     }
 
-    @PostMapping(value = "/getInProgressWorkFlow")
+    @PostMapping(value = "/getSupplierWorkFlow")
     public ResponseEntity<?> getInProgressWorkFlow(@RequestHeader("Authorization") String token,
                                          @RequestBody InProgressWorkFlowDTO inProgressWorkFlowDTO){
 

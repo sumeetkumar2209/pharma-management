@@ -4,109 +4,109 @@
   "description": "Supplier Json",
   "type": "object",
   "properties": {
-    "supplierStatus": {
-      "description": "Status of Supplier",
+    "customerStatus": {
+      "description": "Status of Customer",
       "type": "string",
       "minLength": 2,
       "maxLength": 2
     },
-    "companyName": {
-      "description": "Name of the company",
+    "customerName": {
+      "description": "Name of the Customer",
       "type": "string",
       "maxLength": 100,
       "leadingSpaces": false,
       "trailingSpaces": false
     },
     "contactName": {
-      "description": "Contact name of supplier",
+      "description": "Contact name of Customer",
       "type": "string",
       "maxLength": 100,
       "leadingSpaces": false,
       "trailingSpaces": false
     },
     "contactNumber": {
-      "description": "Contact no of supplier",
+      "description": "Contact no of Customer",
       "type": "string",
       "maxLength": 15,
       "leadingSpaces": false,
       "trailingSpaces": false
     },
     "contactEmail": {
-      "description": "Email of supplier",
+      "description": "Email of Customer",
       "type": "string",
       "maxLength": 50,
       "leadingSpaces": false,
       "trailingSpaces": false
     },
     "addressLine1": {
-      "description": "addressLine1 of supplier",
+      "description": "addressLine1 of Customer",
       "type": "string",
       "maxLength": 50,
       "leadingSpaces": false,
       "trailingSpaces": false
     },
     "addressLine2": {
-      "description": "addressLine2 of supplier",
+      "description": "addressLine2 of Customer",
       "type": "string",
       "maxLength": 50,
       "leadingSpaces": false,
       "trailingSpaces": false
     },
     "addressLine3": {
-      "description": "addressLine3 of supplier",
+      "description": "addressLine3 of Customer",
       "type": "string",
       "maxLength": 50,
       "leadingSpaces": false,
       "trailingSpaces": false
     },
     "town": {
-      "description": "town of supplier",
+      "description": "town of Customer",
       "type": "string",
       "maxLength": 30,
       "leadingSpaces": false,
       "trailingSpaces": false
     },
     "country": {
-      "description": "country of supplier",
+      "description": "Country of Customer",
       "type": "string",
       "minLength": 3,
       "maxLength": 3
     },
     "postalCode": {
-      "description": "postalCode of supplier",
+      "description": "postalCode of Customer",
       "type": "string",
       "maxLength": 15,
       "leadingSpaces": false,
       "trailingSpaces": false
     },
-    "supplierQualificationStatus": {
-      "description": "supplierQualificationStatus of supplier",
+    "customerQualificationStatus": {
+      "description": "customerQualificationStatus of Customer",
       "type": "string",
       "minLength": 2,
       "maxLength": 2
     },
     "currency": {
-      "description": "currency of supplier",
+      "description": "currency of Customer",
       "type": "string",
       "minLength": 3,
       "maxLength": 3
     },
     "approver": {
-      "description": "approver of supplier",
+      "description": "approver of Customer",
       "type": "string",
       "maxLength": 50,
       "leadingSpaces": false,
       "trailingSpaces": false
     },
     "comments": {
-      "description": "comments of supplier",
+      "description": "comments of Customer",
       "type": "string",
       "maxLength": 300,
       "leadingSpaces": false,
       "trailingSpaces": false
     }
   },
-  "required": ["supplierStatus","companyName","contactName","contactNumber",
-    "contactEmail","addressLine1","town","country","postalCode","supplierQualificationStatus",
+  "required": ["customerStatus","customerName","contactName","contactNumber",
+    "contactEmail","addressLine1","town","country","postalCode","customerQualificationStatus",
     "currency","approver"]
 }

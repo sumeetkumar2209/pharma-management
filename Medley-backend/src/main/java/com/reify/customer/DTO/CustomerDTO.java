@@ -14,12 +14,12 @@ import java.util.Date;
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @JsonIgnoreProperties(value = {"countryName","currencyName","initialAdditionDate",
-        "lastUpdatedByUser"})
+        "lastUpdatedByUser","action","reviewStatus","workFlowId"})
 public class CustomerDTO {
 
     private String customerId;
-
-    private StatusDTO customerStatus;
+    private String workFlowId;
+    private String customerStatus;
     private String customerName;
     private String contactName;
     private String contactNumber;
@@ -31,11 +31,11 @@ public class CustomerDTO {
     private String addressLine3;
 
     private String town;
-    private CountryDTO country;
+    private String country;
 
-    private CurrencyDTO currency;
+    private String currency;
     private String postalCode;
-    private QualificationStatusDTO customerQualificationStatus;
+    private String customerQualificationStatus;
 
     private Date validTillDate;
 
@@ -48,9 +48,9 @@ public class CustomerDTO {
     private String lastUpdatedBy;
 
     private long lastUpdatedTimeStamp;
-    private ReviewStatusDTO reviewStatus;
+    private String reviewStatus;
 
-    private String option;
+    private String action;
 
     private String comments;
 

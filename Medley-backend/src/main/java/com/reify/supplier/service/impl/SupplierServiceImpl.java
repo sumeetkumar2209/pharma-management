@@ -46,7 +46,6 @@ public class SupplierServiceImpl implements SupplierService {
         CurrencyDO currencyDO = context.getBean(CurrencyDO.class);
 
         BeanUtils.copyProperties(supplierDTO,supplierDO_INT);
-        supplierDO_INT.setWorkFlowId(supplierDTO.getWorkFlowId());
         supplierDO_INT.setInitialAdditionDate(System.currentTimeMillis()/1000);
         supplierDO_INT.setLastUpdatedTimeStamp(System.currentTimeMillis()/1000);
         supplierDO_INT.setValidTill(supplierDTO.getValidTillDate().getTime()/1000);
@@ -203,8 +202,6 @@ public class SupplierServiceImpl implements SupplierService {
                   reviewStatusDO.setReviewCode("RE");
               }
 
-
-
               supplierDOInt.setReviewStatus(reviewStatusDO);
               supplierDOInt.setLastUpdatedTimeStamp(System.currentTimeMillis()/1000);
               supplierDOInt.setLastUpdatedBy(supplierDOInt.getApprover());
@@ -214,8 +211,8 @@ public class SupplierServiceImpl implements SupplierService {
 
               SupplierAuditDO supplierAuditDO = context.getBean(SupplierAuditDO.class);
               BeanUtils.copyProperties(supplierDO,supplierAuditDO );
-              CountryDO countryDO = context.getBean(CountryDO.class);
 
+              CountryDO countryDO = context.getBean(CountryDO.class);
               countryDO.setCountryCode(supplierDO.getCountry().getCountryCode());
               supplierAuditDO.setCountry(countryDO);
 
@@ -240,8 +237,6 @@ public class SupplierServiceImpl implements SupplierService {
               supplierAuditDO.setLastUpdatedBy(supplierDOInt.getApprover());
 
               supplierAuditRepo.save(supplierAuditDO);
-
-              //supplierIntRepo.deleteById(approveRejectDTO.getWorkflowId());
 
               return true;
 
