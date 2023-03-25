@@ -53,4 +53,6 @@ INSERT INTO MENU (menu_id,label, icon, link, menu_order) VALUES (10,'Audit Trail
 
 insert into ROLE_MENU values (1,1);
 insert into ROLE_MENU values(1,2);
+insert into ROLE_MENU values (2,1);
+insert into ROLE_MENU values(2,2);
 

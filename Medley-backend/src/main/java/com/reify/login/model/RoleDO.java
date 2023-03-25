@@ -27,11 +27,12 @@ public class RoleDO {
     @Column(name = "ROLENAME")
     private String roleName;
 
-    @OneToMany
+    @ManyToMany
     @JoinTable(
             name = "Role_Menu",
             joinColumns = @JoinColumn(name = "ROLE_ID"),
-            inverseJoinColumns = @JoinColumn(name = "MENU_ID")
+            inverseJoinColumns = @JoinColumn(name = "MENU_ID"),
+            uniqueConstraints = {@UniqueConstraint(name= "uniqueRoleAndMenu", columnNames = {"ROLE_ID","MENU_ID"})}
     )
     private List<MenuDO> menuList;
 }
