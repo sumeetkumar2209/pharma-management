@@ -75,7 +75,7 @@ public class CustomerSearchController {
 
     }
 
-    @PostMapping(value = "/getCustomerWorkFlow")
+    @PostMapping(value = "/customerWorkFlow")
     public ResponseEntity<?> getInProgressWorkFlow(@RequestHeader("Authorization") String token,
                                                    @RequestBody InProgressWorkFlowDTO inProgressWorkFlowDTO){
 
