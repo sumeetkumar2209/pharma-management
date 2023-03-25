@@ -29,8 +29,8 @@ public class SearchSupplierImpl implements SearchSupplier{
         List<Predicate> predicates = new ArrayList<>();
 
         if(supplierSearchDTO.getFilter().getSupplierId() != null){
-            predicates.add(cb.equal(suppliers.get("supplierId"),
-                    supplierSearchDTO.getFilter().getSupplierId()));
+            predicates.add(cb.equal(cb.lower(suppliers.get("supplierId")),
+                    supplierSearchDTO.getFilter().getSupplierId().toLowerCase()));
         }
         if(supplierSearchDTO.getFilter().getSupplierStatus() != null){
 
@@ -38,13 +38,13 @@ public class SearchSupplierImpl implements SearchSupplier{
                     suppliers.join("supplierStatus", JoinType.INNER);
 
 
-            predicates.add(cb.equal(supplierStatusDOJoin.get("statusCode"),
-                    supplierSearchDTO.getFilter().getSupplierStatus()));
+            predicates.add(cb.equal(cb.lower(supplierStatusDOJoin.get("statusCode")),
+                    supplierSearchDTO.getFilter().getSupplierStatus().toLowerCase()));
         }
         if(supplierSearchDTO.getFilter().getCompanyName()!= null){
 
-            predicates.add(cb.equal(suppliers.get("companyName"),
-                    supplierSearchDTO.getFilter().getCompanyName()));
+            predicates.add(cb.equal(cb.lower(suppliers.get("companyName")),
+                    supplierSearchDTO.getFilter().getCompanyName().toLowerCase()));
         }
         if(supplierSearchDTO.getFilter().getReviewStatus() != null){
 
@@ -52,13 +52,13 @@ public class SearchSupplierImpl implements SearchSupplier{
                     suppliers.join("reviewStatus", JoinType.INNER);
 
 
-            predicates.add(cb.equal(reviewStatusDOJoin.get("reviewCode"),
-                    supplierSearchDTO.getFilter().getReviewStatus()));
+            predicates.add(cb.equal(cb.lower(reviewStatusDOJoin.get("reviewCode")),
+                    supplierSearchDTO.getFilter().getReviewStatus().toLowerCase()));
         }
         if(supplierSearchDTO.getFilter().getPostalCode() != null){
 
-            predicates.add(cb.equal(suppliers.get("postalCode"),
-                    supplierSearchDTO.getFilter().getPostalCode()));
+            predicates.add(cb.equal(cb.lower(suppliers.get("postalCode")),
+                    supplierSearchDTO.getFilter().getPostalCode().toLowerCase()));
         }
 
         query.where(
@@ -90,8 +90,8 @@ public class SearchSupplierImpl implements SearchSupplier{
         List<Predicate> predicates = new ArrayList<>();
 
         if(supplierSearchDTO.getFilter().getSupplierId() != null){
-            predicates.add(builder.equal(root.get("supplierId"),
-                    supplierSearchDTO.getFilter().getSupplierId()));
+            predicates.add(builder.equal(builder.lower(root.get("supplierId")),
+                    supplierSearchDTO.getFilter().getSupplierId().toLowerCase()));
         }
         if(supplierSearchDTO.getFilter().getSupplierStatus() != null){
 
@@ -99,13 +99,13 @@ public class SearchSupplierImpl implements SearchSupplier{
                     root.join("supplierStatus", JoinType.INNER);
 
 
-            predicates.add(builder.equal(supplierStatusDOJoin.get("statusCode"),
-                    supplierSearchDTO.getFilter().getSupplierStatus()));
+            predicates.add(builder.equal(builder.lower(supplierStatusDOJoin.get("statusCode")),
+                    supplierSearchDTO.getFilter().getSupplierStatus().toLowerCase()));
         }
         if(supplierSearchDTO.getFilter().getCompanyName()!= null){
 
-            predicates.add(builder.equal(root.get("companyName"),
-                    supplierSearchDTO.getFilter().getCompanyName()));
+            predicates.add(builder.equal(builder.lower(root.get("companyName")),
+                    supplierSearchDTO.getFilter().getCompanyName().toLowerCase()));
         }
         if(supplierSearchDTO.getFilter().getReviewStatus() != null){
 
@@ -113,13 +113,13 @@ public class SearchSupplierImpl implements SearchSupplier{
                     root.join("reviewStatus", JoinType.INNER);
 
 
-            predicates.add(builder.equal(reviewStatusDOJoin.get("reviewCode"),
-                    supplierSearchDTO.getFilter().getReviewStatus()));
+            predicates.add(builder.equal(builder.lower(reviewStatusDOJoin.get("reviewCode")),
+                    supplierSearchDTO.getFilter().getReviewStatus().toLowerCase()));
         }
         if(supplierSearchDTO.getFilter().getPostalCode() != null){
 
-            predicates.add(builder.equal(root.get("postalCode"),
-                    supplierSearchDTO.getFilter().getPostalCode()));
+            predicates.add(builder.equal(builder.lower(root.get("postalCode")),
+                    supplierSearchDTO.getFilter().getPostalCode().toLowerCase()));
         }
 
         query.where(

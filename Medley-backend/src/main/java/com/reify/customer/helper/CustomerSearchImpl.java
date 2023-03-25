@@ -28,8 +28,8 @@ public class CustomerSearchImpl implements CustomerSearch{
         List<Predicate> predicates = new ArrayList<>();
 
         if(customerSearchDTO.getCustomerFilter().getCustomerId() != null){
-            predicates.add(cb.equal(customers.get("customerId"),
-                    customerSearchDTO.getCustomerFilter().getCustomerId()));
+            predicates.add(cb.equal(cb.lower(customers.get("customerId")),
+                    customerSearchDTO.getCustomerFilter().getCustomerId().toLowerCase()));
         }
         if(customerSearchDTO.getCustomerFilter().getCustomerStatus() != null){
 
@@ -37,13 +37,13 @@ public class CustomerSearchImpl implements CustomerSearch{
                     customers.join("customerStatus", JoinType.INNER);
 
 
-            predicates.add(cb.equal(customerStatusDOJoin.get("statusCode"),
-                    customerSearchDTO.getCustomerFilter().getCustomerStatus()));
+            predicates.add(cb.equal(cb.lower(customerStatusDOJoin.get("statusCode")),
+                    customerSearchDTO.getCustomerFilter().getCustomerStatus().toLowerCase()));
         }
         if(customerSearchDTO.getCustomerFilter().getCustomerName()!= null){
 
-            predicates.add(cb.equal(customers.get("customerName"),
-                    customerSearchDTO.getCustomerFilter().getCustomerName()));
+            predicates.add(cb.equal(cb.lower(customers.get("customerName")),
+                    customerSearchDTO.getCustomerFilter().getCustomerName().toLowerCase()));
         }
         if(customerSearchDTO.getCustomerFilter().getReviewStatus() != null){
 
@@ -51,13 +51,13 @@ public class CustomerSearchImpl implements CustomerSearch{
                     customers.join("reviewStatus", JoinType.INNER);
 
 
-            predicates.add(cb.equal(reviewStatusDOJoin.get("reviewCode"),
-                    customerSearchDTO.getCustomerFilter().getReviewStatus()));
+            predicates.add(cb.equal(cb.lower(reviewStatusDOJoin.get("reviewCode")),
+                    customerSearchDTO.getCustomerFilter().getReviewStatus().toLowerCase()));
         }
         if(customerSearchDTO.getCustomerFilter().getPostalCode() != null){
 
-            predicates.add(cb.equal(customers.get("postalCode"),
-                    customerSearchDTO.getCustomerFilter().getPostalCode()));
+            predicates.add(cb.equal(cb.lower(customers.get("postalCode")),
+                    customerSearchDTO.getCustomerFilter().getPostalCode().toLowerCase()));
         }
         query.where(
                 cb.and(predicates.toArray(new Predicate[predicates.size()]))
@@ -92,8 +92,8 @@ public class CustomerSearchImpl implements CustomerSearch{
         List<Predicate> predicates = new ArrayList<>();
 
         if(customerSearchDTO.getCustomerFilter().getCustomerId() != null){
-            predicates.add(cb.equal(customers.get("customerId"),
-                    customerSearchDTO.getCustomerFilter().getCustomerId()));
+            predicates.add(cb.equal(cb.lower(customers.get("customerId")),
+                    customerSearchDTO.getCustomerFilter().getCustomerId().toLowerCase()));
         }
         if(customerSearchDTO.getCustomerFilter().getCustomerStatus() != null){
 
@@ -101,13 +101,13 @@ public class CustomerSearchImpl implements CustomerSearch{
                     customers.join("customerStatus", JoinType.INNER);
 
 
-            predicates.add(cb.equal(customerStatusDOJoin.get("statusCode"),
-                    customerSearchDTO.getCustomerFilter().getCustomerStatus()));
+            predicates.add(cb.equal(cb.lower(customerStatusDOJoin.get("statusCode")),
+                    customerSearchDTO.getCustomerFilter().getCustomerStatus().toLowerCase()));
         }
         if(customerSearchDTO.getCustomerFilter().getCustomerName()!= null){
 
-            predicates.add(cb.equal(customers.get("customerName"),
-                    customerSearchDTO.getCustomerFilter().getCustomerName()));
+            predicates.add(cb.equal(cb.lower(customers.get("customerName")),
+                    customerSearchDTO.getCustomerFilter().getCustomerName().toLowerCase()));
         }
         if(customerSearchDTO.getCustomerFilter().getReviewStatus() != null){
 
@@ -115,13 +115,13 @@ public class CustomerSearchImpl implements CustomerSearch{
                     customers.join("reviewStatus", JoinType.INNER);
 
 
-            predicates.add(cb.equal(reviewStatusDOJoin.get("reviewCode"),
-                    customerSearchDTO.getCustomerFilter().getReviewStatus()));
+            predicates.add(cb.equal(cb.lower(reviewStatusDOJoin.get("reviewCode")),
+                    customerSearchDTO.getCustomerFilter().getReviewStatus().toLowerCase()));
         }
         if(customerSearchDTO.getCustomerFilter().getPostalCode() != null){
 
-            predicates.add(cb.equal(customers.get("postalCode"),
-                    customerSearchDTO.getCustomerFilter().getPostalCode()));
+            predicates.add(cb.equal(cb.lower(customers.get("postalCode")),
+                    customerSearchDTO.getCustomerFilter().getPostalCode().toLowerCase()));
         }
         query.where(
                 cb.and(predicates.toArray(new Predicate[predicates.size()]))
