@@ -66,7 +66,7 @@ public class CustomerSearchImpl implements CustomerSearch{
 
 
         if(customerSearchDTO.getOrderBy() != null){
-            if (customerSearchDTO.getOrderType().equalsIgnoreCase("ASC")) {
+            if (customerSearchDTO.getOrderType() != null &&  customerSearchDTO.getOrderType().equalsIgnoreCase("ASC")) {
                 query.orderBy(cb.asc(customers.get(customerSearchDTO.getOrderBy())));
             } else {
                 query.orderBy(cb.desc(customers.get(customerSearchDTO.getOrderBy())));

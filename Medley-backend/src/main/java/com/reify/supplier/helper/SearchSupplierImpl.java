@@ -67,7 +67,7 @@ public class SearchSupplierImpl implements SearchSupplier{
 
 
         if(supplierSearchDTO.getOrderBy() != null){
-            if (supplierSearchDTO.getOrderType().equalsIgnoreCase("ASC")) {
+            if (supplierSearchDTO.getOrderType() != null && supplierSearchDTO.getOrderType().equalsIgnoreCase("ASC")) {
                 query.orderBy(cb.asc(suppliers.get(supplierSearchDTO.getOrderBy())));
             } else {
                 query.orderBy(cb.desc(suppliers.get(supplierSearchDTO.getOrderBy())));
