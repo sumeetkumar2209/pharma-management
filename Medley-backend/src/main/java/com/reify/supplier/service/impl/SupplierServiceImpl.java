@@ -181,7 +181,7 @@ public class SupplierServiceImpl implements SupplierService {
     @Override
     public boolean approveRejectSupplier(ApproveRejectDTO approveRejectDTO)  {
 
-       Optional<SupplierDO_INT> optionalSupplierDOInt = supplierIntRepo.findById(approveRejectDTO.getWorkflowId());
+       Optional<SupplierDO_INT> optionalSupplierDOInt = supplierIntRepo.findById(approveRejectDTO.getWorkFlowId());
 
        if(optionalSupplierDOInt.isPresent()){
 
@@ -233,13 +233,13 @@ public class SupplierServiceImpl implements SupplierService {
               supplierAuditDO.setInitialAdditionDate(System.currentTimeMillis()/1000);
               supplierAuditDO.setLastUpdatedTimeStamp(System.currentTimeMillis()/1000);
               supplierAuditDO.setValidTill(supplierDO.getValidTill()/ 1000);
-              supplierAuditDO.setWorkFlowId(approveRejectDTO.getWorkflowId());
+              supplierAuditDO.setWorkFlowId(approveRejectDTO.getWorkFlowId());
               supplierAuditDO.setComments(approveRejectDTO.getComments());
               supplierAuditDO.setLastUpdatedBy(supplierDOInt.getApprover());
 
               supplierAuditRepo.saveAndFlush(supplierAuditDO);
               if(approveRejectDTO.getDecision().equalsIgnoreCase("AP")) {
-                  supplierIntRepo.deleteById(approveRejectDTO.getWorkflowId());
+                  supplierIntRepo.deleteById(approveRejectDTO.getWorkFlowId());
               } else {
                   supplierDOInt.setReviewStatus(reviewStatusDO);
                   supplierDOInt.setLastUpdatedTimeStamp(System.currentTimeMillis()/1000);

@@ -179,7 +179,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public boolean approveRejectCustomer(ApproveRejectDTO approveRejectDTO) {
 
-        Optional<CustomerDO_INT>  customerIntOpt= customerIntRepo.findById(approveRejectDTO.getWorkflowId());
+        Optional<CustomerDO_INT>  customerIntOpt= customerIntRepo.findById(approveRejectDTO.getWorkFlowId());
 
         if (customerIntOpt.isPresent()){
 
@@ -215,14 +215,14 @@ public class CustomerServiceImpl implements CustomerService {
                 customerAuditDO.setInitialAdditionDate(System.currentTimeMillis()/1000);
                 customerAuditDO.setLastUpdatedTimeStamp(System.currentTimeMillis()/1000);
                 customerAuditDO.setValidTill(customerDOInt.getValidTill()/ 1000);
-                customerAuditDO.setWorkFlowId(approveRejectDTO.getWorkflowId());
+                customerAuditDO.setWorkFlowId(approveRejectDTO.getWorkFlowId());
                 customerAuditDO.setComments(approveRejectDTO.getComments());
                 customerAuditDO.setLastUpdatedBy(customerDOInt.getApprover());
 
                 customerAuditRepo.saveAndFlush(customerAuditDO);
 
                 if (approveRejectDTO.getDecision().equalsIgnoreCase("AP")) {
-                    customerIntRepo.deleteById(approveRejectDTO.getWorkflowId());
+                    customerIntRepo.deleteById(approveRejectDTO.getWorkFlowId());
                 } else {
                     customerDOInt.setReviewStatus(reviewStatusDO);
                     customerDOInt.setLastUpdatedTimeStamp(System.currentTimeMillis()/1000);

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class ApproveRejectDTO {
 
-    private String workflowId;
+    private String workFlowId;
 
     private String decision;
 
