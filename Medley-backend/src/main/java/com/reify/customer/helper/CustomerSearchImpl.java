@@ -66,8 +66,11 @@ public class CustomerSearchImpl implements CustomerSearch{
 
 
         if(customerSearchDTO.getOrderBy() != null){
-
-            query.orderBy(cb.desc(customers.get(customerSearchDTO.getOrderBy())));
+            if (customerSearchDTO.getOrderType().equalsIgnoreCase("ASC")) {
+                query.orderBy(cb.asc(customers.get(customerSearchDTO.getOrderBy())));
+            } else {
+                query.orderBy(cb.desc(customers.get(customerSearchDTO.getOrderBy())));
+            }
         } else {
             query.orderBy(cb.desc(customers.get("lastUpdatedTimeStamp")));
         }

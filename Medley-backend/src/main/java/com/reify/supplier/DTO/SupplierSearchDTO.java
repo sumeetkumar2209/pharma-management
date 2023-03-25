@@ -18,4 +18,6 @@ public class SupplierSearchDTO {
 
     private String orderBy;
 
+    private String orderType;
+
 }

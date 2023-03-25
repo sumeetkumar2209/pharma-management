@@ -18,4 +18,6 @@ public class CustomerSearchDTO {
     private int endIndex;
 
     private String orderBy;
+
+    private String orderType;
 }

@@ -67,8 +67,11 @@ public class SearchSupplierImpl implements SearchSupplier{
 
 
         if(supplierSearchDTO.getOrderBy() != null){
-
-            query.orderBy(cb.desc(suppliers.get(supplierSearchDTO.getOrderBy())));
+            if (supplierSearchDTO.getOrderType().equalsIgnoreCase("ASC")) {
+                query.orderBy(cb.asc(suppliers.get(supplierSearchDTO.getOrderBy())));
+            } else {
+                query.orderBy(cb.desc(suppliers.get(supplierSearchDTO.getOrderBy())));
+            }
         } else {
             query.orderBy(cb.desc(suppliers.get("lastUpdatedTimeStamp")));
         }
