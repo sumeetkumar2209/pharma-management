@@ -123,10 +123,12 @@ public class CustomerController {
 
         boolean res = customerService.approveRejectCustomer(approveRejectDTO);
 
-        if(res){
+        if(res && approveRejectDTO.getDecision().equalsIgnoreCase("AP")){
             return ResponseEntity.status(HttpStatus.OK).body("Customer Approved");
+        } else  if(res && approveRejectDTO.getDecision().equalsIgnoreCase("RE")){
+            return ResponseEntity.status(HttpStatus.OK).body("Customer Rejected");
         }
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Customer not Approved");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Customer approval not acted");
     }
 }

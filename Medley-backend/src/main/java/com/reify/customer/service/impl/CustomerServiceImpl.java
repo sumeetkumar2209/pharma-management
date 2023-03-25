@@ -221,7 +221,15 @@ public class CustomerServiceImpl implements CustomerService {
 
                 customerAuditRepo.saveAndFlush(customerAuditDO);
 
-                customerIntRepo.deleteById(approveRejectDTO.getWorkflowId());
+                if (approveRejectDTO.getDecision().equalsIgnoreCase("AP")) {
+                    customerIntRepo.deleteById(approveRejectDTO.getWorkflowId());
+                } else {
+                    customerDOInt.setReviewStatus(reviewStatusDO);
+                    customerDOInt.setLastUpdatedTimeStamp(System.currentTimeMillis()/1000);
+                    customerDOInt.setLastUpdatedBy(customerDOInt.getApprover());
+                    customerDOInt.setComments(approveRejectDTO.getComments());
+                    customerIntRepo.save(customerDOInt);
+                }
 
 
                 return true;

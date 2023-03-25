@@ -117,11 +117,13 @@ public class SupplierController {
         }
 
         boolean res = supplierService.approveRejectSupplier(approveRejectDTO);
-        if (res) {
+        if (res && approveRejectDTO.getDecision().equalsIgnoreCase("AP")) {
             return ResponseEntity.status(HttpStatus.OK).body("Supplier approved");
+        } else if (res && approveRejectDTO.getDecision().equalsIgnoreCase("RE")) {
+            return ResponseEntity.status(HttpStatus.OK).body("Supplier Rejected");
         }
 
-         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Supplier not approved");
+         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Supplier approval not acted");
     }
 
 }

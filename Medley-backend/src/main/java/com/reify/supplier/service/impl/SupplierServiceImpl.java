@@ -238,8 +238,15 @@ public class SupplierServiceImpl implements SupplierService {
               supplierAuditDO.setLastUpdatedBy(supplierDOInt.getApprover());
 
               supplierAuditRepo.saveAndFlush(supplierAuditDO);
-
-              supplierIntRepo.deleteById(approveRejectDTO.getWorkflowId());
+              if(approveRejectDTO.getDecision().equalsIgnoreCase("AP")) {
+                  supplierIntRepo.deleteById(approveRejectDTO.getWorkflowId());
+              } else {
+                  supplierDOInt.setReviewStatus(reviewStatusDO);
+                  supplierDOInt.setLastUpdatedTimeStamp(System.currentTimeMillis()/1000);
+                  supplierDOInt.setLastUpdatedBy(supplierDOInt.getApprover());
+                  supplierDOInt.setComments(approveRejectDTO.getComments());
+                  supplierIntRepo.save(supplierDOInt);
+              }
 
               return true;
 
