@@ -63,6 +63,8 @@ public class CustomerController {
     @PutMapping(value = "/customer")
     public ResponseEntity<?> modifyCustomer(@RequestHeader("Authorization") String token,
                                             @RequestBody CustomerDTO customerDTO){
+
+        customerDTO = CommonUtils.removeWhiteSpace(customerDTO);
         //validate json
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         try {
@@ -75,23 +77,18 @@ public class CustomerController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors.toString());
             }
 
+            customerService.modifyCustomer(customerDTO);
+
         } catch (JsonProcessingException e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in validating json");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in validating json");
-        }
-
-
-        try {
-            customerService.modifyCustomer(customerDTO);
         } catch (RecordNotFoundException e) {
-
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("customerId not present");
         } catch (InvalidStatusException e) {
-
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Illegal Review Status ");
+        }catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in validating json");
         }
 
         return ResponseEntity.status(HttpStatus.OK).body("Customer Details Updated");
@@ -101,6 +98,7 @@ public class CustomerController {
     public ResponseEntity<?> approveRejectCustomer(@RequestHeader("Authorization") String token,
                                                   @RequestBody ApproveRejectDTO approveRejectDTO){
 
+        approveRejectDTO = CommonUtils.removeWhiteSpace(approveRejectDTO);
         //validate json
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         try {

@@ -8,6 +8,7 @@ import com.reify.common.DTO.ApproveRejectDTO;
 import com.reify.common.constant.JsonSchemaEnum;
 import com.reify.common.exception.InvalidStatusException;
 import com.reify.common.exception.RecordNotFoundException;
+import com.reify.common.utils.CommonUtils;
 import com.reify.common.validation.JsonValidator;
 import com.reify.supplier.DTO.SupplierDTO;
 import com.reify.supplier.service.SupplierService;
@@ -30,6 +31,8 @@ public class SupplierController {
     @PostMapping(value = "/supplier")
     public ResponseEntity<?> addSupplier(@RequestHeader("Authorization") String token,
                                          @RequestBody SupplierDTO supplierDTO){
+
+        supplierDTO = CommonUtils.removeWhiteSpace(supplierDTO);
 
         //validate json
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
@@ -60,6 +63,7 @@ public class SupplierController {
     public ResponseEntity<?> modifySupplier(@RequestHeader("Authorization") String token,
                                             @RequestBody SupplierDTO supplierDTO) {
 
+        supplierDTO = CommonUtils.removeWhiteSpace(supplierDTO);
         //validate json
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         try {
@@ -72,21 +76,17 @@ public class SupplierController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors.toString());
             }
 
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in validating json");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in validating json");
-        }
-
-        try {
             supplierService.modifySupplier(supplierDTO);
+
+        } catch (JsonProcessingException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in validating json");
         } catch (RecordNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("supplier id not present");
         } catch (InvalidStatusException e) {
-
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Illegal Review Status ");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in validating json");
         }
 
         return ResponseEntity.status(HttpStatus.OK).body("supplier updated");
@@ -96,6 +96,8 @@ public class SupplierController {
     public ResponseEntity<?> approveRejectSupplier(@RequestHeader("Authorization") String token,
                                                    @RequestBody  ApproveRejectDTO approveRejectDTO){
 
+
+        approveRejectDTO = CommonUtils.removeWhiteSpace(approveRejectDTO);
         //validate json
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         try {

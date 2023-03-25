@@ -47,14 +47,14 @@
     },
     "addressLine2": {
       "description": "addressLine2 of supplier",
-      "type": "string",
+      "type": ["string", "null"],
       "maxLength": 50,
       "leadingSpaces": false,
       "trailingSpaces": false
     },
     "addressLine3": {
       "description": "addressLine3 of supplier",
-      "type": "string",
+      "type": ["string", "null"],
       "maxLength": 50,
       "leadingSpaces": false,
       "trailingSpaces": false
@@ -100,7 +100,7 @@
     },
     "comments": {
       "description": "comments of supplier",
-      "type": "string",
+      "type": ["string", "null"],
       "maxLength": 300,
       "leadingSpaces": false,
       "trailingSpaces": false
