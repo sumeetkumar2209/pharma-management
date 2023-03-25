@@ -200,11 +200,6 @@ public class CustomerServiceImpl implements CustomerService {
                     reviewStatusDO.setReviewCode("RE");
                 }
 
-                customerDOInt.setReviewStatus(reviewStatusDO);
-                customerDOInt.setLastUpdatedTimeStamp(System.currentTimeMillis()/1000);
-                customerDOInt.setComments(approveRejectDTO.getComments());
-                customerDOInt.setLastUpdatedBy(customerDOInt.getApprover());
-                customerIntRepo.save(customerDOInt);
 
                 CustomerAuditDO customerAuditDO = context.getBean(CustomerAuditDO.class);
                 BeanUtils.copyProperties(customerDO, customerAuditDO);
@@ -217,7 +212,9 @@ public class CustomerServiceImpl implements CustomerService {
                 customerAuditDO.setComments(approveRejectDTO.getComments());
                 customerAuditDO.setLastUpdatedBy(customerDOInt.getApprover());
 
-                customerAuditRepo.save(customerAuditDO);
+                customerAuditRepo.saveAndFlush(customerAuditDO);
+
+                customerIntRepo.deleteById(approveRejectDTO.getWorkflowId());
 
 
                 return true;

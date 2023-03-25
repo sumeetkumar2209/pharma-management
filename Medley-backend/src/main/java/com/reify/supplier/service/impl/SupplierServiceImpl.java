@@ -171,6 +171,8 @@ public class SupplierServiceImpl implements SupplierService {
         supplierAuditRepo.save(supplierAuditDO);
 
     }
+
+    @Transactional
     @Override
     public boolean approveRejectSupplier(ApproveRejectDTO approveRejectDTO)  {
 
@@ -202,12 +204,6 @@ public class SupplierServiceImpl implements SupplierService {
                   reviewStatusDO.setReviewCode("RE");
               }
 
-              supplierDOInt.setReviewStatus(reviewStatusDO);
-              supplierDOInt.setLastUpdatedTimeStamp(System.currentTimeMillis()/1000);
-              supplierDOInt.setLastUpdatedBy(supplierDOInt.getApprover());
-              supplierDOInt.setComments(approveRejectDTO.getComments());
-
-              supplierIntRepo.save(supplierDOInt);
 
               SupplierAuditDO supplierAuditDO = context.getBean(SupplierAuditDO.class);
               BeanUtils.copyProperties(supplierDO,supplierAuditDO );
@@ -236,7 +232,9 @@ public class SupplierServiceImpl implements SupplierService {
               supplierAuditDO.setComments(approveRejectDTO.getComments());
               supplierAuditDO.setLastUpdatedBy(supplierDOInt.getApprover());
 
-              supplierAuditRepo.save(supplierAuditDO);
+              supplierAuditRepo.saveAndFlush(supplierAuditDO);
+
+              supplierIntRepo.deleteById(approveRejectDTO.getWorkflowId());
 
               return true;
 

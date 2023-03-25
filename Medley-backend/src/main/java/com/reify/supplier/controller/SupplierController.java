@@ -92,9 +92,9 @@ public class SupplierController {
         return ResponseEntity.status(HttpStatus.OK).body("supplier updated");
     }
 
-    @PostMapping(value = "/approveRejectSupplier")
+    @PutMapping(value = "/approveRejectSupplier")
     public ResponseEntity<?> approveRejectSupplier(@RequestHeader("Authorization") String token,
-                                                   ApproveRejectDTO approveRejectDTO){
+                                                   @RequestBody  ApproveRejectDTO approveRejectDTO){
 
         //validate json
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();

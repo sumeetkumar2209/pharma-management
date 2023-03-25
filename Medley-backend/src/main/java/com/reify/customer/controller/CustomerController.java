@@ -97,9 +97,9 @@ public class CustomerController {
         return ResponseEntity.status(HttpStatus.OK).body("Customer Details Updated");
     }
 
-    @PostMapping(value = "/approveRejectCustomer")
+    @PutMapping(value = "/approveRejectCustomer")
     public ResponseEntity<?> approveRejectCustomer(@RequestHeader("Authorization") String token,
-                                                   ApproveRejectDTO approveRejectDTO){
+                                                  @RequestBody ApproveRejectDTO approveRejectDTO){
 
         //validate json
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
