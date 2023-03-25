@@ -32,4 +32,6 @@ public interface CustomerIntRepo extends JpaRepository<CustomerDO_INT,String> {
 
     @Query(count_query)
     long countByUserId(@Param("userId") String userId);
+
+    CustomerDO_INT findByCustomerId(String customerId);
 }

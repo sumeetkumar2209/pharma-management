@@ -100,6 +100,11 @@ public class SupplierServiceImpl implements SupplierService {
             throw new RecordNotFoundException("record not found");
         }
 
+        SupplierDO_INT supplierDOIntPending = supplierIntRepo.findBySupplierId(supplierDTO.getSupplierId());
+        if (supplierDOIntPending != null) {
+            throw new InvalidStatusException("Already pending modification");
+        }
+
         SupplierDO supplierDO = supplierIdOpt.get();
 
         if(!(supplierDO.getReviewStatus().getReviewCode().equalsIgnoreCase("AP"))){
@@ -145,7 +150,7 @@ public class SupplierServiceImpl implements SupplierService {
         reviewStatusDO.setReviewCode("PE");
         supplierDO_INT.setReviewStatus(reviewStatusDO);
 
-        supplierIntRepo.save(supplierDO_INT);
+       SupplierDO_INT insertedObj = supplierIntRepo.save(supplierDO_INT);
 
 
         //code added for audit table
@@ -165,8 +170,8 @@ public class SupplierServiceImpl implements SupplierService {
         supplierAuditDO.setInitialAdditionDate(System.currentTimeMillis()/1000);
         supplierAuditDO.setLastUpdatedTimeStamp(System.currentTimeMillis()/1000);
         supplierAuditDO.setValidTill(supplierDTO.getValidTillDate().getTime()/ 1000);
-        supplierAuditDO.setWorkFlowId(supplierDO.getWorkFlowId());
         supplierAuditDO.setLastUpdatedBy(supplierDTO.getUserId());
+        supplierAuditDO.setWorkFlowId(insertedObj.getWorkFlowId());
 
         supplierAuditRepo.save(supplierAuditDO);
 

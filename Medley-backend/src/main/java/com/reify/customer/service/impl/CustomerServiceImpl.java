@@ -12,6 +12,7 @@ import com.reify.customer.repo.CustomerAuditRepo;
 import com.reify.customer.repo.CustomerIntRepo;
 import com.reify.customer.repo.CustomerRepo;
 import com.reify.customer.service.CustomerService;
+import com.reify.supplier.model.SupplierDO_INT;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -97,12 +98,18 @@ public class CustomerServiceImpl implements CustomerService {
 
            throw new RecordNotFoundException("record not found");
        }
+
+        CustomerDO_INT customerDOIntPending = customerIntRepo.findByCustomerId(customerDTO.getCustomerId());
+        if (customerDOIntPending != null) {
+            throw new InvalidStatusException("Already pending modification");
+        }
+
+
        CustomerDO customerDO = CustomerOpt.get();
 
         if(!(customerDO.getReviewStatus().getReviewCode().equalsIgnoreCase("AP"))){
 
             throw new InvalidStatusException("Only Approved or Rejected Review Status can be modified");
-
         }
 
        CustomerDO_INT customerDOInt = context.getBean(CustomerDO_INT.class);
@@ -143,7 +150,7 @@ public class CustomerServiceImpl implements CustomerService {
         reviewStatusDO.setReviewCode("PE");
         customerDOInt.setReviewStatus(reviewStatusDO);
 
-        customerIntRepo.save(customerDOInt);
+        CustomerDO_INT insertedObj = customerIntRepo.save(customerDOInt);
 
         //code added for Audit
         CustomerAuditDO customerAuditDO = context.getBean(CustomerAuditDO.class);
@@ -160,7 +167,7 @@ public class CustomerServiceImpl implements CustomerService {
         customerAuditDO.setInitialAdditionDate(System.currentTimeMillis()/1000);
         customerAuditDO.setLastUpdatedTimeStamp(System.currentTimeMillis()/1000);
         customerAuditDO.setValidTill(customerDOInt.getValidTill()/ 1000);
-        customerAuditDO.setWorkFlowId(customerDO.getWorkFlowId());
+        customerAuditDO.setWorkFlowId(insertedObj.getWorkFlowId());
         customerAuditDO.setLastUpdatedBy(customerDOInt.getUserId());
 
         customerAuditRepo.save(customerAuditDO);

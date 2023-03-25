@@ -33,4 +33,6 @@ public interface SupplierIntRepo extends JpaRepository<SupplierDO_INT,String> {
 
     @Query(count_query)
     long countByUserId(@Param("userId") String userId);
+
+    SupplierDO_INT findBySupplierId(String supplierId);
 }
