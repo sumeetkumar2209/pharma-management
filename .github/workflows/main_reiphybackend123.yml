@@ -50,4 +50,4 @@ jobs:
           app-name: 'reiphybackend123'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_A47B774BE33A4AA2A8E2903038ADA16D }}
-          package: '*.war'
+          package: '*.jar'
