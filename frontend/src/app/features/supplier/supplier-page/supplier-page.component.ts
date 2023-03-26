@@ -10,7 +10,7 @@ import { SupplierInterface, SupplierQualificationStatus, SupplierStatus, Workflo
 import { Router } from '@angular/router';
 import { SupplierService } from '../supplier.service';
 import { SelectionItem } from 'src/app/core/interfaces/interface';
-import { STATUS_OPTION } from 'src/app/core/constants/constant';
+import { STATUS_OPTION, SUPPLIER_HEADERS } from 'src/app/core/constants/constant';
 
 
 
@@ -26,73 +26,15 @@ export class SupplierPageComponent {
   animal!: string;
   name!: string;
   suppliers!: SupplierInterface[];
- 
-  //  = [
-  //   {
-  //     supplierId: 101,
-  //     companyName: 'MEDLEY PHARMACEUTICAL LTD',
-  //     contactName: 'Vikas',
-  //     contactNumber: 9999999,
-  //     contactEmail: 'v@yahoo.com',
-  //     country: 'UK',
-  //     currency: 'GBP',
-  //     supplierQualificationStatus: SupplierQualificationStatus.Qualified,
 
-  //     validTill: 'Dec 31 2023',
-  //     supplierStatus: SupplierStatus.Active,
-  //     addressLine1: '',
-  //     town: '',
-  //     postalCode: '',
-  //     approver: '',
-  //     userId: '',
-  //     initialAdditionDate: '',
-  //     lastUpdatedBy: '',
-  //     flowStatus: WorkflowStatus.Approved
-  //   },
-  //   {
-  //     supplierId: 102,
-  //     companyName: 'RICHI PHARMACEUTICAL LTD',
-  //     contactName: 'Prakash',
-  //     contactNumber: 11111111,
-  //     contactEmail: 'p@gamil.com',
-  //     country: 'USA',
-  //     currency: 'USD',
-  //     supplierQualificationStatus: SupplierQualificationStatus.Qualified,
-
-  //     validTill: 'Dec 31 2030',
-  //     supplierStatus: SupplierStatus.Active,
-  //     addressLine1: '',
-  //     town: '',
-  //     postalCode: '',
-  //     approver: 'Vijay',
-  //     userId: '',
-  //     initialAdditionDate: 'Feb 1 2023',
-  //     lastUpdatedBy: '',
-  //     flowStatus: WorkflowStatus.Approved
-
-  //   },
-  // ];
-
-  cols = [
-    { header: 'Supplier Id', field: 'supplierId' },
-    { header: 'Company Name', field: 'companyName' },
-    { header: 'Contact Name', field: 'contactName' },
-    { header: 'Contact Email', field: 'contactEmail' },
-    { header: 'Contact Number', field: 'contactNumber' },
-    { header: 'Country', field: 'country' },
-    { header: 'Currency', field: 'currency' },
-    { header: 'Status', field: 'qualificationStatus' },
-    { header: 'Valid Till', field: 'validTill' },
-  ];
+  cols = SUPPLIER_HEADERS;
   selectedSuppliers!: SupplierInterface[];
   loading: boolean = false;
-
-
 
   //Filters
   statusList: SelectionItem[] = STATUS_OPTION;
 
-  clmns = this.cols.map(el => el.header);
+  clmns = this.cols.filter(el=>el.type==='default').map(el => el.header);
   selectedColumns = new FormControl(this.clmns);
 
   tableSelectedColumns: any[] = this.cols;
@@ -103,7 +45,8 @@ export class SupplierPageComponent {
   rowsPerPageOptions = [10, 25, 50];
   start = 0;
   end = this.rows;
-
+  orderBy!:string;
+  orderType!:string;
 
   constructor(
     private fb: FormBuilder,
@@ -117,7 +60,7 @@ export class SupplierPageComponent {
     this.initalizeFilter();
     console.log(this.clmns);
     console.log(this.tableSelectedColumns);
-
+    this.tableSelectedColumns = this.cols.filter(el=>el.type==='default');
     this.selectedColumns.valueChanges.subscribe(el => {
       this.tableSelectedColumns = el ? this.cols.filter(col => el.includes(col.header)) : this.cols;
       console.log(el);
@@ -150,7 +93,9 @@ export class SupplierPageComponent {
     this.service.fetchSuppliers({
       endIndex: this.end,
       filter: filter,
-      startIndex: this.start
+      startIndex: this.start,
+      orderBy: this.orderBy,
+      orderType: this.orderType
     }).
     subscribe((res:any)=>{
       this.suppliers = res.suppliers;
@@ -185,7 +130,10 @@ export class SupplierPageComponent {
     this.start = event.first ;
     this.end = this.start + event.rows ;
     this.rows = event.rows;
+    this.orderBy = event.sortField;
+    this.orderType = event.sortOrder === -1? 'desc':'asc';
     console.log(event);
+    this.fetchSuppliersData();
   }
 
   refreshSuppliers(){

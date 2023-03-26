@@ -114,12 +114,12 @@
 
                 </div>
               </th>
-              <th style="width: 2rem">
+              <!-- <th style="width: 2rem">
                 <div class="flex justify-content-between align-items-center">
                  
                   Edit
  
-                 </div></th>
+                 </div></th> -->
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-supplier let-columns="columns">
@@ -129,19 +129,26 @@
                 <p-tableCheckbox [value]="supplier"></p-tableCheckbox>
               </td> -->
               <td style="text-align: center">
-                <button mat-icon-button aria-label="approve supplier icon" (click)="approve(supplier)">
+                <button mat-icon-button aria-label="approve supplier icon" (click)="approve(supplier)" *ngIf="supplier.approver === userId">
                   <mat-icon>check_circle</mat-icon>
+
                 </button>
+                <button mat-icon-button aria-label="approve supplier icon" (click)="true" [disabled]="true" *ngIf="supplier.approver !== userId">
+                  <mat-icon>check_circle_outline</mat-icon>
+
+                </button>
+
+
               </td>
               <td *ngFor="let col of columns">
                 <span class="p-column-title">Supplier Id</span>
                 {{supplier[col.field]}}
               </td>
-              <td style="text-align: center">
+              <!-- <td style="text-align: center">
                 <button mat-icon-button aria-label="edit supplier icon" (click)="modify(supplier)">
                   <mat-icon>edit</mat-icon>
                 </button>
-              </td>
+              </td> -->
             </tr>
           </ng-template>
         </p-table>

@@ -1,13 +1,15 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { delay, map, mergeMap } from 'rxjs/operators';
+import { delay, map, switchMap } from 'rxjs/operators';
 import * as jwt_decode from 'jwt-decode';
 import * as moment from 'moment';
 
 import { environment } from '../../../environments/environment';
-import { of, EMPTY, BehaviorSubject, Observable } from 'rxjs';
+import { of, EMPTY, BehaviorSubject, Observable, forkJoin } from 'rxjs';
 import { User } from '../classes/user';
 import { UserDetails } from '../classes/user-details';
+import { countryMeta, currencyMeta, MetadataInterface, OptionsInterface, qualificationStatusMeta, reviewStatusMeta, statusMeta } from '../interfaces/interface';
+import { STATUS_OPTION } from '../constants/constant';
 
 
 @Injectable({
@@ -16,8 +18,10 @@ import { UserDetails } from '../classes/user-details';
 export class AuthenticationService {
     private currentUserSubject!: BehaviorSubject<User | null>;
     private currentUserDetailsSubject!: BehaviorSubject<UserDetails | null>;
+    private currentMetadaSubject!: BehaviorSubject<OptionsInterface | null>;
     public currentUser: Observable<any>;
     public currentUserDetails: Observable<any>;
+    public currentMetadata: Observable<any>;
 
     constructor(private http: HttpClient,
         @Inject('LOCALSTORAGE') private localStorage: Storage) {
@@ -26,10 +30,10 @@ export class AuthenticationService {
         this.currentUserSubject = new BehaviorSubject<any>(localUser ? JSON.parse(localUser) : null);
         this.currentUser = this.currentUserSubject.asObservable();
         this.currentUserDetailsSubject = new BehaviorSubject<any>(null);
-
-
         this.currentUserDetails = this.currentUserDetailsSubject.asObservable();
-       
+        this.currentMetadaSubject = new BehaviorSubject<any>(null);
+        this.currentMetadata = this.currentMetadaSubject.asObservable();
+
     }
 
     login(email: string, password: string) {
@@ -41,10 +45,22 @@ export class AuthenticationService {
             this.currentUserSubject.next(user);
             return user;
         }),
-            mergeMap(response => this.http.get(`/medley/api/getUserDetails?emailId=${email}`), (responce, userDetails) => {
-                this.currentUserDetailsSubject.next(new UserDetails(userDetails));
-                return userDetails;
-            }));
+            switchMap(response => {
+                console.log(response);
+                const userdetails = this.http.get(`/medley/api/getUserDetails?emailId=${email}`);
+                const metadata = this.http.get('/medley/api/metadata').pipe(map(res=>res as MetadataInterface));
+                return forkJoin([userdetails, metadata]).pipe(map(results => {
+                    console.log(results);
+                    this.currentUserDetailsSubject.next(new UserDetails(results[0]));
+                    this.currentMetadaSubject.next(this.generateMetadata(results[1]));
+                    return results[0];
+                }))
+            })
+        );
+
+
+
+
         // return of(true)
         // .pipe(delay(1000),
         // map((/*response*/) => {
@@ -65,14 +81,53 @@ export class AuthenticationService {
         //     return true;
         // }));
     }
+    generateMetadata(metadata: MetadataInterface): OptionsInterface {
+        return {
+            statusList: metadata.statusList.map((o: statusMeta) => {
+                return {
+                    label: o.statusName,
+                    value: o.statusCode
+                };
+            }),
+            reviewStatusList: metadata.reviewStatusList.map((o: reviewStatusMeta) => {
+                return {
+                    label: o.reviewName,
+                    value: o.reviewCode
+                };
+            }),
+            currencyList: metadata.currencyList.map((o: currencyMeta) => {
+                return {
+                    label: o.currencyName,
+                    value: o.currencyCode
+                };
+            }),
+            qualificationStatusList: metadata.qualificationStatusList.map((o: qualificationStatusMeta) => {
+                return {
+                    label: o.qualificationName,
+                    value: o.qualificationCode
+                };
+            }),
+            countryList: metadata.countryList.map((o: countryMeta) => {
+                return {
+                    label: o.countryName,
+                    value: o.countryCode
+                };
+            })
+        };
+    };
+
+
 
     fetchUserDetails() {
-       const user = this.getCurrentUser();
-       this.http.get(`/medley/api/getUserDetails?emailId=${user.email}`).pipe(map(response => {
-            this.currentUserDetailsSubject.next(new UserDetails(response));
-            return response;
+        const user = this.getCurrentUser();
+        const userdetails = this.http.get(`/medley/api/getUserDetails?emailId=${user.email}`);
+        const metadata = this.http.get('/medley/api/metadata').pipe(map(res=>res as MetadataInterface));
+        forkJoin([userdetails, metadata]).pipe(map(results => {
+            this.currentUserDetailsSubject.next(new UserDetails(results[0]));
+            this.currentMetadaSubject.next(this.generateMetadata(results[1]));
+            return results[0];
         })).subscribe();
-           
+
 
     }
 
@@ -81,6 +136,7 @@ export class AuthenticationService {
         this.localStorage.removeItem('currentUser');
         this.currentUserSubject.next(null);
         this.currentUserDetailsSubject.next(null);
+        this.currentMetadaSubject.next(null);
     }
 
     getCurrentUser(): any {
@@ -93,6 +149,10 @@ export class AuthenticationService {
     }
     getCurrentUserDetails(): any {
         return this.currentUserDetailsSubject.value;
+    }
+
+    getCurrentMetadata(): any{
+        return this.currentMetadaSubject.value;
     }
 
     passwordResetRequest(email: string) {

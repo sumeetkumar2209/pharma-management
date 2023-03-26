@@ -4,18 +4,16 @@
 
       <div>
 
-        <h2><mat-icon>flare</mat-icon>Customers</h2>
+        <h2><mat-icon>flare</mat-icon>Workflow</h2>
       </div>
       <div style="margin:18px 0px">
-        <button mat-raised-button [routerLink]="['/customer/add']"  class="demo-button">
-          New Customer
+       
+        <button mat-raised-button [routerLink]="['/customer']"  class="demo-button">
+          Return to Overview
         </button>
-        <button mat-raised-button [routerLink]="['/customer/pending']"  class="demo-button">
-          Workflow
-        </button>
-
 
       </div>
+     
     </div>
     <mat-accordion>
       <mat-expansion-panel [expanded]="true" style="margin-bottom:16px;">
@@ -38,19 +36,17 @@
 
             <mat-form-field fxFlex="25%">
               <mat-label>Customer Name</mat-label>
-              <input matInput #input formControlName="customerName">
+              <input matInput #input formControlName="companyName">
             </mat-form-field>
             <mat-form-field fxFlex="25%">
-              <mat-label>Postcode</mat-label>
-              <input matInput #input formControlName="postalCode">
+              <mat-label>Reveiw Status</mat-label>
+              <input matInput #input formControlName="reviewStatus">
             </mat-form-field>
-            <mat-form-field  fxFlex="25%">
-              <mat-label>Customer Status</mat-label>
-              <mat-select [formControl]="customerStatusControl" name="customerStatus">
-                <mat-option *ngFor="let sso of customerStatusOptions" [value]="sso.value">
-                  {{sso.viewValue}}
-                </mat-option>
-              </mat-select>
+          
+            <mat-form-field fxFlex="25%" >
+              <mat-select formControlName="customerStatus" placeholder="Customer Status">              
+                <mat-option *ngFor="let statusVal of statusList" [value]="statusVal.value">{{statusVal.label}}</mat-option>
+              </mat-select>            
             </mat-form-field>
            
           
@@ -66,11 +62,6 @@
         </form>
       </mat-expansion-panel></mat-accordion>
 
-
-
-
-
-
     <mat-card>
       <mat-card-content>
         <p-table [columns]="tableSelectedColumns" [value]="customers" [tableStyle]="{'min-width': '50rem'}" dataKey="customerId"
@@ -83,7 +74,11 @@
           <ng-template pTemplate="caption">
             <div class="table-header" fxLayout="row" fxLayoutAlign="space-between center">
               <div>
-                List of Customers</div>
+                Customers in Workflow
+                <button mat-icon-button aria-label="refresh customer icon" (click)="refreshCustomers()">
+                  <mat-icon>refresh</mat-icon>
+                </button>
+              </div>
               <div class="p-input-icon-left">
 
                 <mat-form-field>
@@ -94,9 +89,9 @@
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
-                <button mat-icon-button aria-label="edit customer icon" (click)="print()">
+                <!-- <button mat-icon-button aria-label="edit customer icon" (click)="print()">
                   <mat-icon>print</mat-icon>
-                </button>
+                </button> -->
               </div>
             </div>
 
@@ -104,7 +99,11 @@
           <ng-template pTemplate="header" let-columns>
             <tr>
               <th style="width: 4rem">
-                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                <div class="flex justify-content-between align-items-center">
+                 
+                 Approve
+
+                </div>
               </th>
 
 
@@ -115,14 +114,24 @@
 
                 </div>
               </th>
-              <th style="width: 2rem"></th>
+              <th style="width: 2rem">
+                <div class="flex justify-content-between align-items-center">
+                 
+                  Edit
+ 
+                 </div></th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-customer let-columns="columns">
             <tr>
 
-              <td>
+              <!-- <td>
                 <p-tableCheckbox [value]="customer"></p-tableCheckbox>
+              </td> -->
+              <td style="text-align: center">
+                <button mat-icon-button aria-label="approve customer icon" (click)="approve(customer)">
+                  <mat-icon>check_circle</mat-icon>
+                </button>
               </td>
               <td *ngFor="let col of columns">
                 <span class="p-column-title">Customer Id</span>

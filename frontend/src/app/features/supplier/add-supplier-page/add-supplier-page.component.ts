@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject, OnDestroy } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { NGXLogger } from 'ngx-logger';
@@ -7,9 +7,11 @@ import { Router } from '@angular/router';
 import { SupplierInterface } from '../supplier.interface';
 import { SupplierService } from '../supplier.service';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
-import { SelectionItem } from 'src/app/core/interfaces/interface';
-import { APPROVAL_STATUS_OPTION, COUNTRY_OPTION, CURRENCY_OPTION, QUALIFICATION_STATUS_OPTION, STATUS_OPTION } from 'src/app/core/constants/constant';
+import { OptionsInterface, SelectionItem } from 'src/app/core/interfaces/interface';
 import * as moment from 'moment';
+import { UserDetails } from 'src/app/core/classes/user-details';
+import { MatDialog } from '@angular/material/dialog';
+import { NotificationDialogComponent } from 'src/app/shared/notification-dialog/notification-dialog.component';
 
 
 @Component({
@@ -17,15 +19,15 @@ import * as moment from 'moment';
   templateUrl: './add-supplier-page.component.html',
   styleUrls: ['./add-supplier-page.component.css']
 })
-export class AddSupplierPageComponent {
+export class AddSupplierPageComponent implements OnDestroy {
   addSupplierForm: FormGroup;
   supplier: any;
-  countryList: SelectionItem[] = COUNTRY_OPTION;
-  currencyList: SelectionItem[] = CURRENCY_OPTION;
-  statusList: SelectionItem[] = STATUS_OPTION;
-  qualifyList: SelectionItem[] = QUALIFICATION_STATUS_OPTION;
-  approverList: SelectionItem[] = [{ label: 'Vijay', value: '009e8ce0afcd4d1098ff7e26dbb2755c' }];
-  approvalStatusOption: SelectionItem[] = APPROVAL_STATUS_OPTION;
+  countryList!: SelectionItem[];
+  currencyList!: SelectionItem[];
+  statusList!: SelectionItem[];
+  qualifyList!: SelectionItem[];
+  approverList!: SelectionItem[];
+  approvalStatusOption!: SelectionItem[];
   editForm: boolean = false;
   approverForm: boolean = false;
   _supplier!: SupplierInterface;
@@ -34,14 +36,20 @@ export class AddSupplierPageComponent {
     private logger: NGXLogger, private notificationService: NotificationService,
     private router: Router,
     private service: SupplierService,
-    private authService: AuthenticationService) {
+    private authService: AuthenticationService,
+    public dialog: MatDialog,
+    @Inject('LOCALSTORAGE') private localStorage: Storage) {
+
     if (this.router.url.includes('edit')) {
       this.editForm = true;
       this.approverForm = false;
+      this.getSetCurrentSupplier();
 
     } else if (this.router.url.includes('approve')) {
       this.editForm = false;
       this.approverForm = true;
+      this.getSetCurrentSupplier();
+
     }
     this.addSupplierForm = this.fb.group({
       'supplierId': new FormControl({ value: null, disabled: this.approverForm || this.editForm }),
@@ -77,23 +85,46 @@ export class AddSupplierPageComponent {
 
     }
 
-    console.log(this.router.url);
+    const options = this.authService.getCurrentMetadata();
+    this.setSelectionOptions(options);
+
+  }
+  getSetCurrentSupplier() {
+    if (!this._supplier) {
+      const cs = this.localStorage.getItem('currentSupplier');
+      if (cs) {
+        this._supplier = JSON.parse(cs);
+      }
+    } else {
+      this.localStorage.setItem('currentSupplier', JSON.stringify(this._supplier));
+    }
+  }
+  ngOnDestroy(): void {
+    this.localStorage.removeItem('currentSupplier');
+  }
+
+  setSelectionOptions(options: OptionsInterface) {
+    this.countryList = options.countryList;
+    this.currencyList = options.currencyList;
+    this.statusList = options.statusList;
+    this.qualifyList = options.qualificationStatusList;
+    this.approverList = (this.authService.getCurrentUserDetails() as UserDetails).approverMap;
+    this.approvalStatusOption = options.reviewStatusList;
   }
   ngOnInit() {
-    console.log(this.editForm);
     this.titleService.setTitle('Reiphy Pharma - Add Supplier');
     this.logger.log('Add Supplier loaded');
 
     setTimeout(() => {
-      
+
       if (this.editForm) {
         this.notificationService.openSnackBar('Edit Supplier Form and save to Modify Supplier!');
 
       } else if (this.approverForm) {
-  
+
         this.notificationService.openSnackBar('Select Approver Status to Approve/Reject Supplier!');
-  
-      }else{
+
+      } else {
         this.notificationService.openSnackBar('Fill in the Supplier form to Add Supplier!');
       }
     });
@@ -110,19 +141,20 @@ export class AddSupplierPageComponent {
     this.addSupplierForm.get('currency')?.setValue(this._supplier.currency);
     this.addSupplierForm.get('status')?.setValue(this._supplier.supplierStatus);
     this.addSupplierForm.get('qualification')?.setValue(this._supplier.supplierQualificationStatus);
-    this.addSupplierForm.get('validTill')?.setValue(this._supplier.validTillDate);
+    this.addSupplierForm.get('validTill')?.setValue(moment(this._supplier.validTillDate, 'YYYY-MM-DD').toDate());
     this.addSupplierForm.get('address1')?.setValue(this._supplier.addressLine1);
     this.addSupplierForm.get('address2')?.setValue(this._supplier.addressLine2);
     this.addSupplierForm.get('address3')?.setValue(this._supplier.addressLine3);
     this.addSupplierForm.get('town')?.setValue(this._supplier.town);
     this.addSupplierForm.get('postcode')?.setValue(this._supplier.postalCode);
-    this.addSupplierForm.get('approver')?.setValue(this._supplier.approvedBy);
+    this.addSupplierForm.get('approver')?.setValue(this._supplier.approver);
   }
   onSubmit(post: any) {
     console.log(post);
     const addSupplierRequest: SupplierInterface = {
-      supplierId: post.supplierId,
-      initialAdditionDate: post.initialAdditionDate,
+      supplierId: this._supplier ? this._supplier.supplierId : null,
+
+      initialAdditionDate: this._supplier ? this._supplier.initialAdditionDate : null,
       companyName: post.companyName,
       contactName: post.contactName,
       contactEmail: post.contactEmail,
@@ -138,21 +170,20 @@ export class AddSupplierPageComponent {
       town: post.town,
       postalCode: post.postcode,
       country: post.country,
-      approvedBy: post.approver,
+      approver: post.approver,
       userId: this.authService.getCurrentUserDetails().userId,
     }
 
     if (!this.editForm && !this.approverForm) {
       this.service.addSupplier(addSupplierRequest).subscribe(res => {
         console.log(res);
+        this.openNotificationDialogue(`Add Supplier Successful!`, `Workflow Id ${''} has been created and awaiting approval`);
 
         setTimeout(() => {
           this.notificationService.openSnackBar('Supplier Added and sent for Approval. Redirecting to supplier page');
+
         });
-        setTimeout(() => {
-          this.addSupplierForm.reset()
-          this.router.navigate(['/supplier']);
-        }, 2000);
+
       });
     } else if (this.editForm) {
       this.service.editSupplier(addSupplierRequest).subscribe(res => {
@@ -160,28 +191,26 @@ export class AddSupplierPageComponent {
         setTimeout(() => {
           this.notificationService.openSnackBar('Supplier Modified and sent for Approval. Redirecting to supplier page');
         });
-        setTimeout(() => {
-          this.addSupplierForm.reset()
-          this.router.navigate(['/supplier']);
-        }, 2000);
+        this.openNotificationDialogue(`Modify Supplier Successful!`, `Supplier Id ${this._supplier.supplierId} has been updated and awaiting approval`);
+
       });
     } else {
       const requestBody = {
-        supplierId: this._supplier.supplierId,
-        approvalStatus:post.approvalStatus,
-        approvalComments:post.approvalComments
+        workFlowId: this._supplier.workFlowId,
+        decision: post.approvalStatus,
+        comments: post.approvalComments
       }
       const approvalStatus = post.approvalStatus;
       const approvalComments = post.approvalComments;
       this.service.approveSupplier(requestBody).subscribe(res => {
         console.log(res);
+        const decision = this.approvalStatusOption.find(el=>el.value === post.approvalStatus)?.label;
+        this.openNotificationDialogue(`Approve Supplier Successful!`, `Supplier Id ${this._supplier.supplierId} has been ${decision}`);
+
         setTimeout(() => {
-          this.notificationService.openSnackBar('Supplier Modified and sent for Approval. Redirecting to supplier page');
+          this.notificationService.openSnackBar('Supplier Workflow actioned. Redirecting to supplier page');
         });
-        setTimeout(() => {
-          this.addSupplierForm.reset()
-          this.router.navigate(['/supplier']);
-        }, 2000);
+       
       });
     }
 
@@ -198,10 +227,22 @@ export class AddSupplierPageComponent {
   }
 
   save() { }
-  cancelAction(){
-    if (this.approverForm){
+  cancelAction() {
+    if (this.approverForm) {
       this.router.navigate(['/supplier/pending']);
-    }else{
-    this.router.navigate(['/supplier']);}
+    } else {
+      this.router.navigate(['/supplier']);
+    }
+  }
+
+  openNotificationDialogue(title:string, message:string){
+    const dialogRef = this.dialog.open(NotificationDialogComponent, {
+      data: { title: title , message: message },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.addSupplierForm.reset()
+      this.router.navigate(['/supplier']);
+    });
   }
 }
