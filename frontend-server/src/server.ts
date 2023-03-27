@@ -14,7 +14,7 @@ dotenv.config();
 const port = process.env.SERVER_PORT;
 
 const app = express();
-const baseBackendUrl = 'http://localhost:9010'
+const baseBackendUrl = process.env.NODE_ENV === 'dev'? 'http://localhost:9010':process.env.BACKEND;
 app.use(express.json())
 app.use('/medley/*', (req, res) => {
     try {
