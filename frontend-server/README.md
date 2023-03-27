@@ -11,3 +11,4 @@ Change server and backend link as desired
 `NODE_ENV=prod BACKEND=http://localhost:9010  SERVER_PORT=9000 npm start`
 
 
+### P.S For deployment only the frontend-server folder with compiled UI in dist folder is required
