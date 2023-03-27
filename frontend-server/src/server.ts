@@ -3,6 +3,7 @@ import { logger } from "./logUtil";
 import dotenv from "dotenv";
 import axios from 'axios';
 import * as path from 'path';
+import Helmet from "helmet";
 
 
 
@@ -12,10 +13,16 @@ dotenv.config();
 // port is now available to the Node.js runtime
 // as if it were an environment variable
 const port = process.env.SERVER_PORT;
+const baseBackendUrl = process.env.NODE_ENV === 'dev' ? 'http://localhost:9010' : process.env.BACKEND;
 
 const app = express();
-const baseBackendUrl = process.env.NODE_ENV === 'dev'? 'http://localhost:9010':process.env.BACKEND;
-app.use(express.json())
+app.use(Helmet({
+    contentSecurityPolicy: false,
+  }));
+
+app.use(express.json());
+app.disable('x-powered-by')
+
 app.use('/medley/*', (req, res) => {
     try {
         logger.debug(`Headers: ${JSON.stringify(req.headers)}`);
@@ -30,7 +37,7 @@ app.use('/medley/*', (req, res) => {
             reqObj.body = req.body
         }
         logger.info(`Forwarding response to ${reqObj.url} as a ${reqObj.method} with body ${JSON.stringify(reqObj.body)}`);
-        axios(reqObj).then( (response) =>{
+        axios(reqObj).then((response) => {
             res.status(response.status).send(response.data);
         })
             .catch((error) => {
@@ -55,6 +62,13 @@ app.get("/healthCheck", (req, res) => {
     res.send("AOK!");
 });
 
+
+
+// custom error handler
+app.use((err:any, req:any, res:any, next:any) => {
+    logger.error(err.stack);
+    res.status(500).send('Something broke!')
+})
 
 
 app.use(express.static('dist/reiphy-pharma/'));
