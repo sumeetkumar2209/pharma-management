@@ -27,15 +27,19 @@ jobs:
 
       - name: npm install, build, angular
         run: |
+          cd frontend
           npm ci
           npm run build-production -- --output-path ${{ github.workspace }}/frontend-server/dist/reiphy-pharma
-        working-directory: '${{ github.workspace }}/frontend'
-
-      - name: npm install node js server
-        run: |
+          cd ../frontend-server
           npm ci
           ls -lRt .
-        working-directory: '${{ github.workspace }}/frontend-server'
+        working-directory: '${{ github.workspace }}'
+
+      # - name: npm install node js server
+      #   run: |
+      #     npm ci
+      #     ls -lRt .
+      #   working-directory: '${{ github.workspace }}/frontend-server'
 
       # - name: Upload artifact for deployment job
       #   uses: actions/upload-artifact@v3
