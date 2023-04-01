@@ -10,8 +10,8 @@ dotenv.config();
 
 // port is now available to the Node.js runtime
 // as if it were an environment variable
-// const port = process.env.SERVER_PORT? process.env.SERVER_PORT : 8080;
-const port = 8080;
+const port = process.env.SERVER_PORT;
+
 const baseBackendUrl = process.env.NODE_ENV === 'dev' ? 'http://localhost:9010' : process.env.BACKEND;
 
 const app = express();

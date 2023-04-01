@@ -7,7 +7,7 @@
     "pre": "tslint -c tslint.json -p tsconfig.json --fix",
     "build": "tsc",
     "tsbuild": "npm run build",
-    "start":"node dist/index.js",
+    "start":"NODE_ENV=prod BACKEND=https://reiphybackend123.azurewebsites.net/  SERVER_PORT=8080 node dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "BVT",
