@@ -20,11 +20,10 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '18.x'
-          path: '${{ github.workspace }}/frontend-server'
 
       - name: npm install, build, and test
         run: |
-          npm install
+          cd frontend-server && npm install
           npm run build-production --if-present
           npm run test --if-present
 
