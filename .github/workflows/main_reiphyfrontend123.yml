@@ -21,17 +21,22 @@ jobs:
         with:
           node-version: '18.x'
 
-      - name: npm install, build, and test
+      - name: npm install, build, angular
         run: |
-          npm install
+          npm ci
           npm run build-production
-        working-directory: '${{ github.workspace }}/frontend/'
+        working-directory: '${{ github.workspace }}/frontend'
+
+      - name: npm install node js server
+        run: |
+          npm ci
+        working-directory: '${{ github.workspace }}/frontend-server'
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: node-app
-          path: '${{ github.workspace }}/frontend/'
+          path: '${{ github.workspace }}/frontend-server'
 
   deploy:
     runs-on: ubuntu-latest
