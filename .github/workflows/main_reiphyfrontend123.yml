@@ -28,7 +28,7 @@ jobs:
       - name: npm install, build, angular
         run: |
           npm ci
-          npm run build-production
+          ng build --configuration=production --output-path ${{ github.workspace }}/frontend-server/dist/reiphy-pharma
         working-directory: '${{ github.workspace }}/frontend'
 
       - name: npm install node js server
