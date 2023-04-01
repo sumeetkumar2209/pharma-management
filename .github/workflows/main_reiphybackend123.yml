@@ -6,7 +6,7 @@ name: Build and deploy WAR app to Azure Web App - reiphybackend123
 on:
   push:
     branches:
-      - main
+      - release
   workflow_dispatch:
 
 jobs:
