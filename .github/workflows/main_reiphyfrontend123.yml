@@ -24,8 +24,8 @@ jobs:
       - name: npm install, build, and test
         run: |
           npm install
-          npm run build
-        working-directory: '${{ github.workspace }}/frontend-server'
+          npm run build-production
+        working-directory: '${{ github.workspace }}/frontend'
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
