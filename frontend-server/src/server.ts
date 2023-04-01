@@ -11,12 +11,12 @@ dotenv.config();
 // port is now available to the Node.js runtime
 // as if it were an environment variable
 // const port = process.env.SERVER_PORT? process.env.SERVER_PORT : 8080;
-const port = 8080;
+const port = process.env.SERVER_PORT? process.env.SERVER_PORT : 3000;
 const baseBackendUrl = process.env.NODE_ENV === 'dev' ? 'http://localhost:9010' : process.env.BACKEND;
 
 const app = express();
 
-//Security settings
+// Security settings
 app.use(Helmet({
     contentSecurityPolicy: false,
 }));
@@ -78,7 +78,7 @@ app.use((err: any, req: any, res: any, next: any) => {
 // Host static angular files
 app.use(express.static('dist/reiphy-pharma/'));
 
-// Send all not found routes to UI 
+// Send all not found routes to UI
 app.get('*', (req, res) => {
     res.sendFile(path.resolve('dist/reiphy-pharma/index.html'));
 });

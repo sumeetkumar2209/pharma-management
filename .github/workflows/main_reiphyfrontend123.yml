@@ -32,6 +32,7 @@ jobs:
           npm run build-production -- --output-path ${{ github.workspace }}/frontend-server/dist/reiphy-pharma
           cd ../frontend-server
           npm ci
+          npm run build --if-present
           ls -lRt ./dist
         working-directory: '${{ github.workspace }}'
 
