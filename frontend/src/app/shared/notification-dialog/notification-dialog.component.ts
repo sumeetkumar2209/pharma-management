@@ -3,8 +3,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-Notification-dialog',
-  templateUrl: './Notification-dialog.component.html',
-  styleUrls: ['./Notification-dialog.component.scss']
+  templateUrl: './notification-dialog.component.html',
+  styleUrls: ['./notification-dialog.component.scss']
 })
 export class NotificationDialogComponent {
   title: string;
