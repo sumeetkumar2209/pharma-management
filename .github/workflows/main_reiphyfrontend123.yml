@@ -25,13 +25,13 @@ jobs:
         run: |
           npm install
           npm run build-production
-        working-directory: '${{ github.workspace }}/frontend/'
+        working-directory: '${{ github.workspace }}/frontend'
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: node-app
-          path: '${{ github.workspace }}/frontend/'
+          path: '${{ github.workspace }}/frontend'
 
   deploy:
     runs-on: ubuntu-latest
