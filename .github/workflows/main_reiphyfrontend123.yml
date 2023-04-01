@@ -32,7 +32,7 @@ jobs:
           npm run build-production -- --output-path ${{ github.workspace }}/frontend-server/dist/reiphy-pharma
           cd ../frontend-server
           npm ci
-          ls -lRt .
+          ls -lRt ./dist
         working-directory: '${{ github.workspace }}'
 
       # - name: npm install node js server
