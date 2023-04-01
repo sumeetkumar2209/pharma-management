@@ -22,9 +22,11 @@ jobs:
           node-version: '18.x'
 
       - name: npm install, build, and test
+      - working-directory: '${{ github.workspace }}/frontend-server'
         run: |
-          cd frontend-server && npm install
-          cd frontend-serve && npm run build-production --if-present
+          npm install
+          npm run build-production --if-present
+          npm run test --if-present
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
