@@ -66,4 +66,4 @@ jobs:
           app-name: 'reiphyfrontend123'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_D2D077B78CD24F5E8722E9815B1AFDC3 }}
-          package: '${{ github.workspace }}/frontend-server/dist'
+          package: '${{ github.workspace }}/frontend-server'
