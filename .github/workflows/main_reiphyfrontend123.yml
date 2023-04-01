@@ -26,7 +26,7 @@ jobs:
           npm install
           npm run build-production --if-present
           npm run test --if-present
-        working-directory: /frontend-server
+        working-directory: '${{ github.workspace }}/frontend-server'
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
