@@ -34,7 +34,7 @@ jobs:
       - name: npm install node js server
         run: |
           npm ci
-          ls -lrt .
+          ls -lRt .
         working-directory: '${{ github.workspace }}/frontend-server'
 
       # - name: Upload artifact for deployment job
