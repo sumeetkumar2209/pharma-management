@@ -126,9 +126,9 @@ public class ProductController {
         }
         String res = productService.approveRejectProduct(approveRejectDTO);
         if (res != null && approveRejectDTO.getDecision().equalsIgnoreCase("AP")) {
-            return ResponseEntity.status(HttpStatus.OK).body("res");
+            return ResponseEntity.status(HttpStatus.OK).body(res +" has been approved");
         } else if (res != null && approveRejectDTO.getDecision().equalsIgnoreCase("RE")) {
-            return ResponseEntity.status(HttpStatus.OK).body("Product Rejected");
+            return ResponseEntity.status(HttpStatus.OK).body(res +" has been rejected");
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Product approval not acted");
