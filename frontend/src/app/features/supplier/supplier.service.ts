@@ -28,7 +28,7 @@ export class SupplierService{
      }
 
      fetchPendingSuppliers(request:any): Observable<any>{
-      return this.http.post('/medley/api/suppliers', request, {headers:this.headers})
+      return this.http.post('/medley/api/getSupplierWorkFlow', request, {headers:this.headers})
    }
      
     

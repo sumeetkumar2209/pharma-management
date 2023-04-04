@@ -4,10 +4,10 @@
   "description": "thin server to host ui and route requests to backend",
   "main": "dist/server.js",
   "scripts": {
-    "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
+    "pre": "tslint -c tslint.json -p tsconfig.json --fix",
     "build": "tsc",
-    "prestart": "npm run build",
-    "start": "node .",
+    "tsbuild": "npm run build",
+    "start":"NODE_ENV=prod BACKEND=https://reiphybackend123.azurewebsites.net/  SERVER_PORT=8080 node dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "BVT",
@@ -15,6 +15,7 @@
   "devDependencies": {
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.17",
+    "@types/helmet": "^4.0.0",
     "@types/node": "^16.18.18",
     "nodemon": "^2.0.22",
     "tslint": "^6.1.3",
@@ -24,6 +25,7 @@
     "axios": "^1.3.4",
     "dotenv": "^10.0.0",
     "express": "^4.18.2",
+    "helmet": "^6.0.1",
     "winston": "^3.8.2"
   }
 }

@@ -25,5 +25,8 @@ export class CustomerService {
      approveCustomer(request:any): Observable<any>{
         return this.http.put(`/medley/api/approveRejectCustomer`, request, {headers:this.headers, responseType: 'text' });
      }
+     fetchPendingCustomers(request:any): Observable<any>{
+      return this.http.post('/medley/api/suppliers', request, {headers:this.headers})
+   }
     
 }

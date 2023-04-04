@@ -1,16 +1,15 @@
-import { Component, Input, ViewChild, ViewEncapsulation } from '@angular/core';
-import { Observable, ReplaySubject } from 'rxjs';
-
+import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { NGXLogger } from 'ngx-logger';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { SupplierInterface, SupplierQualificationStatus, SupplierStatus, WorkflowStatus } from 'src/app/features/supplier/supplier.interface';
+import { SupplierInterface } from 'src/app/features/supplier/supplier.interface';
 import { Router } from '@angular/router';
 import { SupplierService } from '../supplier.service';
 import { SelectionItem } from 'src/app/core/interfaces/interface';
-import { STATUS_OPTION } from 'src/app/core/constants/constant';
+import { STATUS_OPTION, SUPPLIER_HEADERS, SUPPLIER_WORKFLOW_HEADERS } from 'src/app/core/constants/constant';
+import { AuthenticationService } from 'src/app/core/services/auth.service';
 
 
 
@@ -25,41 +24,8 @@ export class PendingSupplierPageComponent {
 
   animal!: string;
   name!: string;
-  suppliers: SupplierInterface[] = [
-    {
-      supplierId: 101,
-      companyName: 'MEDLEY PHARMACEUTICAL LTD',
-      contactName: 'Vikas',
-      contactNumber: 9999999,
-      contactEmail: 'v@yahoo.com',
-      country: 'UK',
-      currency: 'GBP',
-      supplierQualificationStatus: SupplierQualificationStatus.Qualified,
-
-      validTillDate: 'Dec 31 2023',
-      supplierStatus: SupplierStatus.Active,
-      addressLine1: '',
-      town: '',
-      postalCode: '',
-      approvedBy: '',
-      userId: '',
-      initialAdditionDate: '',
-      lastUpdatedBy: '',
-      reviewStatus: WorkflowStatus.Approved
-    }
-  ];
-
-  cols = [
-    { header: 'Supplier Id', field: 'supplierId' },
-    { header: 'Company Name', field: 'companyName' },
-    { header: 'Contact Name', field: 'contactName' },
-    { header: 'Contact Email', field: 'contactEmail' },
-    { header: 'Contact Number', field: 'contactNumber' },
-    { header: 'Country', field: 'country' },
-    { header: 'Currency', field: 'currency' },
-    { header: 'Status', field: 'qualificationStatus' },
-    { header: 'Valid Till', field: 'validTill' },
-  ];
+  suppliers!: SupplierInterface[] ;
+  cols = SUPPLIER_WORKFLOW_HEADERS;
   selectedSuppliers!: SupplierInterface[];
   loading: boolean = false;
 
@@ -68,7 +34,7 @@ export class PendingSupplierPageComponent {
   //Filters
   statusList: SelectionItem[] = STATUS_OPTION;
 
-  clmns = this.cols.map(el => el.header);
+  clmns = this.cols.filter(el=>el.type==='default').map(el => el.header);
   selectedColumns = new FormControl(this.clmns);
 
   tableSelectedColumns: any[] = this.cols;
@@ -79,6 +45,9 @@ export class PendingSupplierPageComponent {
   rowsPerPageOptions = [10, 25, 50];
   start = 0;
   end = this.rows;
+  userId!:string;
+  orderBy!:string;
+  orderType!:string;
 
 
   constructor(
@@ -88,16 +57,19 @@ export class PendingSupplierPageComponent {
     private notificationService: NotificationService,
     public dialog: MatDialog,
     private router: Router,
-    private service:SupplierService) {
+    private service:SupplierService,
+    private authService:AuthenticationService) {
 
     this.initalizeFilter();
     console.log(this.clmns);
     console.log(this.tableSelectedColumns);
+    this.tableSelectedColumns = this.cols.filter(el=>el.type==='default');
 
     this.selectedColumns.valueChanges.subscribe(el => {
       this.tableSelectedColumns = el ? this.cols.filter(col => el.includes(col.header)) : this.cols;
       console.log(el);
     })
+    this.userId = this.authService.getCurrentUserDetails().userId;
 
   }
   initalizeFilter() {
@@ -126,7 +98,10 @@ export class PendingSupplierPageComponent {
     this.service.fetchPendingSuppliers({
       endIndex: this.end,
       filter: filter,
-      startIndex: this.start
+      startIndex: this.start,
+      userId: this.userId,
+      orderBy: this.orderBy,
+      orderType: this.orderType
     }).
     subscribe((res:any)=>{
       this.suppliers = res.suppliers;
@@ -159,15 +134,13 @@ export class PendingSupplierPageComponent {
     this.initalizeFilter();
   }
   paginate(event: any) {
-    //event.first = Index of the first record
-    //event.rows = Number of rows to display in new page
-    //event.page = Index of the new page
-    //event.pageCount = Total number of pages
-
     this.start = event.first ;
     this.end = this.start + event.rows ;
     this.rows = event.rows;
+    this.orderBy = event.sortField;
+    this.orderType = event.sortOrder === -1? 'desc':'asc';
     console.log(event);
+    this.fetchPendingSuppliersData();
   }
 
   refreshSuppliers(){
@@ -176,11 +149,6 @@ export class PendingSupplierPageComponent {
 
 }
 
-
-interface SupplierStatusOption {
-  value: string;
-  viewValue: string;
-}
 
 
 

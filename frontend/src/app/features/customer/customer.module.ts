@@ -7,9 +7,10 @@ import { CustomerPageComponent } from './customer-page/customer-page.component';
 import { CustomMaterialModule } from 'src/app/custom-material/custom-material.module';
 import { AddCustomerPageComponent } from './add-customer-page/add-customer-page.component';
 import { CustomerService } from './customer.service';
+import { PendingCustomerPageComponent } from './pending-customer-page/pending-customer-page.component';
 
 @NgModule({
-  declarations: [CustomerPageComponent,AddCustomerPageComponent],
+  declarations: [CustomerPageComponent,AddCustomerPageComponent,PendingCustomerPageComponent],
   imports: [
     CommonModule,
     SharedModule,

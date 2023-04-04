@@ -1,5 +1,6 @@
 export interface SupplierInterface {
-    supplierId: number;
+    workFlowId?: string;
+    supplierId: number|null;
     supplierStatus: SupplierStatus; //use Green for Active, Red for inactive
     companyName: string;
     contactName: string;
@@ -14,12 +15,13 @@ export interface SupplierInterface {
     supplierQualificationStatus: SupplierQualificationStatus;
     validTillDate: string; // validation for future dateD
     currency: string;
-    approvedBy?: string;
+    approver?: string;
     userId: string;
-    initialAdditionDate: string;
+    initialAdditionDate: string|null;
     lastUpdatedBy?: string;
     lastUpdatedTimeStamp?:string;
     reviewStatus?: WorkflowStatus;
+    comments?:string;
 }
 
 export enum SupplierStatus {

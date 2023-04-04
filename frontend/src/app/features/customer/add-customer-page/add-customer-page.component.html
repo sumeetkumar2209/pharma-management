@@ -31,40 +31,23 @@
               <div class="break" *ngIf="editForm||approverForm"></div> 
             
             <mat-form-field fxFlex="50%" fxFlex.lt-sm="100%">
-              <input matInput placeholder="Company Name" formControlName="companyName">
-              <mat-error *ngIf="!apControls['companyName'].valid && apControls['companyName'].touched">
-                {{ getError('companyName') }}
+              <input matInput placeholder="Customer Name" formControlName="customerName">
+              <mat-error *ngIf="!apControls['customerName'].valid && apControls['customerName'].touched">
+                {{ getError('customerName') }}
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field fxFlex="25%" fxFlex.lt-sm="50%">
-              <mat-select formControlName="status" placeholder="Customer Status">
-                <mat-select-trigger>
-                  {{!apControls['status'].value?.[0] || ''}}
-                  <span *ngIf="(apControls['status'].value?.length || 0) > 1" class="example-additional-selection">
-                    (+{{(apControls['status'].value?.length || 0) - 1}} {{apControls['status'].value?.length === 2 ?
-                    'other' :
-                    'others'}})
-                  </span>
-                </mat-select-trigger>
-                <mat-option *ngFor="let statusVal of statusList" [value]="statusVal">{{statusVal}}</mat-option>
+            <mat-form-field fxFlex="25%" fxFlex.lt-sm="50%">    
+              <mat-select formControlName="status" placeholder="Customer Status">          
+                <mat-option *ngFor="let statusVal of statusList" [value]="statusVal.value">{{statusVal.label}}</mat-option>
               </mat-select>
               <mat-error *ngIf="!apControls['status'].valid && apControls['status'].touched">
                 {{ getError('status') }}
               </mat-error>
             </mat-form-field>
             <mat-form-field fxFlex="25%" fxFlex.lt-sm="50%">
-              <mat-select formControlName="qualification" placeholder="Customer Qualification">
-                <mat-select-trigger>
-                  {{!apControls['qualification'].value?.[0] || ''}}
-                  <span *ngIf="(apControls['qualification'].value?.length || 0) > 1"
-                    class="example-additional-selection">
-                    (+{{(apControls['qualification'].value?.length || 0) - 1}}
-                    {{apControls['qualification'].value?.length === 2 ? 'other' :
-                    'others'}})
-                  </span>
-                </mat-select-trigger>
-                <mat-option *ngFor="let qualVal of qualifyList" [value]="qualVal">{{qualVal}}</mat-option>
+              <mat-select formControlName="qualification" placeholder="Customer Qualification">          
+                <mat-option *ngFor="let qualVal of qualifyList" [value]="qualVal.value">{{qualVal.label}}</mat-option>
               </mat-select>
               <mat-error *ngIf="!apControls['qualification'].valid && apControls['qualification'].touched">
                 {{ getError('qualification') }}
@@ -114,7 +97,7 @@
 
             <mat-form-field fxFlex="50%" fxFlex.lt-sm="100%">
               <mat-label>Valid Till</mat-label>
-              <input matInput formControlName="validTill" [matDatepicker]="datepicker">
+              <input matInput formControlName="validTillDate" [matDatepicker]="datepicker">
               <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
               <mat-hint>MM/DD/YYYY</mat-hint>
               <mat-datepicker #datepicker>
@@ -123,8 +106,8 @@
                   <button mat-raised-button color="primary" matDatepickerApply>Select</button>
                 </mat-datepicker-actions>
               </mat-datepicker>
-              <mat-error *ngIf="!apControls['validTill'].valid && apControls['validTill'].touched">
-                {{ getError('validTill') }}
+              <mat-error *ngIf="!apControls['validTillDate'].valid && apControls['validTillDate'].touched">
+                {{ getError('validTillDate') }}
               </mat-error>
             </mat-form-field>
 
@@ -135,16 +118,8 @@
               </mat-error>
             </mat-form-field>
             <mat-form-field fxFlex="25%" fxFlex.lt-sm="100%">
-              <mat-select formControlName="country" placeholder="Country">
-                <mat-select-trigger>
-                  {{!apControls['country'].value?.[0] || ''}}
-                  <span *ngIf="(apControls['country'].value?.length || 0) > 1" class="example-additional-selection">
-                    (+{{(apControls['country'].value?.length || 0) - 1}} {{apControls['country'].value?.length === 2 ?
-                    'other' :
-                    'others'}})
-                  </span>
-                </mat-select-trigger>
-                <mat-option *ngFor="let countryVal of countryList" [value]="countryVal">{{countryVal}}</mat-option>
+              <mat-select formControlName="country" placeholder="Country">               
+                <mat-option *ngFor="let countryVal of countryList" [value]="countryVal.value">{{countryVal.label}}</mat-option>
               </mat-select>
               <mat-error *ngIf="!apControls['country'].valid && apControls['country'].touched">
                 {{ getError('country') }}
@@ -153,15 +128,7 @@
 
             <mat-form-field fxFlex="50%">
               <mat-select formControlName="currency" placeholder="Currency">
-                <mat-select-trigger>
-                  {{!apControls['currency'].value?.[0] || ''}}
-                  <span *ngIf="(apControls['currency'].value?.length || 0) > 1" class="example-additional-selection">
-                    (+{{(apControls['currency'].value?.length || 0) - 1}} {{apControls['currency'].value?.length === 2 ?
-                    'other' :
-                    'others'}})
-                  </span>
-                </mat-select-trigger>
-                <mat-option *ngFor="let currencyVal of currencyList" [value]="currencyVal">{{currencyVal}}</mat-option>
+               <mat-option *ngFor="let currencyVal of currencyList" [value]="currencyVal.value">{{currencyVal.label}}</mat-option>
               </mat-select>
               <mat-error *ngIf="!apControls['currency'].valid && apControls['currency'].touched">
                 {{ getError('currency') }}
@@ -178,7 +145,7 @@
             <mat-form-field fxFlex="50%" fxFlex.lt-sm="100%" *ngIf="!approverForm">
               <mat-select formControlName="approver" placeholder="Select Approver">
 
-                <mat-option *ngFor="let al of approverList" [value]="al">{{al}}</mat-option>
+                <mat-option *ngFor="let al of approverList" [value]="al.value">{{al.label}}</mat-option>
               </mat-select>
               <mat-error *ngIf="!apControls['approver'].valid && apControls['approver'].touched">
                 {{ getError('approver') }}
@@ -191,7 +158,7 @@
             <mat-form-field fxFlex="50%" fxFlex.lt-sm="100%" *ngIf="approverForm">
               <mat-select formControlName="approvalStatus" placeholder="Select Approval Status">
 
-                <mat-option *ngFor="let al of approvalStatusOption" [value]="al">{{al}}</mat-option>
+                <mat-option *ngFor="let al of approvalStatusOption" [value]="al.value">{{al.label}}</mat-option>
               </mat-select>
               <mat-error *ngIf="!apControls['approvalStatus'].valid && apControls['approvalStatus'].touched">
                 {{ getError('approvalStatus') }}
@@ -214,12 +181,12 @@
 
         <div>
 
-          <button mat-raised-button [routerLink]="['/customer']" class="demo-button">
+          <button mat-raised-button (click)="cancelAction()" class="demo-button">
             Cancel
           </button>
         </div>
         <div style="margin:18px 0px">
-          <button mat-raised-button (click)="addCustomerForm.reset();" class="demo-button">
+          <button mat-raised-button (click)="addCustomerForm.reset();" class="demo-button"  *ngIf="!approverForm">
             Clear
           </button>
           <button mat-raised-button (click)="save()" type="submit" class="demo-button">

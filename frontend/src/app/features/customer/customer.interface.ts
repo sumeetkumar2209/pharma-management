@@ -1,7 +1,7 @@
 export interface CustomerInterface {
-    customerId: number;
+    customerId: string;
     customerStatus: CustomerStatus; //use Green for Active, Red for inactive
-    companyName: string;
+    customerName: string;
     contactName: string;
     contactNumber: number;
     contactEmail: string;//Generic email Id validation
@@ -12,14 +12,20 @@ export interface CustomerInterface {
     country: string;
     postalCode: string;
     customerQualificationStatus: CustomerQualificationStatus;
-    validTill: string; // validation for future dateD
+    validTillDate: string; // validation for future dateD
     currency: string;
     approver: string;
     userId: string;
     initialAdditionDate: string;
-    lastUpdatedBy: string;
-    flowStatus: WorkflowStatus;
+    lastUpdatedBy?: string;
+    lastUpdatedTimeStamp?: string;
+    reviewStatus?: WorkflowStatus;
 }
+    // "comments": "<string>",
+
+    // "option": "<string>",
+
+ 
 
 export enum CustomerStatus {
     Active, Inactive

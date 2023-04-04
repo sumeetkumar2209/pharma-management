@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LayoutComponent } from '../../shared/layout/layout.component';
 import { AddCustomerPageComponent } from './add-customer-page/add-customer-page.component';
 import { CustomerPageComponent } from './customer-page/customer-page.component';
+import { PendingCustomerPageComponent } from './pending-customer-page/pending-customer-page.component';
 
 const routes: Routes = [
   {
@@ -14,6 +15,8 @@ const routes: Routes = [
       { path: 'add', component: AddCustomerPageComponent },
       { path: 'edit', component: AddCustomerPageComponent },
       { path: 'approve', component: AddCustomerPageComponent },
+      { path: 'pending', component: PendingCustomerPageComponent },
+
 
     ]
   }
