@@ -4,7 +4,7 @@ import com.reify.common.utils.DateConvertorUtils;
 import com.reify.customer.DTO.CustomerDTO;
 import com.reify.customer.DTO.CustomerSearchDTO;
 import com.reify.customer.service.CustomerSearchservice;
-import com.reify.supplier.DTO.InProgressWorkFlowDTO;
+import com.reify.common.DTO.InProgressWorkFlowDTO;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,7 +2,7 @@ package com.reify.customer.service;
 
 import com.reify.customer.DTO.CustomerDTO;
 import com.reify.customer.DTO.CustomerSearchDTO;
-import com.reify.supplier.DTO.InProgressWorkFlowDTO;
+import com.reify.common.DTO.InProgressWorkFlowDTO;
 
 import java.util.List;
 

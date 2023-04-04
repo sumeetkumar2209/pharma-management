@@ -1,7 +1,7 @@
 package com.reify.supplier.controller;
 
 import com.reify.common.utils.DateConvertorUtils;
-import com.reify.supplier.DTO.InProgressWorkFlowDTO;
+import com.reify.common.DTO.InProgressWorkFlowDTO;
 import com.reify.supplier.DTO.SupplierDTO;
 import com.reify.supplier.DTO.SupplierSearchDTO;
 import com.reify.supplier.service.SupplierSearchService;

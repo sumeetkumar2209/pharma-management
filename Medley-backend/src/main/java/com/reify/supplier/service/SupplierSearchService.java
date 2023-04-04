@@ -1,6 +1,6 @@
 package com.reify.supplier.service;
 
-import com.reify.supplier.DTO.InProgressWorkFlowDTO;
+import com.reify.common.DTO.InProgressWorkFlowDTO;
 import com.reify.supplier.DTO.SupplierDTO;
 import com.reify.supplier.DTO.SupplierSearchDTO;
 

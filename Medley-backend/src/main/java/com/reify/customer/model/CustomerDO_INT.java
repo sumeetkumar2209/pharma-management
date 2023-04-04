@@ -28,7 +28,7 @@ public class CustomerDO_INT implements Serializable {
     @GenericGenerator(name = "customer_wf_seq",
             strategy = "com.reify.common.helper.CustomIdGenerator",
             parameters = {
-                    @org.hibernate.annotations.Parameter(name = "prefix", value = "WFS"),
+                    @org.hibernate.annotations.Parameter(name = "prefix", value = "WFC"),
                     @org.hibernate.annotations.Parameter(name = "seqName", value = "customer_wf_seq"),
                     @org.hibernate.annotations.Parameter(name = "seqLength", value = "5")
             })

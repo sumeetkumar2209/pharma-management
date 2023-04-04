@@ -3,20 +3,20 @@ insert into role  values(2,'APPROVER');
 insert into role  values(3,'QUALITY_USER');
 insert into role  values(4,'WAREHOUSE_USER');
 
-INSERT INTO USER (USER_ID,contact_no,created_by,creation_timestamp,email_id,first_name,last_name,password,role_id)
+INSERT INTO USERS(USER_ID,contact_no,created_by,creation_timestamp,email_id,first_name,last_name,password,role_id)
 values ('009e8ce0afcd4d1098ff7e26dbb2755f','961922065','AUTOMAT',CURRENT_TIMESTAMP,'sumeet@gmail.com',
 'sumeet','kumar','$2a$10$yf/QUtMVDHwxIATgdMiahOdH6jst4Z0kcj0JpYucRnkyBKA7J8NxS',1);
 
-INSERT INTO USER (USER_ID,contact_no,created_by,creation_timestamp,email_id,first_name,last_name,password,role_id,SUPERVISOR_ID)
+INSERT INTO USERS(USER_ID,contact_no,created_by,creation_timestamp,email_id,first_name,last_name,password,role_id,SUPERVISOR_ID)
 values ('0159cf833d8a418eb84f162f21d8ecd7','961922065','AUTOMAT',CURRENT_TIMESTAMP,'kiran@gmail.com',
 'kiran','thakur','$2a$10$yf/QUtMVDHwxIATgdMiahOdH6jst4Z0kcj0JpYucRnkyBKA7J8NxS',1,'009e8ce0afcd4d1098ff7e26dbb2755f');
 
 
-INSERT INTO USER (USER_ID,contact_no,created_by,creation_timestamp,email_id,first_name,last_name,password,role_id,SUPERVISOR_ID)
+INSERT INTO USERS(USER_ID,contact_no,created_by,creation_timestamp,email_id,first_name,last_name,password,role_id,SUPERVISOR_ID)
 values ('8310d77155ef4cebabbce94267d54b38','961922065','AUTOMAT',CURRENT_TIMESTAMP,'chotu@gmail.com',
 'Chotu','Singh','$2a$10$yf/QUtMVDHwxIATgdMiahOdH6jst4Z0kcj0JpYucRnkyBKA7J8NxS',2,'009e8ce0afcd4d1098ff7e26dbb2755f');
 
-INSERT INTO USER (USER_ID,contact_no,created_by,creation_timestamp,email_id,first_name,last_name,password,role_id,SUPERVISOR_ID)
+INSERT INTO USERS(USER_ID,contact_no,created_by,creation_timestamp,email_id,first_name,last_name,password,role_id,SUPERVISOR_ID)
 values ('41808edee83f4cb79dca9d10fdccff32','961922065','AUTOMAT',CURRENT_TIMESTAMP,'shashank@gmail.com',
 'Shashank','Singh','$2a$10$yf/QUtMVDHwxIATgdMiahOdH6jst4Z0kcj0JpYucRnkyBKA7J8NxS',2,'009e8ce0afcd4d1098ff7e26dbb2755f');
 
@@ -55,4 +55,11 @@ insert into ROLE_MENU values (1,1);
 insert into ROLE_MENU values(1,2);
 insert into ROLE_MENU values (2,1);
 insert into ROLE_MENU values(2,2);
+
+insert into PRODUCT_DOSAGE_FORM values('TAB','Tablets');
+insert into PACK_TYPE values('ST','Strip');
+insert into PRODUCT_APPROVAL_STATUS  values('UR','Under Registration');
+insert into PRODUCT_APPROVING_AUTHORITY values('USFDA','USFDA');
+insert into TAXATION_TYPE values('IGST','IGST');
+
 

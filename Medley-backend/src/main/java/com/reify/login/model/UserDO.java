@@ -17,7 +17,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @Entity
-@Table(name = "USER")
+@Table(name = "USERS")
 public class UserDO {
 
     @Id

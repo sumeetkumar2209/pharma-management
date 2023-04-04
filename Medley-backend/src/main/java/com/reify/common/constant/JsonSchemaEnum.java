@@ -4,7 +4,7 @@ public enum JsonSchemaEnum {
 
     SUPPLIER_SCHEMA("supplierSchema.json"),
     CUSTOMER_SCHEMA("customerSchema.json"),
-
+    PRODUCT_SCHEMA("productSchema.json"),
     APPROVE_SCHEMA("approveSchema.json");
 
     private String name;

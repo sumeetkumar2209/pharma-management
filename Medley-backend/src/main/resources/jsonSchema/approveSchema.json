@@ -4,8 +4,8 @@
   "description": "Supplier Json",
   "type": "object",
   "properties": {
-    "workflowId": {
-      "description": "workflowId",
+    "workFlowId": {
+      "description": "workFlowId",
       "type": "string",
       "minLength": 8,
       "maxLength": 8
@@ -24,5 +24,5 @@
       "trailingSpaces": false
     }
     },
-    "required": ["workflowId","decision","comments"]
+    "required": ["workFlowId","decision","comments"]
   }

@@ -1,4 +1,4 @@
-package com.reify.supplier.DTO;
+package com.reify.product.DTO;
 
 import lombok.Data;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -8,12 +8,13 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class InProgressWorkFlowDTO {
+public class ProductFilterDTO {
 
-    private String userId;
+    private String productId;
+    private String productName;
+    private String packType;
+    private String reviewStatus;
+    private String ProductApprovalStatus;
 
-    private int startIndex;
-
-    private int endIndex;
 
 }

@@ -1,0 +1,128 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Product",
+  "description": "Product Json",
+  "type": "object",
+  "properties": {
+    "reviewStatus": {
+      "description": "reviewStatus",
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 2
+    },
+    "productId": {
+      "description": "productId",
+      "type": "string",
+      "maxLength": 20,
+      "leadingSpaces": false,
+      "trailingSpaces": false
+    },
+    "productName": {
+      "description": "productName",
+      "type": "string",
+      "maxLength": 50,
+      "leadingSpaces": false,
+      "trailingSpaces": false
+    },
+    "licenceNumber": {
+      "description": "licenceNumber",
+      "type": "string",
+      "maxLength": 30,
+      "leadingSpaces": false,
+      "trailingSpaces": false
+    },
+    "productDosageForm": {
+      "description": "productDosageForm",
+      "type": "string",
+      "maxLength": 3,
+      "leadingSpaces": false,
+      "trailingSpaces": false
+    },
+    "strength": {
+      "description": "strength",
+      "type": "string",
+      "maxLength": 10,
+      "leadingSpaces": false,
+      "trailingSpaces": false
+    },
+    "packType": {
+      "description": "packType",
+      "maxLength": 3,
+      "leadingSpaces": false,
+      "trailingSpaces": false
+    },
+    "packSize": {
+      "description": "packSize",
+      "type":"number",
+      "maxLength": 6,
+      "leadingSpaces": false,
+      "trailingSpaces": false
+    },
+    "town": {
+      "description": "town of Customer",
+      "type": "string",
+      "maxLength": 30,
+      "leadingSpaces": false,
+      "trailingSpaces": false
+    },
+    "productManufactureCountry": {
+      "description": "productManufactureCountry",
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 3
+    },
+    "productApprovalStatus": {
+      "description": "productApprovalStatus",
+      "type": "string",
+      "maxLength": 3,
+      "leadingSpaces": false,
+      "trailingSpaces": false
+    },
+    "productApprovingAuthority": {
+      "description": "productApprovingAuthority",
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 8
+    },
+    "currency": {
+      "description": "currency of product",
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 3
+    },
+    "approver": {
+      "description": "approver of Customer",
+      "type": "string",
+      "maxLength": 50,
+      "leadingSpaces": false,
+      "trailingSpaces": false
+    },
+    "taxPercent": {
+      "description": "taxPercent",
+      "type": "number",
+      "maxLength": 10,
+      "leadingSpaces": false,
+      "trailingSpaces": false
+    },"pricePerPack": {
+      "description": "pricePerPack",
+      "maxLength": 10,
+      "leadingSpaces": false,
+      "trailingSpaces": false
+    },"taxationType": {
+      "description": "taxationType",
+      "minLength": 3,
+      "maxLength": 6,
+      "leadingSpaces": false,
+      "trailingSpaces": false
+    },"productManufacturer": {
+      "description": "productManufacturer",
+      "minLength": 8,
+      "maxLength": 8,
+      "leadingSpaces": false,
+      "trailingSpaces": false
+    }
+  },
+  "required": ["productId","productName","licenceNumber","productDosageForm",
+    "packType","packSize","pricePerPack","productManufactureCountry","strength","productApprovalStatus",
+    "currency","productApprovalStatus","productApprovingAuthority","taxationType","taxPercent"]
+}
