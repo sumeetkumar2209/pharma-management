@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -201,5 +202,36 @@ public class ProductSearchServiceImpl implements ProductSearchService {
     @Override
     public long getProductCountBasedOnUser(InProgressWorkFlowDTO inProgressWorkFlowDTO) {
         return productIntRepo.countByUserId(inProgressWorkFlowDTO.getUserId());
+    }
+
+    @Override
+    public List<String> getAllProduct() {
+
+      List<ProductDO> productDOList = productRepo.findAll();
+
+      if (!productDOList.isEmpty()){
+
+          return  productDOList.stream().map(obj -> obj.getProductId()).collect(Collectors.toList());
+
+      }
+        return null;
+    }
+
+    @Override
+    public ProductDTO getProductById(String productId) {
+
+        Optional<ProductDO> productDOOptional = productRepo.findById(productId);
+
+        if(productDOOptional.isPresent()){
+
+            ProductDO productDO = productDOOptional.get();
+            ProductDTO productDTO = context.getBean(ProductDTO.class);
+
+            BeanUtils.copyProperties(productDO, productDTO);
+
+            return productDTO;
+
+        }
+          return null;
     }
 }

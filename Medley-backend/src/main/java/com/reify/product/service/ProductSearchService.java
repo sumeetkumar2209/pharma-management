@@ -15,4 +15,8 @@ public interface ProductSearchService {
     public List<ProductDTO> getProductBasedOnUser(InProgressWorkFlowDTO inProgressWorkFlowDTO);
 
     public long getProductCountBasedOnUser(InProgressWorkFlowDTO inProgressWorkFlowDTO);
+
+    public  List<String> getAllProduct();
+
+    public ProductDTO getProductById(String productId);
 }

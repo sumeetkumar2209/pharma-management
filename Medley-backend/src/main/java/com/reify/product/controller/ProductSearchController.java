@@ -141,6 +141,24 @@ import java.util.List;
             return ResponseEntity.status(HttpStatus.OK).body(root.toString());
 
         }
+        @GetMapping (value = "/allProducts")
+        public ResponseEntity<?> getAllProduct(@RequestHeader("Authorization") String token){
+
+           List<String> productIdList = productSearchService.getAllProduct();
+
+           return ResponseEntity.status(HttpStatus.OK).body(productIdList);
+
+
+        }
+        @GetMapping(value = "/getProductById")
+        public ResponseEntity<?> getProductById(@RequestHeader("Authorization") String token,
+                                                @RequestParam ("productId") String productId){
+
+            ProductDTO productDTO = productSearchService.getProductById(productId);
+
+            return ResponseEntity.status(HttpStatus.OK).body(productDTO);
+
+        }
     }
 
 
