@@ -1,0 +1,112 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Supplier",
+  "description": "Supplier Json",
+  "type": "object",
+  "properties": {
+    "supplierStatus": {
+      "description": "Status of Supplier",
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 2
+    },
+    "companyName": {
+      "description": "Name of the company",
+      "type": "string",
+      "maxLength": 100,
+      "leadingSpaces": false,
+      "trailingSpaces": false
+    },
+    "contactName": {
+      "description": "Contact name of supplier",
+      "type": "string",
+      "maxLength": 100,
+      "leadingSpaces": false,
+      "trailingSpaces": false
+    },
+    "contactNumber": {
+      "description": "Contact no of supplier",
+      "type": "string",
+      "maxLength": 15,
+      "leadingSpaces": false,
+      "trailingSpaces": false
+    },
+    "contactEmail": {
+      "description": "Email of supplier",
+      "type": "string",
+      "maxLength": 50,
+      "leadingSpaces": false,
+      "trailingSpaces": false
+    },
+    "addressLine1": {
+      "description": "addressLine1 of supplier",
+      "type": "string",
+      "maxLength": 50,
+      "leadingSpaces": false,
+      "trailingSpaces": false
+    },
+    "addressLine2": {
+      "description": "addressLine2 of supplier",
+      "type": ["string", "null"],
+      "maxLength": 50,
+      "leadingSpaces": false,
+      "trailingSpaces": false
+    },
+    "addressLine3": {
+      "description": "addressLine3 of supplier",
+      "type": ["string", "null"],
+      "maxLength": 50,
+      "leadingSpaces": false,
+      "trailingSpaces": false
+    },
+    "town": {
+      "description": "town of supplier",
+      "type": "string",
+      "maxLength": 30,
+      "leadingSpaces": false,
+      "trailingSpaces": false
+    },
+    "country": {
+      "description": "country of supplier",
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 3
+    },
+    "postalCode": {
+      "description": "postalCode of supplier",
+      "type": "string",
+      "maxLength": 15,
+      "leadingSpaces": false,
+      "trailingSpaces": false
+    },
+    "supplierQualificationStatus": {
+      "description": "supplierQualificationStatus of supplier",
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 2
+    },
+    "currency": {
+      "description": "currency of supplier",
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 3
+    },
+    "approver": {
+      "description": "approver of supplier",
+      "type": "string",
+      "maxLength": 50,
+      "leadingSpaces": false,
+      "trailingSpaces": false
+    },
+    "comments": {
+      "description": "comments of supplier",
+      "type": ["string", "null"],
+      "maxLength": 300,
+      "leadingSpaces": false,
+      "trailingSpaces": false
+    }
+  },
+  "required": ["supplierStatus","companyName","contactName","contactNumber",
+    "contactEmail","addressLine1","town","country","postalCode","supplierQualificationStatus",
+    "currency","approver"]
+}

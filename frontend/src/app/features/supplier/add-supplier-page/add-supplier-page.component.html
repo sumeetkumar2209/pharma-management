@@ -1,0 +1,200 @@
+<div class="container" fxLayout="row" fxLayoutAlign="center none">
+  <div fxFlex="95%">
+    <div class="container" fxLayout="row" fxLayoutAlign="space-between center">
+
+      <div>
+
+        <h2 *ngIf="!(editForm||approverForm)"><mat-icon></mat-icon>Add Supplier</h2>
+        <h2 *ngIf="editForm"><mat-icon></mat-icon>Modify Supplier</h2>
+        <h2 *ngIf="approverForm"><mat-icon></mat-icon>Approve Supplier</h2>
+      </div>
+
+    </div>
+    <form [formGroup]="addSupplierForm" (ngSubmit)="onSubmit(addSupplierForm.value)" class="form">
+
+      <mat-card>
+        <mat-card-content>
+         
+
+          <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="16px grid">
+
+            
+              <mat-form-field fxFlex="25%" fxFlex.lt-sm="100%" *ngIf="editForm||approverForm">
+                <input matInput placeholder="Supplier Id" formControlName="supplierId">
+  
+              </mat-form-field>
+              <mat-form-field fxFlex="25%" fxFlex.lt-sm="100%" *ngIf="editForm||approverForm">
+                <input matInput placeholder="Initial Addition Date" formControlName="initialAdditionDate">
+  
+              </mat-form-field>
+              <!-- <mat-divider fxFlex="95%"></mat-divider> -->
+              <div class="break" *ngIf="editForm||approverForm"></div> 
+            
+            <mat-form-field fxFlex="50%" fxFlex.lt-sm="100%">
+              <input matInput placeholder="Company Name" formControlName="companyName">
+              <mat-error *ngIf="!apControls['companyName'].valid && apControls['companyName'].touched">
+                {{ getError('companyName') }}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="25%" fxFlex.lt-sm="50%">
+              <mat-select formControlName="status" placeholder="Supplier Status">              
+                <mat-option *ngFor="let statusVal of statusList" [value]="statusVal.value">{{statusVal.label}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="!apControls['status'].valid && apControls['status'].touched">
+                {{ getError('status') }}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field fxFlex="25%" fxFlex.lt-sm="50%">
+              <mat-select formControlName="qualification" placeholder="Supplier Qualification">              
+                <mat-option *ngFor="let qualVal of qualifyList" [value]="qualVal.value">{{qualVal.label}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="!apControls['qualification'].valid && apControls['qualification'].touched">
+                {{ getError('qualification') }}
+              </mat-error>
+            </mat-form-field>
+
+
+            <mat-form-field fxFlex="50%" fxFlex.lt-sm="100%">
+              <input matInput placeholder="Contact Name" formControlName="contactName">
+              <mat-error *ngIf="!apControls['contactName'].valid && apControls['contactName'].touched">
+                {{ getError('contactName') }}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field fxFlex="50%" fxFlex.lt-sm="100%">
+              <input matInput placeholder="Address Line 1" formControlName="address1">
+              <mat-error *ngIf="!apControls['address1'].valid && apControls['address1'].touched">
+                {{ getError('address1') }}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="50%" fxFlex.lt-sm="100%">
+              <input matInput placeholder="Contact Email" formControlName="contactEmail">
+              <mat-error *ngIf="!apControls['contactEmail'].valid && apControls['contactEmail'].touched">
+                {{ getError('contactEmail') }}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field fxFlex="50%" fxFlex.lt-sm="100%">
+              <input matInput placeholder="Address Line 2" formControlName="address2">
+              <mat-error *ngIf="!apControls['address2'].valid && apControls['address2'].touched">
+                {{ getError('address2') }}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="50%" fxFlex.lt-sm="100%">
+              <input matInput placeholder="Contact Number" formControlName="contactNumber">
+              <mat-error *ngIf="!apControls['contactNumber'].valid && apControls['contactNumber'].touched">
+                {{ getError('contactNumber') }}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field fxFlex="50%" fxFlex.lt-sm="100%">
+              <input matInput placeholder="Address Line 3" formControlName="address3">
+              <mat-error *ngIf="!apControls['address3'].valid && apControls['address3'].touched">
+                {{ getError('address3') }}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="50%" fxFlex.lt-sm="100%">
+              <mat-label>Valid Till</mat-label>
+              <input matInput formControlName="validTill" [matDatepicker]="datepicker">
+              <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+              <mat-hint>MM/DD/YYYY</mat-hint>
+              <mat-datepicker #datepicker>
+                <mat-datepicker-actions>
+                  <button mat-button matDatepickerCancel>Cancel</button>
+                  <button mat-raised-button color="primary" matDatepickerApply>Select</button>
+                </mat-datepicker-actions>
+              </mat-datepicker>
+              <mat-error *ngIf="!apControls['validTill'].valid && apControls['validTill'].touched">
+                {{ getError('validTill') }}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="25%" fxFlex.lt-sm="100%">
+              <input matInput placeholder="Town" formControlName="town">
+              <mat-error *ngIf="!apControls['town'].valid && apControls['town'].touched">
+                {{ getError('town') }}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field fxFlex="25%" fxFlex.lt-sm="100%">
+              <mat-select formControlName="country" placeholder="Country">
+              
+                <mat-option *ngFor="let countryVal of countryList" [value]="countryVal.value">{{countryVal.label}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="!apControls['country'].valid && apControls['country'].touched">
+                {{ getError('country') }}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="50%">
+              <mat-select formControlName="currency" placeholder="Currency">
+               
+                <mat-option *ngFor="let currencyVal of currencyList" [value]="currencyVal.value">{{currencyVal.label}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="!apControls['currency'].valid && apControls['currency'].touched">
+                {{ getError('currency') }}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field fxFlex="50%" fxFlex.lt-sm="100%">
+              <input matInput placeholder="PostCode" formControlName="postcode">
+              <mat-error *ngIf="!apControls['postcode'].valid && apControls['postcode'].touched">
+                {{ getError('postcode') }}
+              </mat-error>
+            </mat-form-field>
+            <mat-divider fxFlex="95%"></mat-divider>
+
+            <mat-form-field fxFlex="50%" fxFlex.lt-sm="100%" *ngIf="!approverForm">
+              <mat-select formControlName="approver" placeholder="Select Approver">
+                <mat-option *ngFor="let al of approverList" [value]="al.value">{{al.label}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="!apControls['approver'].valid && apControls['approver'].touched">
+                {{ getError('approver') }}
+              </mat-error>
+             
+
+            </mat-form-field>
+            <div class="break"></div> 
+
+            <mat-form-field fxFlex="50%" fxFlex.lt-sm="100%" *ngIf="approverForm">
+              <mat-select formControlName="approvalStatus" placeholder="Select Approval Status">
+
+                <mat-option *ngFor="let al of approvalStatusOption" [value]="al.value">{{al.label}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="!apControls['approvalStatus'].valid && apControls['approvalStatus'].touched">
+                {{ getError('approvalStatus') }}
+              </mat-error>             
+            </mat-form-field>
+            <mat-form-field fxFlex="50%" fxFlex.lt-sm="100%" *ngIf="approverForm">
+              <input matInput placeholder="Comments" formControlName="approvalComments">
+            
+            </mat-form-field>
+
+
+          </div>
+
+
+
+        </mat-card-content>
+      </mat-card>
+
+      <div class="container" fxLayout="row" fxLayoutAlign="space-between center">
+
+        <div>
+
+          <button mat-raised-button (click)="cancelAction()" class="demo-button">
+            Cancel
+          </button>
+        </div>
+        <div style="margin:18px 0px">
+          <button mat-raised-button (click)="addSupplierForm.reset();" class="demo-button" *ngIf="!approverForm">
+            Clear
+          </button>
+          <button mat-raised-button (click)="save()" type="submit" class="demo-button">
+            Save
+          </button>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>

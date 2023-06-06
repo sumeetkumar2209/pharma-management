@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Supplier",
+  "description": "Supplier Json",
+  "type": "object",
+  "properties": {
+    "workFlowId": {
+      "description": "workFlowId",
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 8
+    },
+    "decision": {
+      "description": "decision",
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 2
+    },
+    "comments": {
+      "description": "comments",
+      "type": "string",
+      "maxLength": 300,
+      "leadingSpaces": false,
+      "trailingSpaces": false
+    }
+    },
+    "required": ["workFlowId","decision","comments"]
+  }
